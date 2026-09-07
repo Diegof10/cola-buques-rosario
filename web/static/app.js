@@ -1,75 +1,103 @@
 (() => {
   const ZONE_ORDER = [
-    "Timbúes",
-    "San Lorenzo",
-    "Rosario",
-    "Punta Alvear",
-    "Gral. Lagos",
-    "Arroyo Seco",
-    "Villa Constitución",
-    "San Nicolás",
-    "Ramallo",
+    "Timbúes", "San Lorenzo", "Rosario", "Punta Alvear", "Gral. Lagos",
+    "Arroyo Seco", "Villa Constitución", "San Nicolás", "Ramallo",
   ];
-
   const STATUS_LABEL = {
-    cargando: "Cargando",
-    en_rada: "En rada",
-    arribando: "Arribando",
-    en_cola: "En cola",
+    cargando: "Cargando", en_rada: "En rada", arribando: "Arribando", en_cola: "En cola",
   };
-
   const TZ = "America/Argentina/Cordoba";
+  const DEST_META = {
+    ALGERIA: { label: "Argelia", lat: 28.0, lon: 3.0 },
+    AUSTRALIA: { label: "Australia", lat: -25.0, lon: 134.0 },
+    BRAZIL: { label: "Brasil", lat: -14.2, lon: -51.9 },
+    CAMEROON: { label: "Camerún", lat: 5.7, lon: 12.0 },
+    CANADA: { label: "Canadá", lat: 56.1, lon: -106.3 },
+    CHILE: { label: "Chile", lat: -35.7, lon: -71.5 },
+    CHINA: { label: "China", lat: 35.9, lon: 104.2 },
+    DENMARK: { label: "Dinamarca", lat: 56.3, lon: 9.5 },
+    "DOMINICAN REPUB": { label: "Rep. Dominicana", lat: 18.7, lon: -70.2 },
+    ECUADOR: { label: "Ecuador", lat: -1.8, lon: -78.2 },
+    EGYPT: { label: "Egipto", lat: 26.8, lon: 30.8 },
+    "EL SALVADOR": { label: "El Salvador", lat: 13.8, lon: -88.9 },
+    FRANCE: { label: "Francia", lat: 46.2, lon: 2.2 },
+    GERMANY: { label: "Alemania", lat: 51.2, lon: 10.4 },
+    GREECE: { label: "Grecia", lat: 39.1, lon: 21.8 },
+    GUATEMALA: { label: "Guatemala", lat: 15.8, lon: -90.2 },
+    INDIA: { label: "India", lat: 20.6, lon: 79.0 },
+    INDONESIA: { label: "Indonesia", lat: -2.5, lon: 118.0 },
+    IRAQ: { label: "Irak", lat: 33.2, lon: 43.7 },
+    IRELAND: { label: "Irlanda", lat: 53.1, lon: -8.0 },
+    ISRAEL: { label: "Israel", lat: 31.0, lon: 34.9 },
+    ITALY: { label: "Italia", lat: 41.9, lon: 12.6 },
+    KOREA: { label: "Corea", lat: 35.9, lon: 127.8 },
+    LATVIA: { label: "Letonia", lat: 56.9, lon: 24.1 },
+    LIBYA: { label: "Libia", lat: 26.3, lon: 17.2 },
+    MADAGASCAR: { label: "Madagascar", lat: -18.8, lon: 46.9 },
+    MALAYSIA: { label: "Malasia", lat: 4.2, lon: 101.9 },
+    MEXICO: { label: "México", lat: 23.6, lon: -102.5 },
+    MOROCCO: { label: "Marruecos", lat: 31.8, lon: -7.1 },
+    NETHERLANDS: { label: "Países Bajos", lat: 52.1, lon: 5.3 },
+    "NEW ZEALAND": { label: "Nueva Zelanda", lat: -40.9, lon: 174.9 },
+    OMAN: { label: "Omán", lat: 21.5, lon: 55.9 },
+    PARAGUAY: { label: "Paraguay", lat: -23.4, lon: -58.4 },
+    PERU: { label: "Perú", lat: -9.2, lon: -75.0 },
+    PHILIPPINES: { label: "Filipinas", lat: 12.9, lon: 121.8 },
+    POLAND: { label: "Polonia", lat: 51.9, lon: 19.1 },
+    PORTUGAL: { label: "Portugal", lat: 39.4, lon: -8.2 },
+    "PUERTO RICO": { label: "Puerto Rico", lat: 18.2, lon: -66.6 },
+    "SAUDI ARABIA": { label: "Arabia Saudita", lat: 23.9, lon: 45.1 },
+    SINGAPORE: { label: "Singapur", lat: 1.35, lon: 103.8 },
+    SPAIN: { label: "España", lat: 40.5, lon: -3.7 },
+    THAILAND: { label: "Tailandia", lat: 15.9, lon: 100.9 },
+    TUNISIA: { label: "Túnez", lat: 33.9, lon: 9.5 },
+    TURKEY: { label: "Turquía", lat: 38.96, lon: 35.2 },
+    "UNITED ARAB EMIR": { label: "Emiratos Árabes", lat: 23.4, lon: 53.8 },
+    "UNITED KINGDOM": { label: "Reino Unido", lat: 55.4, lon: -3.4 },
+    "UNITED STATES": { label: "Estados Unidos", lat: 39.8, lon: -98.5 },
+    URUGUAY: { label: "Uruguay", lat: -32.5, lon: -55.8 },
+    VENEZUELA: { label: "Venezuela", lat: 6.4, lon: -66.6 },
+    VIETNAM: { label: "Vietnam", lat: 14.1, lon: 108.3 },
+    YEMEN: { label: "Yemen", lat: 15.6, lon: 48.5 },
+  };
+  const PIE_COLORS = [
+    "#1B5E3B", "#1565C0", "#F57C00", "#6A1B9A", "#00838F",
+    "#C62828", "#2E7D32", "#EF6C00", "#4527A0", "#00695C",
+    "#AD1457", "#0277BD", "#558B2F", "#5D4037", "#37474F",
+    "#7B1FA2", "#0097A7", "#E65100", "#283593", "#546E7A",
+  ];
 
   let vesselsPayload = null;
   let trucksPayload = null;
-  let terminalsPayload = null;
-  let map = null;
-  let markerLayer = null;
-  let mapReady = false;
-  /** Collapsed zone keys for próximos arribos (empty = all expanded). */
+  let worldMap = null;
+  let worldLayer = null;
+  let worldMapReady = false;
   const arrivalsCollapsed = new Set();
-
   const $ = (id) => document.getElementById(id);
 
   function fmtNum(n) {
     if (n == null || Number.isNaN(n)) return "—";
     return new Intl.NumberFormat("es-AR").format(Math.round(n));
   }
-
   function fmtTons(n) {
     if (n == null || Number.isNaN(n)) return "—";
     if (n >= 1000) return fmtNum(n / 1000) + " mil tn";
     return fmtNum(n) + " tn";
   }
-
   function fmtTonsShort(n) {
     if (n == null || Number.isNaN(n)) return "—";
     return fmtNum(n) + " tn";
   }
-
   function toAR(iso) {
     if (!iso) return "—";
     try {
       const d = new Date(iso);
-      return d.toLocaleString("es-AR", {
-        timeZone: TZ,
-        dateStyle: "short",
-        timeStyle: "short",
-      }) + " ART";
-    } catch {
-      return iso;
-    }
+      return d.toLocaleString("es-AR", { timeZone: TZ, dateStyle: "short", timeStyle: "short" }) + " ART";
+    } catch { return iso; }
   }
-
-  /** Today's calendar date YYYY-MM-DD in America/Argentina/Cordoba. */
   function todayCordoba() {
     return new Date().toLocaleDateString("en-CA", { timeZone: TZ });
   }
-
-  /**
-   * Parse NABSA ETA strings like "ETA REC 09/09" or "ETA 04/09" → YYYY-MM-DD
-   * using the current year in Cordoba. Returns null if unparseable.
-   */
   function parseEtaYmd(eta) {
     const m = String(eta || "").match(/(\d{1,2})\s*\/\s*(\d{1,2})/);
     if (!m) return null;
@@ -78,26 +106,20 @@
     if (month < 1 || month > 12 || day < 1 || day > 31) return null;
     const today = todayCordoba();
     const year = parseInt(today.slice(0, 4), 10);
-    return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    return year + "-" + String(month).padStart(2, "0") + "-" + String(day).padStart(2, "0");
   }
-
-  /** True when ETA calendar date is strictly before today (Cordoba). */
   function isPastEta(eta) {
     const ymd = parseEtaYmd(eta);
     if (!ymd) return false;
     return ymd < todayCordoba();
   }
-
-  /** Stale “arribando” rows (past ETA) — hide from próximos + map. */
   function isStaleArrival(v) {
     return v.status === "arribando" && isPastEta(v.eta);
   }
-
   function upRiverVessels() {
     const all = vesselsPayload?.vessels || [];
     return all.filter((v) => v.up_river && !isStaleArrival(v));
   }
-
   function sortZones(keys) {
     return [...keys].sort((a, b) => {
       const ia = ZONE_ORDER.indexOf(a);
@@ -105,7 +127,6 @@
       return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b, "es");
     });
   }
-
   function currentFilters() {
     return {
       zone: $("fZone").value,
@@ -114,7 +135,6 @@
       search: ($("fSearch").value || "").trim().toLowerCase(),
     };
   }
-
   function applyFilters(list) {
     const f = currentFilters();
     return list.filter((v) => {
@@ -129,28 +149,23 @@
       return true;
     });
   }
-
   function fillZones(list) {
     const sel = $("fZone");
     const cur = sel.value;
     const zones = sortZones([...new Set(list.map((v) => v.zone))]);
-    sel.innerHTML = '<option value="">Todas</option>' + zones.map((z) => `<option value="${z}">${z}</option>`).join("");
+    sel.innerHTML = '<option value="">Todas</option>' + zones.map((z) => '<option value="' + z + '">' + z + "</option>").join("");
     if (zones.includes(cur)) sel.value = cur;
   }
-
   function chip(commodity, label) {
     const c = commodity || "otro";
-    return `<span class="chip ${c}">${label || c}</span>`;
+    return '<span class="chip ' + c + '">' + (label || c) + "</span>";
   }
-
   function statusBadge(st) {
-    return `<span class="status ${st}">${STATUS_LABEL[st] || st}</span>`;
+    return '<span class="status ' + st + '">' + (STATUS_LABEL[st] || st) + "</span>";
   }
-
   function timing(v) {
     return [v.etf, v.etb, v.eta].filter(Boolean).join(" · ") || "—";
   }
-
   function escapeHtml(s) {
     return String(s ?? "")
       .replace(/&/g, "&amp;")
@@ -158,7 +173,6 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
   }
-
   function norm(s) {
     return String(s || "")
       .toLowerCase()
@@ -168,173 +182,262 @@
       .trim();
   }
 
-  /** Resolve vessel zone/port/terminal to a terminal coord entry. */
-  function resolveTerminal(v) {
-    const terminals = terminalsPayload?.terminals || [];
-    if (!terminals.length) return null;
-
-    const zoneN = norm(v.zone);
-    for (const t of terminals) {
-      if (norm(t.label) === zoneN) return t;
-    }
-
-    const hay = [v.zone, v.port, v.port_raw, v.terminal].map(norm).filter(Boolean);
-    for (const t of terminals) {
-      const aliases = [t.label, ...(t.aliases || [])].map(norm);
-      for (const a of aliases) {
-        for (const h of hay) {
-          if (h === a || h.includes(a) || a.includes(h)) return t;
-        }
-      }
-    }
-    return null;
+  function rawDestination(v) {
+    return String(v.destination || v.destino || "").trim();
+  }
+  function isArgentinaDest(raw) {
+    const n = norm(raw);
+    return n === "argentina" || n === "ar" || n === "arg" || n.startsWith("argentina ");
+  }
+  function isUnknownDest(raw) {
+    const n = norm(raw);
+    if (!n) return true;
+    return (
+      n === "not available" ||
+      n === "n a" ||
+      n === "na" ||
+      n === "n/a" ||
+      n === "unknown" ||
+      n === "tbd" ||
+      n === "-" ||
+      n === "sin destino" ||
+      n === "otros"
+    );
+  }
+  function destKey(raw) {
+    return String(raw || "").trim().toUpperCase();
+  }
+  function destLabel(key) {
+    if (DEST_META[key]) return DEST_META[key].label;
+    // title-case fallback
+    return key
+      .toLowerCase()
+      .split(" ")
+      .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+      .join(" ");
   }
 
-  /** Deterministic jitter so vessels at same terminal don't fully overlap. */
-  function jitterLatLon(baseLat, baseLon, key) {
-    let h = 0;
-    const s = String(key || "x");
-    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-    const ang = ((h % 360) * Math.PI) / 180;
-    const r = 0.0022 + ((h % 17) / 17) * 0.0045; // ~250–750 m
-    return [baseLat + Math.sin(ang) * r, baseLon + Math.cos(ang) * r * 1.15];
-  }
-
-  function initMap() {
-    if (map || typeof L === "undefined") return;
-    map = L.map("map", {
-      zoomControl: true,
-      attributionControl: true,
-    }).setView([-33.05, -60.55], 9);
-
-    L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
-      {
-        attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
-        maxZoom: 16,
-      }
-    ).addTo(map);
-
-    markerLayer = L.markerClusterGroup({
-      showCoverageOnHover: false,
-      maxClusterRadius: 42,
-      spiderfyOnMaxZoom: true,
-    });
-    map.addLayer(markerLayer);
-    mapReady = true;
-
-    $("mapLegend").innerHTML = [
-      "soja|Soja",
-      "maiz|Maíz",
-      "trigo|Trigo",
-      "girasol|Girasol",
-      "sorgo|Sorgo",
-      "cebada|Cebada",
-      "otro|Otros",
-    ]
-      .map((x) => {
-        const [c, l] = x.split("|");
-        return chip(c, l);
-      })
-      .join("");
-
-    setTimeout(() => map.invalidateSize(), 80);
-  }
-
-  function renderMap(list) {
-    if (!mapReady) initMap();
-    if (!map || !markerLayer) return;
-
-    markerLayer.clearLayers();
-    const bounds = [];
-    let plotted = 0;
-
-    // list already excludes stale arribando via upRiverVessels()
+  /** Aggregate tons: export by country, plus descarga AR and Otros. */
+  function aggregateDestinations(list) {
+    const exportMap = new Map();
+    let arTons = 0;
+    let arCount = 0;
+    let otrosTons = 0;
+    let otrosCount = 0;
     for (const v of list) {
-      const term = resolveTerminal(v);
-      if (!term) continue;
-      const key = `${v.vessel}|${v.terminal}|${v.commodity}|${v.status}`;
-      const [lat, lon] = jitterLatLon(term.lat, term.lon, key);
-      const colorClass = v.commodity || "otro";
-      const icon = L.divIcon({
-        className: "",
-        html: `<div class="vessel-marker ${colorClass}" title="${escapeHtml(v.vessel)}"></div>`,
-        iconSize: [14, 14],
-        iconAnchor: [7, 7],
-      });
-
-      const timingBits = [
-        v.eta ? `<div class="pop-row"><strong>ETA</strong> ${escapeHtml(v.eta)}</div>` : "",
-        v.etb ? `<div class="pop-row"><strong>ETB</strong> ${escapeHtml(v.etb)}</div>` : "",
-        v.etf ? `<div class="pop-row"><strong>ETF</strong> ${escapeHtml(v.etf)}</div>` : "",
-      ].join("");
-
-      const html = `
-        <div class="pop-name">${escapeHtml(v.vessel)}</div>
-        <div class="pop-row"><strong>Terminal</strong> ${escapeHtml(v.terminal || term.label)}</div>
-        <div class="pop-row"><strong>Zona</strong> ${escapeHtml(v.zone || term.label)}</div>
-        <div class="pop-row"><strong>Estado</strong> ${escapeHtml(STATUS_LABEL[v.status] || v.status)}</div>
-        <div class="pop-row"><strong>Commodity</strong> ${escapeHtml(v.commodity_label || v.commodity || "—")}</div>
-        <div class="pop-row"><strong>Toneladas</strong> ${escapeHtml(fmtTonsShort(v.tons))}</div>
-        ${timingBits}
-      `;
-
-      const m = L.marker([lat, lon], { icon }).bindPopup(html);
-      markerLayer.addLayer(m);
-      bounds.push([lat, lon]);
-      plotted += 1;
-    }
-
-    $("mapCount").textContent = String(plotted);
-
-    if (bounds.length) {
-      try {
-        map.fitBounds(bounds, { padding: [36, 36], maxZoom: 11 });
-      } catch {
-        /* ignore */
+      const tons = Number(v.tons) || 0;
+      const raw = rawDestination(v);
+      if (isArgentinaDest(raw)) {
+        arTons += tons;
+        arCount += 1;
+        continue;
       }
-    } else {
-      map.setView([-33.05, -60.55], 9);
+      if (isUnknownDest(raw)) {
+        otrosTons += tons;
+        otrosCount += 1;
+        continue;
+      }
+      const key = destKey(raw);
+      const cur = exportMap.get(key) || { key, label: destLabel(key), tons: 0, count: 0 };
+      cur.tons += tons;
+      cur.count += 1;
+      exportMap.set(key, cur);
     }
-    setTimeout(() => map.invalidateSize(), 50);
+    const exports = [...exportMap.values()].sort((a, b) => b.tons - a.tons || a.label.localeCompare(b.label, "es"));
+    return { exports, arTons, arCount, otrosTons, otrosCount };
+  }
+
+  function initWorldMap() {
+    if (worldMap || typeof L === "undefined") return;
+    const el = $("worldMap");
+    if (!el) return;
+    worldMap = L.map(el, { zoomControl: true, attributionControl: true, worldCopyJump: true }).setView([10, 20], 2);
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+      attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+      maxZoom: 8,
+      minZoom: 1,
+    }).addTo(worldMap);
+    worldLayer = L.layerGroup().addTo(worldMap);
+    worldMapReady = true;
+    setTimeout(() => worldMap.invalidateSize(), 80);
+  }
+
+  function renderWorldMap(exports) {
+    if (!worldMapReady) initWorldMap();
+    if (!worldMap || !worldLayer) return;
+    worldLayer.clearLayers();
+    const maxTons = Math.max(...exports.map((e) => e.tons), 1);
+    const bounds = [];
+    exports.forEach((e, i) => {
+      const meta = DEST_META[e.key];
+      if (!meta || meta.lat == null) return;
+      const r = 4 + Math.sqrt(e.tons / maxTons) * 22;
+      const color = PIE_COLORS[i % PIE_COLORS.length];
+      const circle = L.circleMarker([meta.lat, meta.lon], {
+        radius: r,
+        color: "#0B1F3A",
+        weight: 1,
+        fillColor: color,
+        fillOpacity: 0.72,
+      });
+      circle.bindPopup(
+        '<div class="pop-name">' + escapeHtml(e.label) + "</div>" +
+        '<div class="pop-row"><strong>Toneladas</strong> ' + escapeHtml(fmtTonsShort(e.tons)) + "</div>" +
+        '<div class="pop-row"><strong>Embarques</strong> ' + escapeHtml(String(e.count)) + "</div>"
+      );
+      worldLayer.addLayer(circle);
+      bounds.push([meta.lat, meta.lon]);
+    });
+    if (bounds.length) {
+      try { worldMap.fitBounds(bounds, { padding: [28, 28], maxZoom: 4 }); }
+      catch { worldMap.setView([10, 20], 2); }
+    } else {
+      worldMap.setView([10, 20], 2);
+    }
+    setTimeout(() => worldMap.invalidateSize(), 50);
+  }
+
+  function drawDestPie(exports) {
+    const canvas = $("destChart");
+    if (!canvas) return;
+    const rect = canvas.parentElement?.getBoundingClientRect();
+    const size = Math.max(220, Math.min(360, Math.floor((rect?.width || 320))));
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    canvas.style.width = size + "px";
+    canvas.style.height = size + "px";
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, size, size);
+
+    const TOP = 8;
+    let slices = exports.slice(0, TOP).map((e, i) => ({
+      label: e.label, tons: e.tons, color: PIE_COLORS[i % PIE_COLORS.length],
+    }));
+    const restTons = exports.slice(TOP).reduce((s, e) => s + e.tons, 0);
+    if (restTons > 0) {
+      slices.push({ label: "Resto", tons: restTons, color: "#90A4AE" });
+    }
+    const total = slices.reduce((s, x) => s + x.tons, 0);
+    const cx = size / 2;
+    const cy = size / 2;
+    const radius = size * 0.38;
+    const inner = radius * 0.55;
+
+    if (total <= 0) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.fillStyle = "#e8eef5";
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(cx, cy, inner, 0, Math.PI * 2);
+      ctx.fillStyle = "#fff";
+      ctx.fill();
+      ctx.fillStyle = "#5b6b7c";
+      ctx.font = "600 13px system-ui,sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("Sin exportaciones", cx, cy);
+      return slices;
+    }
+
+    let angle = -Math.PI / 2;
+    for (const sl of slices) {
+      const sweep = (sl.tons / total) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, angle, angle + sweep);
+      ctx.closePath();
+      ctx.fillStyle = sl.color;
+      ctx.fill();
+      angle += sweep;
+    }
+    ctx.beginPath();
+    ctx.arc(cx, cy, inner, 0, Math.PI * 2);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.fillStyle = "#0B1F3A";
+    ctx.font = "800 15px system-ui,sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(fmtTons(total).replace(" mil tn", "k"), cx, cy - 8);
+    ctx.fillStyle = "#5b6b7c";
+    ctx.font = "600 11px system-ui,sans-serif";
+    ctx.fillText("export tn", cx, cy + 12);
+    return slices;
+  }
+
+  function renderDestinations(list) {
+    const agg = aggregateDestinations(list);
+    $("destCount").textContent = String(agg.exports.length);
+    $("destArTons").textContent = fmtTons(agg.arTons);
+    $("destArHint").textContent =
+      agg.arCount + " embarque(s) · destino Argentina = descarga (no export)";
+    $("destOtrosTons").textContent = fmtTons(agg.otrosTons);
+    const slices = drawDestPie(agg.exports);
+    $("destChartNote").textContent =
+      "Exportación: " + fmtTons(agg.exports.reduce((s, e) => s + e.tons, 0)) +
+      " · Descarga AR y Otros aparte";
+
+    const colorByLabel = new Map((slices || []).map((s) => [s.label, s.color]));
+    $("destList").innerHTML = agg.exports.length
+      ? agg.exports
+          .map((e, i) => {
+            const col = colorByLabel.get(e.label) || PIE_COLORS[i % PIE_COLORS.length];
+            return (
+              '<div class="dest-row">' +
+              '<span class="dest-swatch" style="background:' + col + '"></span>' +
+              '<span class="dest-name">' + escapeHtml(e.label) + "</span>" +
+              '<span class="dest-tons">' + escapeHtml(fmtTonsShort(e.tons)) + "</span>" +
+              "</div>"
+            );
+          })
+          .join("")
+      : '<div class="empty">Sin destinos de exportación con estos filtros.</div>';
+
+    renderWorldMap(agg.exports);
   }
 
   function renderQueue(list) {
     const waiting = list.filter((v) => v.status !== "arribando");
     $("queueCount").textContent = String(waiting.length);
-
     const byZone = new Map();
     for (const v of waiting) {
       if (!byZone.has(v.zone)) byZone.set(v.zone, []);
       byZone.get(v.zone).push(v);
     }
-
     const zones = sortZones([...byZone.keys()]);
-
     if (!zones.length) {
       $("queueBody").innerHTML = '<div class="empty">Sin buques en cola con los filtros actuales.</div>';
       return;
     }
-
     $("queueBody").innerHTML = zones
       .map((zone) => {
         const rows = byZone.get(zone);
         const tons = rows.reduce((s, v) => s + (v.tons || 0), 0);
         const cards = rows
           .map(
-            (v) => `
-          <div class="vessel-card">
-            <div>
-              <div class="v-name">${escapeHtml(v.vessel)}</div>
-              <div class="v-term">${escapeHtml(v.terminal || v.port)}</div>
-            </div>
-            <div class="v-meta">${chip(v.commodity, v.commodity_label)}<div style="margin-top:.35rem">${statusBadge(v.status)}</div></div>
-            <div class="v-meta"><div class="tons">${fmtTonsShort(v.tons)}</div><small>${escapeHtml(v.ops || "")}</small></div>
-            <div class="v-meta">${escapeHtml(timing(v))}<div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">${escapeHtml(v.destination || "")}</div></div>
-          </div>`
+            (v) =>
+              '<div class="vessel-card">' +
+              "<div><div class=\"v-name\">" + escapeHtml(v.vessel) + '</div><div class="v-term">' + escapeHtml(v.terminal || v.port) + "</div></div>" +
+              '<div class="v-meta">' + chip(v.commodity, v.commodity_label) + '<div style="margin-top:.35rem">' + statusBadge(v.status) + "</div></div>" +
+              '<div class="v-meta"><div class="tons">' + fmtTonsShort(v.tons) + "</div><small>" + escapeHtml(v.ops || "") + "</small></div>" +
+              '<div class="v-meta">' + escapeHtml(timing(v)) + '<div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">' + escapeHtml(v.destination || "") + "</div></div>" +
+              "</div>"
           )
           .join("");
-        return `<div class="port-block"><div class="port-title"><span>${escapeHtml(zone)}</span><span class="meta">${rows.length} buques · ${fmtTons(tons)}</span></div>${cards}</div>`;
+        return (
+          '<div class="port-block"><div class="port-title"><span>' +
+          escapeHtml(zone) +
+          '</span><span class="meta">' +
+          rows.length +
+          " buques · " +
+          fmtTons(tons) +
+          "</span></div>" +
+          cards +
+          "</div>"
+        );
       })
       .join("");
   }
@@ -353,7 +456,6 @@
       $("arrivalsBody").innerHTML = '<div class="empty">Sin arribos anunciados con estos filtros.</div>';
       return;
     }
-
     const byZone = new Map();
     for (const v of arrivals) {
       const z = v.zone || "Otro";
@@ -361,35 +463,31 @@
       byZone.get(z).push(v);
     }
     const zones = sortZones([...byZone.keys()]);
-
     $("arrivalsBody").innerHTML = zones
       .map((zone) => {
         const rows = byZone.get(zone);
         const collapsed = arrivalsCollapsed.has(zone);
         const cards = rows
           .map(
-            (v) => `
-          <div class="vessel-card arrival-card">
-            <div>
-              <div class="v-name">${escapeHtml(v.vessel)}</div>
-              <div class="v-term">${escapeHtml(v.terminal || "")}</div>
-            </div>
-            <div class="v-meta">${chip(v.commodity, v.commodity_label)}<div class="tons" style="margin-top:.35rem">${fmtTonsShort(v.tons)}</div></div>
-            <div class="v-meta"><strong>${escapeHtml(v.eta || "ETA")}</strong><div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">${escapeHtml(v.charterer || "")}</div></div>
-          </div>`
+            (v) =>
+              '<div class="vessel-card arrival-card">' +
+              "<div><div class=\"v-name\">" + escapeHtml(v.vessel) + '</div><div class="v-term">' + escapeHtml(v.terminal || "") + "</div></div>" +
+              '<div class="v-meta">' + chip(v.commodity, v.commodity_label) + '<div class="tons" style="margin-top:.35rem">' + fmtTonsShort(v.tons) + "</div></div>" +
+              '<div class="v-meta"><strong>' + escapeHtml(v.eta || "ETA") + '</strong><div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">' + escapeHtml(v.charterer || "") + "</div></div>" +
+              "</div>"
           )
           .join("");
-        return `
-          <details class="port-fold" data-zone="${escapeHtml(zone)}" ${collapsed ? "" : "open"}>
-            <summary class="port-title">
-              <span class="port-title-main"><span class="fold-chevron" aria-hidden="true"></span>${escapeHtml(zone)}</span>
-              <span class="meta">${rows.length} · ETA ≥ hoy</span>
-            </summary>
-            <div class="port-fold-body">${cards}</div>
-          </details>`;
+        return (
+          '<details class="port-fold" data-zone="' + escapeHtml(zone) + '" ' + (collapsed ? "" : "open") + ">" +
+          '<summary class="port-title"><span class="port-title-main"><span class="fold-chevron" aria-hidden="true"></span>' +
+          escapeHtml(zone) +
+          '</span><span class="meta">' +
+          rows.length +
+          " · ETA ≥ hoy</span></summary>" +
+          '<div class="port-fold-body">' + cards + "</div></details>"
+        );
       })
       .join("");
-
     $("arrivalsBody").querySelectorAll("details.port-fold").forEach((el) => {
       el.addEventListener("toggle", () => {
         const z = el.getAttribute("data-zone");
@@ -406,9 +504,7 @@
     const tons = list.reduce((s, v) => s + (v.tons || 0), 0);
     $("kpiCola").textContent = fmtNum(uniqueCola.size);
     $("kpiTons").textContent = tons >= 1000 ? fmtNum(Math.round(tons / 1000)) + "k" : fmtNum(tons);
-    if (trucksPayload) {
-      $("kpiTrucks").textContent = fmtNum(trucksPayload.total_camiones);
-    }
+    if (trucksPayload) $("kpiTrucks").textContent = fmtNum(trucksPayload.total_camiones);
     const updated = vesselsPayload?.updated_at || trucksPayload?.updated_at;
     $("kpiUpdated").textContent = toAR(updated);
     const live = vesselsPayload?.live && vesselsPayload?.parse_ok;
@@ -432,21 +528,26 @@
     const max = Math.max(...t.by_product.map((p) => p.camiones), 1);
     $("truckBars").innerHTML = t.by_product
       .map(
-        (p) => `
-      <div class="bar-row">
-        <div class="bar-label">${escapeHtml(p.label)}</div>
-        <div class="bar-track"><div class="bar-fill ${p.product}" style="width:${(100 * p.camiones) / max}%"></div></div>
-        <div class="bar-val">${fmtNum(p.camiones)}</div>
-      </div>`
+        (p) =>
+          '<div class="bar-row"><div class="bar-label">' +
+          escapeHtml(p.label) +
+          '</div><div class="bar-track"><div class="bar-fill ' +
+          p.product +
+          '" style="width:' +
+          (100 * p.camiones) / max +
+          '%"></div></div><div class="bar-val">' +
+          fmtNum(p.camiones) +
+          "</div></div>"
       )
       .join("");
     $("truckZones").innerHTML = (t.by_zone || [])
       .map(
-        (z) => `
-      <div class="zone-card">
-        <strong>${escapeHtml(z.zone)}</strong>
-        <span>${fmtNum(z.camiones)} camiones</span>
-      </div>`
+        (z) =>
+          '<div class="zone-card"><strong>' +
+          escapeHtml(z.zone) +
+          "</strong><span>" +
+          fmtNum(z.camiones) +
+          " camiones</span></div>"
       )
       .join("");
     $("legend").innerHTML = ["soja|Soja", "maiz|Maíz", "trigo|Trigo", "girasol|Girasol", "sorgo|Sorgo"]
@@ -458,7 +559,7 @@
     $("truckNote").textContent =
       t.source === "sample"
         ? "Camiones: muestra realista local (MAGyP/BCR sin API estructurada)."
-        : `Fuente camiones: ${t.source}`;
+        : "Fuente camiones: " + t.source;
   }
 
   function renderAll() {
@@ -469,24 +570,17 @@
     renderQueue(filtered);
     renderArrivals(filtered);
     renderTrucks();
-    renderMap(filtered);
+    renderDestinations(filtered);
   }
 
   async function load() {
     $("queueBody").innerHTML = '<div class="loading">Cargando lineup…</div>';
     try {
-      const [vRes, tRes, termRes] = await Promise.all([
-        fetch("/api/vessels"),
-        fetch("/api/trucks"),
-        fetch("/api/terminals"),
-      ]);
+      const [vRes, tRes] = await Promise.all([fetch("/api/vessels"), fetch("/api/trucks")]);
       vesselsPayload = await vRes.json();
       trucksPayload = await tRes.json();
-      terminalsPayload = termRes.ok ? await termRes.json() : { terminals: [] };
-      initMap();
+      initWorldMap();
       renderAll();
-
-      // If server kicked a background refresh, re-poll once shortly after.
       if (vesselsPayload?.cache?.refresh_in_progress || vesselsPayload?.cache?.stale) {
         setTimeout(async () => {
           try {
@@ -499,14 +593,12 @@
               vesselsPayload = next;
               renderKpis(applyFilters(upRiverVessels()));
             }
-          } catch {
-            /* ignore */
-          }
+          } catch { /* ignore */ }
         }, 8000);
       }
     } catch (err) {
       console.error(err);
-      $("queueBody").innerHTML = `<div class="empty">Error al cargar datos: ${escapeHtml(err.message)}</div>`;
+      $("queueBody").innerHTML = '<div class="empty">Error al cargar datos: ' + escapeHtml(err.message) + "</div>";
       $("liveLabel").textContent = "Error de carga";
     }
   }
@@ -523,6 +615,12 @@
     renderAll();
   });
   $("btnReload").addEventListener("click", load);
+  window.addEventListener("resize", () => {
+    if (vesselsPayload) {
+      const filtered = applyFilters(upRiverVessels());
+      renderDestinations(filtered);
+    }
+  });
 
   load();
 })();

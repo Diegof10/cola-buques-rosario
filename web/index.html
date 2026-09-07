@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cola de Buques · Up-River Rosario</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
@@ -64,15 +62,35 @@
       <button class="btn" type="button" id="btnReload">Recargar</button>
     </section>
 
-    <section class="panel full map-panel" id="mapPanel">
+    <section class="panel full dest-panel" id="destPanel">
       <div class="panel-h">
-        <h2>Mapa Up-River · posición por terminal</h2>
-        <span class="count" id="mapCount">0</span>
+        <h2>Volumen por destino · exportación</h2>
+        <span class="count" id="destCount">0</span>
       </div>
-      <div class="panel-b map-panel-b">
-        <div id="map" role="img" aria-label="Mapa de buques por terminal"></div>
-        <div class="map-legend" id="mapLegend"></div>
-        <p class="map-note">Posición aproximada por terminal (NABSA). AIS en tiempo real: próximamente.</p>
+      <div class="panel-b dest-panel-b">
+        <div class="dest-layout">
+          <div class="dest-chart-col">
+            <div class="dest-chart-wrap"><canvas id="destChart" width="360" height="360" aria-label="Torta de toneladas por destino"></canvas></div>
+            <p class="dest-chart-note" id="destChartNote">Toneladas a cargar / cargadas · destinos de exportación</p>
+          </div>
+          <div class="dest-side">
+            <div class="dest-stat descarga">
+              <div class="dest-stat-label">Descarga AR</div>
+              <div class="dest-stat-value" id="destArTons">—</div>
+              <div class="dest-stat-hint" id="destArHint">Importación / descarga en Argentina (no export)</div>
+            </div>
+            <div class="dest-stat otros">
+              <div class="dest-stat-label">Otros / sin destino</div>
+              <div class="dest-stat-value" id="destOtrosTons">—</div>
+              <div class="dest-stat-hint">NOT AVAILABLE, vacío o desconocido</div>
+            </div>
+            <div class="dest-list" id="destList"></div>
+          </div>
+        </div>
+        <div class="world-map-wrap">
+          <div id="worldMap" role="img" aria-label="Mapa mundial de destinos por volumen"></div>
+          <p class="map-note">Círculos = toneladas de exportación por país (centroide). Descarga AR y Otros no se dibujan en el mapa.</p>
+        </div>
       </div>
     </section>
 
@@ -113,7 +131,6 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>

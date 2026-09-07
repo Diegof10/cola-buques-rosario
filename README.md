@@ -4,8 +4,8 @@ Prototipo local interactivo (español) del escritorio de logística de granos Up
 
 Muestra:
 - **Cola de buques** agrupada por puerto/zona (San Lorenzo, Timbúes, Rosario, Punta Alvear, Gral. Lagos, Arroyo Seco, etc.)
-- **Próximos arribos** (ETA anunciados)
-- **Mapa georreferenciado** (Leaflet): buques ubicados en coordenadas aproximadas del complejo portuario según lineup NABSA (no AIS)
+- **Próximos arribos** (ETA anunciados, filtra ETA pasadas, agrupados por puerto)
+- **Volumen por destino** (torta + mapa mundial): toneladas agregadas por país de destino NABSA
 - **Camiones** del día por producto y zona (muestra realista si no hay API MAGyP/BCR)
 
 ## Requisitos
@@ -34,7 +34,7 @@ Abrir **http://127.0.0.1:5173**
 
 En el sitio desplegado, `GET /api/vessels` refresca NABSA automáticamente si `vessels.json` tiene más de ~45 min (configurable con `VESSELS_MAX_AGE_SEC`) o falta. El refresh corre en background; la API responde de inmediato con el último cache bueno. En Render (FS efímero) escribe bajo `/tmp/cola-buques-data` (o `DATA_DIR`). También: `POST /api/vessels/refresh`, y `GET /api/health` muestra edad del cache.
 
-La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Cordoba) sea **anterior a hoy**, y los excluye del mapa. Los arribos se agrupan por puerto/zona (secciones colapsables).
+La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Cordoba) sea **anterior a hoy**. Los arribos se agrupan por puerto/zona (secciones colapsables).
 
 `scripts/refresh_data.py` intenta:
 
@@ -44,27 +44,27 @@ La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Co
 4. Guardar `data/vessels.json` (+ copia `data/sample-vessels.json`)
 5. Camiones: si MAGyP/BCR no ofrecen JSON usable, mantiene `data/trucks.json` (seed realista) y `data/sample-trucks.json`
 
+## Volumen por destino
 
-## Mapa (terminal ≈ posición)
-
-- Coordenadas en `data/terminals.json` (WGS84 aproximadas por zona Up-River).
-- El cliente mapea `zone` / `port` / `terminal` del lineup a esas coords (nombres fuzzy) y aplica un jitter leve para no solapar marcadores.
-- Colores por commodity; popups con estado, tn, ETA/ETB/ETF; clusters Leaflet.
-- **AIS en tiempo real (futuro):** hace falta API key de MarineTraffic, AISStream u otro proveedor AIS. Placeholder de capa: consumir posiciones MMSI/IMO y superponer sobre el mapa actual sin reemplazar el fallback NABSA-por-terminal.
+- Agrega toneladas del lineup Up-River por campo `destination` (NABSA).
+- **Argentina** (y variantes AR/ARG) → tarjeta **Descarga AR** (importación / descarga). No entra en la torta ni en los círculos de exportación.
+- Destino vacío / `NOT AVAILABLE` / desconocido → bucket **Otros** (aparte de la torta de exportación).
+- Torta (canvas) + lista ordenada por toneladas + mapa Leaflet mundial con círculos en centroides de país (solo exportación).
+- Respeta filtros de zona / commodity / estado / búsqueda.
 
 ## API local
 
 - `GET /api/health`
 - `GET /api/vessels`
 - `GET /api/trucks`
-- `GET /api/terminals`
+- `GET /api/terminals` (coords legacy; la UI ya no usa el mapa de terminales Up-River)
 - UI estática en `/` y `/static/*`
 
 ## Stack
 
-HTML + CSS + JS (escritorio agro: navy `#0B1F3A`, verde bosque) + Leaflet (CDN) + FastAPI (sirve JSON sin CORS).
+HTML + CSS + JS (escritorio agro: navy `#0B1F3A`, verde bosque) + Leaflet (mapa mundial CDN) + FastAPI (sirve JSON sin CORS).
 
-Filtros: puerto/zona, commodity, estado, búsqueda por buque (sincronizados con el mapa).
+Filtros: puerto/zona, commodity, estado, búsqueda por buque (sincronizados con torta y mapa de destinos).
 
 ## Notas
 
