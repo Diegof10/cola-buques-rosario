@@ -32,6 +32,10 @@ Abrir **http://127.0.0.1:5173**
 
 ## Datos en vivo
 
+En el sitio desplegado, `GET /api/vessels` refresca NABSA automáticamente si `vessels.json` tiene más de ~45 min (configurable con `VESSELS_MAX_AGE_SEC`) o falta. El refresh corre en background; la API responde de inmediato con el último cache bueno. En Render (FS efímero) escribe bajo `/tmp/cola-buques-data` (o `DATA_DIR`). También: `POST /api/vessels/refresh`, y `GET /api/health` muestra edad del cache.
+
+La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Cordoba) sea **anterior a hoy**, y los excluye del mapa. Los arribos se agrupan por puerto/zona (secciones colapsables).
+
 `scripts/refresh_data.py` intenta:
 
 1. Descargar `https://www.nabsa.com.ar/assets/vessel_update.pdf`

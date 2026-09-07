@@ -265,3 +265,74 @@ body { min-height: 100vh; }
 @media (max-width: 560px) {
   #map { height: 320px; }
 }
+
+
+/* —— Próximos arribos agrupados (collapsible) —— */
+.port-fold {
+  margin-bottom: .65rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fafbfd;
+  overflow: hidden;
+}
+.port-fold:last-child { margin-bottom: 0; }
+.port-fold > summary.port-title {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  padding: .55rem .75rem;
+  border-bottom: none;
+  gap: .5rem;
+}
+.port-fold > summary.port-title::-webkit-details-marker { display: none; }
+.port-fold[open] > summary.port-title {
+  border-bottom: 2px solid #e6efe9;
+  background: linear-gradient(180deg, #fbfcfe, #f3f7f4);
+}
+.port-title-main {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-width: 0;
+}
+.fold-chevron {
+  display: inline-block;
+  width: 0; height: 0;
+  border-left: 5px solid var(--forest);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform .15s ease;
+  flex-shrink: 0;
+}
+.port-fold[open] .fold-chevron { transform: rotate(90deg); }
+.port-fold-body { padding: .55rem .65rem .65rem; }
+.arrivals .arrival-card {
+  grid-template-columns: 1.1fr .85fr .75fr;
+  padding: .5rem .6rem;
+  margin-bottom: .35rem;
+}
+
+@media (max-width: 980px) {
+  .arrivals .arrival-card { grid-template-columns: 1fr 1fr; }
+  .panel-b { padding: .55rem .7rem .75rem; }
+  .port-fold-body { padding: .4rem .5rem .55rem; }
+}
+
+@media (max-width: 560px) {
+  .wrap { padding: .75rem .7rem 1.5rem; }
+  .brand-title { font-size: 1.1rem; }
+  .brand-sub { font-size: .78rem; }
+  .kpi .value { font-size: 1.45rem; }
+  .kpi { padding: .75rem .8rem; }
+  .filters { padding: .65rem .7rem; gap: .5rem; }
+  .arrivals .arrival-card,
+  .vessel-card { grid-template-columns: 1fr; padding: .5rem .55rem; gap: .3rem; }
+  .v-name { font-size: .88rem; }
+  .port-title { font-size: .88rem; flex-wrap: wrap; }
+  .port-title .meta { font-size: .72rem; }
+  .panel-h { padding: .7rem .75rem; }
+  .panel-h h2 { font-size: .92rem; }
+  #arrivalsBody { max-height: min(70vh, 520px); overflow: auto; -webkit-overflow-scrolling: touch; }
+  #queueBody { max-height: min(70vh, 560px); overflow: auto; -webkit-overflow-scrolling: touch; }
+}

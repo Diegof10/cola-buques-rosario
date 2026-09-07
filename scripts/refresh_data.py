@@ -295,11 +295,69 @@ def try_fetch_trucks() -> dict[str, Any] | None:
     return None
 
 
-def main() -> int:
-    DATA.mkdir(parents=True, exist_ok=True)
-    pdf_path = DATA / "vessel_update.pdf"
-    live = download(VESSEL_URL, pdf_path)
-    sailed_ok = download(SAILED_URL, DATA / "vessels_sailed_update.pdf")
+def build_vessels_payload(
+    vessels: list[dict[str, Any]],
+    meta: dict[str, Any],
+    *,
+    live: bool,
+    sailed_ok: bool,
+) -> dict[str, Any]:
+    up = [v for v in vessels if v.get("up_river")]
+    return {
+        "updated_at": ar_tz_now().isoformat(),
+        "live": live,
+        "parse_ok": True,
+        "source": "NABSA vessel_update.pdf",
+        "source_url": VESSEL_URL,
+        "meta": meta,
+        "sailed_pdf": sailed_ok,
+        "counts": {
+            "all": len(vessels),
+            "up_river": len(up),
+            "arribando": sum(1 for v in up if v["status"] == "arribando"),
+            "en_cola": sum(1 for v in up if v["status"] in ("en_cola", "en_rada", "cargando")),
+            "cargando": sum(1 for v in up if v["status"] == "cargando"),
+            "en_rada": sum(1 for v in up if v["status"] == "en_rada"),
+        },
+        "vessels": vessels,
+    }
+
+
+def refresh_vessels(
+    data_dir: Path | None = None,
+    *,
+    write_sample: bool = True,
+    download_sailed: bool = True,
+    timeout: int = 45,
+) -> dict[str, Any]:
+    """Download NABSA PDF, parse lineup, write vessels.json under data_dir.
+
+    Returns the vessels payload. Raises on hard failure (no parse and no sample).
+    """
+    data_dir = Path(data_dir) if data_dir else DATA
+    data_dir.mkdir(parents=True, exist_ok=True)
+    pdf_path = data_dir / "vessel_update.pdf"
+
+    # Bounded download timeout for server-side use
+    def _download(url: str, dest: Path) -> bool:
+        try:
+            r = requests.get(
+                url,
+                timeout=timeout,
+                headers={"User-Agent": "cola-buques-rosario/1.0"},
+            )
+            r.raise_for_status()
+            dest.write_bytes(r.content)
+            print(f"OK download {url} -> {dest.name} ({len(r.content)} bytes)")
+            return True
+        except Exception as ex:
+            print(f"FAIL download {url}: {ex}", file=sys.stderr)
+            return False
+
+    live = _download(VESSEL_URL, pdf_path)
+    sailed_ok = False
+    if download_sailed:
+        sailed_ok = _download(SAILED_URL, data_dir / "vessels_sailed_update.pdf")
 
     vessels: list[dict[str, Any]] = []
     meta: dict[str, Any] = {}
@@ -313,63 +371,72 @@ def main() -> int:
             print(f"Parse failed: {ex}", file=sys.stderr)
 
     if not parse_ok:
-        sample = DATA / "sample-vessels.json"
-        if sample.exists():
-            print("Using sample-vessels.json fallback")
-            payload = json.loads(sample.read_text(encoding="utf-8"))
-            DATA.joinpath("vessels.json").write_text(
+        sample = data_dir / "sample-vessels.json"
+        bundled = DATA / "sample-vessels.json"
+        for candidate in (sample, bundled, data_dir / "vessels.json", DATA / "vessels.json"):
+            if candidate.exists():
+                print(f"Using fallback {candidate}")
+                payload = json.loads(candidate.read_text(encoding="utf-8"))
+                payload.setdefault("live", False)
+                payload["parse_ok"] = payload.get("parse_ok", False)
+                (data_dir / "vessels.json").write_text(
+                    json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+                )
+                return payload
+        raise RuntimeError("No vessels data available")
+
+    payload = build_vessels_payload(vessels, meta, live=live, sailed_ok=sailed_ok)
+    (data_dir / "vessels.json").write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    if write_sample:
+        try:
+            (data_dir / "sample-vessels.json").write_text(
                 json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
             )
-        else:
-            print("No vessels data available", file=sys.stderr)
-            return 1
-    else:
-        up = [v for v in vessels if v.get("up_river")]
-        payload = {
-            "updated_at": ar_tz_now().isoformat(),
-            "live": live,
-            "parse_ok": True,
-            "source": "NABSA vessel_update.pdf",
-            "source_url": VESSEL_URL,
-            "meta": meta,
-            "sailed_pdf": sailed_ok,
-            "counts": {
-                "all": len(vessels),
-                "up_river": len(up),
-                "arribando": sum(1 for v in up if v["status"] == "arribando"),
-                "en_cola": sum(1 for v in up if v["status"] in ("en_cola", "en_rada", "cargando")),
-                "cargando": sum(1 for v in up if v["status"] == "cargando"),
-                "en_rada": sum(1 for v in up if v["status"] == "en_rada"),
-            },
-            "vessels": vessels,
-        }
-        DATA.joinpath("vessels.json").write_text(
-            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
-        # also refresh sample snapshot for offline demo
-        DATA.joinpath("sample-vessels.json").write_text(
-            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
-        print(f"Wrote data/vessels.json (up_river={len(up)})")
+        except OSError:
+            pass
+    up_n = payload["counts"]["up_river"]
+    print(f"Wrote {data_dir}/vessels.json (up_river={up_n})")
+    return payload
 
-    trucks_path = DATA / "trucks.json"
+
+def ensure_trucks(data_dir: Path | None = None) -> dict[str, Any]:
+    data_dir = Path(data_dir) if data_dir else DATA
+    data_dir.mkdir(parents=True, exist_ok=True)
+    trucks_path = data_dir / "trucks.json"
     live_trucks = try_fetch_trucks()
     if live_trucks:
         trucks_path.write_text(json.dumps(live_trucks, ensure_ascii=False, indent=2), encoding="utf-8")
-    else:
-        if not trucks_path.exists():
-            seed = seed_trucks()
-            trucks_path.write_text(json.dumps(seed, ensure_ascii=False, indent=2), encoding="utf-8")
-            DATA.joinpath("sample-trucks.json").write_text(
+        return live_trucks
+    if not trucks_path.exists():
+        # Prefer bundled sample if present
+        for candidate in (DATA / "trucks.json", DATA / "sample-trucks.json"):
+            if candidate.exists() and candidate != trucks_path:
+                text = candidate.read_text(encoding="utf-8")
+                trucks_path.write_text(text, encoding="utf-8")
+                return json.loads(text)
+        seed = seed_trucks()
+        trucks_path.write_text(json.dumps(seed, ensure_ascii=False, indent=2), encoding="utf-8")
+        try:
+            (data_dir / "sample-trucks.json").write_text(
                 json.dumps(seed, ensure_ascii=False, indent=2), encoding="utf-8"
             )
-            print("Wrote seed data/trucks.json")
-        else:
-            # keep existing; ensure sample copy
-            if not (DATA / "sample-trucks.json").exists():
-                (DATA / "sample-trucks.json").write_text(trucks_path.read_text(encoding="utf-8"), encoding="utf-8")
-            print("Kept existing data/trucks.json (seed)")
+        except OSError:
+            pass
+        print("Wrote seed trucks.json")
+        return seed
+    return json.loads(trucks_path.read_text(encoding="utf-8"))
 
+
+def main() -> int:
+    DATA.mkdir(parents=True, exist_ok=True)
+    try:
+        refresh_vessels(DATA, write_sample=True, download_sailed=True)
+    except Exception as ex:
+        print(f"Vessels refresh failed: {ex}", file=sys.stderr)
+        return 1
+    ensure_trucks(DATA)
     print("Done.")
     return 0
 
