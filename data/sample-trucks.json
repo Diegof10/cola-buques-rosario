@@ -5,7 +5,7 @@
   "source_note": "Muestra realista (seed). Ejecutar refresh intenta MAGyP/BCR; si falla se conserva este JSON.",
   "unit": "camiones",
   "total_camiones": 3725,
-  "total_tn": 111750,
+  "total_tn": 111200,
   "by_product": [
     {
       "product": "soja",
@@ -35,7 +35,7 @@
       "product": "girasol",
       "label": "Girasol",
       "camiones": 110,
-      "tn": 3300
+      "tn": 2750
     }
   ],
   "by_zone": [

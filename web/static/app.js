@@ -78,6 +78,7 @@
 
   let vesselsPayload = null;
   let trucksPayload = null;
+  let coveragePayload = null;
   let worldMap = null;
   let worldLayer = null;
   let worldMapReady = false;
@@ -588,6 +589,139 @@
         else arrivalsCollapsed.add(z);
       });
     });
+  }
+
+
+  // Truck coverage KPI — factors Diego: 30 tn/cam (25 girasol). Semáforo by days_to_cover.
+  // Calibration: MAGyP 2025 Rosario 964.503 cam/año ≈ 2.640/día; early Aug 2026 ~2.4k–4.5k/día;
+  // picos AgroEntregas/BCR 5.500–7.000; stock Up-River ~3,5–5 Mt. At ~4,8 Mt: ~60d promedio (rojo),
+  // ~40d flujo bueno (amarillo), ≤30d picos (verde).
+  const GRAIN_COMMODITIES = new Set(["soja", "maiz", "trigo", "girasol", "sorgo", "cebada"]);
+  const TN_TRUCK = 30;
+  const TN_TRUCK_GIRASOL = 25;
+  const DAYS_GREEN_MAX = 30;
+  const DAYS_YELLOW_MAX = 55;
+
+  function truckFactor(product) {
+    return String(product || "").toLowerCase() === "girasol" ? TN_TRUCK_GIRASOL : TN_TRUCK;
+  }
+
+  function estimateTruckTn(trucks) {
+    let truck_tn = 0;
+    let total_camiones = 0;
+    const by_product = [];
+    for (const row of trucks?.by_product || []) {
+      const camiones = Number(row.camiones) || 0;
+      const factor = truckFactor(row.product);
+      const tn = camiones * factor;
+      by_product.push({ product: row.product, camiones, tn_per_truck: factor, tn });
+      truck_tn += tn;
+      total_camiones += camiones;
+    }
+    if (!by_product.length && trucks?.total_camiones) {
+      total_camiones = Number(trucks.total_camiones) || 0;
+      truck_tn = total_camiones * TN_TRUCK;
+    }
+    return { truck_tn, total_camiones, by_product, source: trucks?.source };
+  }
+
+  function estimateDemandTn(list) {
+    let demand_tn = 0;
+    let vessel_count = 0;
+    let excluded_ar_tn = 0;
+    for (const v of list) {
+      if (!GRAIN_COMMODITIES.has(v.commodity)) continue;
+      const tons = Number(v.tons) || 0;
+      const raw = rawDestination(v);
+      const eff = effectiveDestination(v);
+      if (isArgentinaDest(raw) || isArgentinaDest(eff)) {
+        excluded_ar_tn += tons;
+        continue;
+      }
+      demand_tn += tons;
+      vessel_count += 1;
+    }
+    return { demand_tn, vessel_count, excluded_ar_tn };
+  }
+
+  function classifySemaforo(days) {
+    if (days == null || Number.isNaN(days)) {
+      return { color: "gray", code: "sin_datos", label: "Sin datos", hint: "Sin flujo o sin demanda" };
+    }
+    if (days <= DAYS_GREEN_MAX) {
+      return { color: "green", code: "verde", label: "Alto", hint: "Flujo alto · ≤ 30 días de cobertura" };
+    }
+    if (days <= DAYS_YELLOW_MAX) {
+      return { color: "yellow", code: "amarillo", label: "Normal", hint: "Flujo normal · 30–55 días de cobertura" };
+    }
+    return { color: "red", code: "rojo", label: "Bajo", hint: "Flujo flojo · > 55 días de cobertura" };
+  }
+
+  function computeCoverageClient() {
+    const trucksEst = estimateTruckTn(trucksPayload);
+    // Full Up-River grain export demand (not UI filters) — matches /api/coverage
+    const demandEst = estimateDemandTn(upRiverVessels());
+    const truck_tn = trucksEst.truck_tn;
+    const demand_tn = demandEst.demand_tn;
+    const coverage_pct = demand_tn > 0 ? (100 * truck_tn) / demand_tn : null;
+    const days_to_cover = truck_tn > 0 ? demand_tn / truck_tn : null;
+    return {
+      truck_tn,
+      demand_tn,
+      coverage_pct,
+      days_to_cover,
+      semaforo: classifySemaforo(days_to_cover),
+      trucks: trucksEst,
+      demand: demandEst,
+    };
+  }
+
+  function fmtPct(n) {
+    if (n == null || Number.isNaN(n)) return "—";
+    return new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1, minimumFractionDigits: 1 }).format(n) + "%";
+  }
+  function fmtDays(n) {
+    if (n == null || Number.isNaN(n)) return "—";
+    return new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1, minimumFractionDigits: 1 }).format(n) + " d";
+  }
+  function fmtMt(n) {
+    if (n == null || Number.isNaN(n)) return "—";
+    if (n >= 1e6) return new Intl.NumberFormat("es-AR", { maximumFractionDigits: 2 }).format(n / 1e6) + " Mt";
+    if (n >= 1000) return fmtNum(n / 1000) + " mil tn";
+    return fmtNum(n) + " tn";
+  }
+
+  function renderCoverage() {
+    const c = computeCoverageClient();
+    coveragePayload = c;
+    $("kpiTruckTn").textContent = c.truck_tn >= 1000 ? fmtNum(Math.round(c.truck_tn / 1000)) + "k" : fmtNum(c.truck_tn);
+    $("kpiTruckTnHint").textContent =
+      fmtNum(c.trucks.total_camiones) + " cam · 30 tn (25 girasol)";
+    $("kpiCoveragePct").textContent = fmtPct(c.coverage_pct);
+    $("kpiCoveragePctHint").textContent =
+      "Demanda export " + fmtMt(c.demand_tn) + " · " + fmtNum(c.demand.vessel_count) + " buques";
+    $("kpiDaysCover").textContent = fmtDays(c.days_to_cover);
+    const sem = c.semaforo;
+    const dot = $("semaforoDot");
+    const lab = $("semaforoLabel");
+    const card = $("kpiSemaforoCard");
+    dot.className = "semaforo-dot " + (sem.color || "gray");
+    lab.textContent = sem.label || "—";
+    lab.className = "semaforo-label " + (sem.label || "");
+    card.className = "kpi coverage kpi-semaforo " + (sem.code || "");
+    $("kpiDaysHint").textContent = sem.hint || "Demanda ÷ tn camiones";
+
+    const sampleCaveat =
+      trucksPayload?.source === "sample"
+        ? " Camiones: datos muestra (no MAGyP en vivo)."
+        : "";
+    $("coverageFootnote").textContent =
+      "Cobertura: tn camiones = Σ by_product.camiones × 30 tn (girasol × 25). " +
+      "Demanda = tn anunciadas Up-River (soja, maíz, trigo, girasol, sorgo, cebada) excl. Argentina / Descarga AR. " +
+      "Semáforo (días cobertura): Verde ≤30 Alto · Amarillo 30–55 Normal · Rojo >55 Bajo (flujo vs stock). " +
+      "Calibración: MAGyP 2025 Rosario ≈2.640 cam/día; ago-2026 ~2,4–4,5k; picos 5,5–7k; stock típico 3,5–5 Mt " +
+      "(a ~4,8 Mt: ~60d promedio / ~40d bueno / ≤30d pico)." +
+      sampleCaveat;
   }
 
   function renderKpis(list) {

@@ -7,6 +7,7 @@ Muestra:
 - **Próximos arribos** (ETA anunciados, filtra ETA pasadas, agrupados por puerto)
 - **Volumen por destino** (torta + mapa mundial): toneladas agregadas por país de destino NABSA
 - **Camiones** del día por producto y zona (muestra realista si no hay API MAGyP/BCR)
+- **Cobertura camiones vs demanda**: tn estimadas (30 tn/camión; 25 girasol) vs stock export Up-River; % cobertura, días a cubrir y semáforo Verde/Amarillo/Rojo
 
 ## Requisitos
 
@@ -54,11 +55,27 @@ La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Co
 - Lista ordenada por toneladas + mapa Leaflet mundial (solo exportación).
 - Respeta filtros de zona / commodity / estado / búsqueda.
 
+
+## Cobertura camiones / semáforo
+
+Estima el flujo diario de camiones frente al stock de exportación Up-River:
+
+- **Tn camiones**: `Σ by_product.camiones × factor` — 30 tn/camión (soja, maíz, trigo, sorgo, cebada, etc.) y **25 tn/camión solo girasol** (se ignoran campos `tn` stale si usaban 30 para girasol).
+- **Demanda**: suma de toneladas anunciadas de buques Up-River con commodity en {soja, maíz, trigo, girasol, sorgo, cebada}, **excluyendo** destinos Argentina / Descarga AR.
+- **Métricas**: `coverage_pct = 100 × truck_tn / demand_tn`, `days_to_cover = demand_tn / truck_tn`.
+- **Semáforo** (sobre `days_to_cover`; etiqueta = flujo de camiones vs stock):
+  - Verde · **Alto**: ≤ 30 días
+  - Amarillo · **Normal**: 30–55 días
+  - Rojo · **Bajo**: > 55 días
+
+Calibración histórica (pie de UI + comentario en código): MAGyP 2025 Rosario y aledaños 964.503 cam/año ≈ 2.640/día; MAGyP ago-2026 ~2,4–4,5k/día; picos AgroEntregas/BCR 5.500–7.000; stock Up-River típico ~3,5–5 Mt. A ~4,8 Mt: ~60d promedio (rojo), ~40d flujo bueno (amarillo), ≤30d picos (verde).
+
 ## API local
 
 - `GET /api/health`
 - `GET /api/vessels`
 - `GET /api/trucks`
+- `GET /api/coverage` (tn camiones est. vs demanda export Up-River + semáforo)
 - `GET /api/terminals` (coords legacy; la UI ya no usa el mapa de terminales Up-River)
 - UI estática en `/` y `/static/*`
 

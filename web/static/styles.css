@@ -190,6 +190,55 @@ body { min-height: 100vh; }
 .legend { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
 .legend .chip { opacity: .95; }
 
+
+/* —— Cobertura camiones / semáforo —— */
+.coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .9rem;
+  margin-bottom: .55rem;
+}
+.kpi.coverage .value { font-size: 1.65rem; }
+.kpi.coverage .value-row {
+  display: flex; align-items: center; gap: .55rem; margin-top: .25rem; flex-wrap: wrap;
+}
+.kpi.coverage .value-row .value { margin-top: 0; }
+.semaforo-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #94a3b8;
+  box-shadow: 0 0 0 3px rgba(148,163,184,.25);
+  flex-shrink: 0;
+}
+.semaforo-dot.green { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.28); }
+.semaforo-dot.yellow { background: #eab308; box-shadow: 0 0 0 3px rgba(234,179,8,.3); }
+.semaforo-dot.red { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.28); }
+.semaforo-dot.gray { background: #94a3b8; box-shadow: 0 0 0 3px rgba(148,163,184,.25); }
+.semaforo-label {
+  font-size: .85rem; font-weight: 700; letter-spacing: .03em;
+  text-transform: uppercase; color: var(--muted);
+  padding: .15rem .55rem; border-radius: 999px;
+  background: #eef2f6; border: 1px solid var(--border);
+}
+.semaforo-label.Alto { color: #166534; background: #dcfce7; border-color: #bbf7d0; }
+.semaforo-label.Normal { color: #854d0e; background: #fef9c3; border-color: #fde047; }
+.semaforo-label.Bajo { color: #991b1b; background: #fee2e2; border-color: #fecaca; }
+.kpi-semaforo.verde { border-color: #bbf7d0; }
+.kpi-semaforo.amarillo { border-color: #fde047; }
+.kpi-semaforo.rojo { border-color: #fecaca; }
+.coverage-footnote {
+  margin: 0 0 1.1rem;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.45;
+  max-width: 72rem;
+}
+@media (max-width: 980px) {
+  .coverage-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .coverage-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 980px) {
   .kpi-grid { grid-template-columns: repeat(2, 1fr); margin-top: 1rem; }
   .layout { grid-template-columns: 1fr; }

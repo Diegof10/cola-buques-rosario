@@ -7,6 +7,8 @@ refreshes write under /tmp (or an in-memory cache) when data/ is not writable.
 from __future__ import annotations
 
 import json
+import re
+import unicodedata
 import os
 import sys
 import threading
@@ -34,7 +36,7 @@ REFRESH_TIMEOUT_SEC = int(os.environ.get("VESSELS_REFRESH_TIMEOUT_SEC", "50"))
 
 sys.path.insert(0, str(SCRIPTS))
 
-app = FastAPI(title="Cola Buques Rosario", version="1.1.0")
+app = FastAPI(title="Cola Buques Rosario", version="1.2.0")
 
 _cache_lock = threading.Lock()
 _refresh_lock = threading.Lock()
@@ -291,6 +293,218 @@ def _load_static(name: str) -> JSONResponse:
     return JSONResponse({"error": f"missing {name}"}, status_code=404)
 
 
+
+
+# --- Truck coverage KPI (tn camiones vs demanda Up-River) ---
+# Historical calibration (MAGyP / BCR / NABSA / AgroEntregas):
+# - MAGyP 2025 Rosario y aledaños 964.503 cam/año ≈ 2.640/día promedio
+# - MAGyP daily early Aug 2026 Rosario often ~2.4k–4.5k/day
+# - Picos cosecha AgroEntregas/BCR: 5.500–7.000 cam/día
+# - Stock Up-River típico ~3,5–5 Mt (BCR/NABSA/AAACI)
+# At ~4,8 Mt: promedio anual ~60d (rojo), flujo bueno ~40d (amarillo), picos ≤30d (verde)
+GRAIN_COMMODITIES = frozenset({"soja", "maiz", "trigo", "girasol", "sorgo", "cebada"})
+TN_PER_TRUCK_DEFAULT = 30
+TN_PER_TRUCK_GIRASOL = 25
+# Semáforo on days_to_cover (truck flow vs stock): Verde≤30 Alto, Amarillo 30–55 Normal, Rojo>55 Bajo
+DAYS_GREEN_MAX = 30
+DAYS_YELLOW_MAX = 55
+
+
+def _norm_dest(s: str) -> str:
+    s = unicodedata.normalize("NFD", str(s or "").lower())
+    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+    return re.sub(r"[^a-z0-9]+", " ", s).strip()
+
+
+def _is_argentina_dest(raw: str) -> bool:
+    n = _norm_dest(raw)
+    return n in {"argentina", "ar", "arg"} or n.startswith("argentina ")
+
+
+def _is_unknown_dest(raw: str) -> bool:
+    n = _norm_dest(raw)
+    if not n:
+        return True
+    return n in {
+        "not available",
+        "n a",
+        "na",
+        "n/a",
+        "unknown",
+        "tbd",
+        "-",
+        "sin destino",
+        "otros",
+    }
+
+
+def _effective_destination(v: dict[str, Any]) -> str:
+    if v.get("destination_source") == "inferred" and v.get("destination_inferred"):
+        return str(v["destination_inferred"]).strip()
+    raw = str(v.get("destination") or v.get("destino") or "").strip()
+    if not _is_unknown_dest(raw):
+        return raw
+    if v.get("destination_inferred"):
+        return str(v["destination_inferred"]).strip()
+    return ""
+
+
+def _truck_factor(product: str) -> int:
+    # Diego: 30 tn/camión general; 25 tn/camión solo girasol. Ignore stale tn fields.
+    return TN_PER_TRUCK_GIRASOL if str(product or "").lower() == "girasol" else TN_PER_TRUCK_DEFAULT
+
+
+def _load_trucks_payload() -> dict[str, Any] | None:
+    for base in (WRITABLE_DATA, BUNDLED_DATA):
+        for name in ("trucks.json", "sample-trucks.json"):
+            path = base / name
+            payload = _read_json(path)
+            if payload:
+                return payload
+    return None
+
+
+def estimate_truck_tn(trucks: dict[str, Any] | None) -> dict[str, Any]:
+    by_product = []
+    total_camiones = 0
+    truck_tn = 0.0
+    if trucks:
+        for row in trucks.get("by_product") or []:
+            product = str(row.get("product") or "").lower()
+            camiones = int(row.get("camiones") or 0)
+            factor = _truck_factor(product)
+            tn = camiones * factor
+            by_product.append(
+                {
+                    "product": product,
+                    "label": row.get("label") or product,
+                    "camiones": camiones,
+                    "tn_per_truck": factor,
+                    "tn": tn,
+                }
+            )
+            total_camiones += camiones
+            truck_tn += tn
+        if not by_product and trucks.get("total_camiones"):
+            # Fallback: unknown mix → 30 tn
+            total_camiones = int(trucks.get("total_camiones") or 0)
+            truck_tn = total_camiones * TN_PER_TRUCK_DEFAULT
+    return {
+        "truck_tn": truck_tn,
+        "total_camiones": total_camiones,
+        "by_product": by_product,
+        "source": (trucks or {}).get("source"),
+        "date": (trucks or {}).get("date"),
+        "updated_at": (trucks or {}).get("updated_at"),
+    }
+
+
+def estimate_demand_tn(vessels_payload: dict[str, Any] | None) -> dict[str, Any]:
+    vessels = (vessels_payload or {}).get("vessels") or []
+    demand_tn = 0.0
+    counted = 0
+    excluded_ar_tn = 0.0
+    excluded_ar_n = 0
+    skipped_commodity_n = 0
+    for v in vessels:
+        if not v.get("up_river"):
+            continue
+        commodity = str(v.get("commodity") or "").lower()
+        if commodity not in GRAIN_COMMODITIES:
+            skipped_commodity_n += 1
+            continue
+        tons = float(v.get("tons") or 0)
+        raw = str(v.get("destination") or v.get("destino") or "").strip()
+        eff = _effective_destination(v)
+        if _is_argentina_dest(raw) or _is_argentina_dest(eff):
+            excluded_ar_tn += tons
+            excluded_ar_n += 1
+            continue
+        demand_tn += tons
+        counted += 1
+    return {
+        "demand_tn": demand_tn,
+        "vessel_count": counted,
+        "excluded_ar_tn": excluded_ar_tn,
+        "excluded_ar_count": excluded_ar_n,
+        "skipped_non_grain_up_river": skipped_commodity_n,
+        "commodities": sorted(GRAIN_COMMODITIES),
+    }
+
+
+def classify_semaforo(days_to_cover: float | None) -> dict[str, Any]:
+    """Semáforo by days_to_cover. Label = truck flow vs stock (Alto/Normal/Bajo)."""
+    if days_to_cover is None:
+        return {
+            "color": "gray",
+            "code": "sin_datos",
+            "label": "Sin datos",
+            "hint": "Sin flujo o sin demanda",
+        }
+    if days_to_cover <= DAYS_GREEN_MAX:
+        return {
+            "color": "green",
+            "code": "verde",
+            "label": "Alto",
+            "hint": "Flujo alto · ≤ 30 días de cobertura",
+        }
+    if days_to_cover <= DAYS_YELLOW_MAX:
+        return {
+            "color": "yellow",
+            "code": "amarillo",
+            "label": "Normal",
+            "hint": "Flujo normal · 30–55 días de cobertura",
+        }
+    return {
+        "color": "red",
+        "code": "rojo",
+        "label": "Bajo",
+        "hint": "Flujo flojo · > 55 días de cobertura",
+    }
+
+
+def compute_coverage(
+    vessels_payload: dict[str, Any] | None = None,
+    trucks_payload: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    if vessels_payload is None:
+        vessels_payload = get_vessels_payload(force_refresh=False)
+    if trucks_payload is None:
+        trucks_payload = _load_trucks_payload()
+
+    trucks_est = estimate_truck_tn(trucks_payload)
+    demand_est = estimate_demand_tn(vessels_payload)
+    truck_tn = float(trucks_est["truck_tn"] or 0)
+    demand_tn = float(demand_est["demand_tn"] or 0)
+
+    coverage_pct = (100.0 * truck_tn / demand_tn) if demand_tn > 0 else None
+    days_to_cover = (demand_tn / truck_tn) if truck_tn > 0 else None
+    semaforo = classify_semaforo(days_to_cover)
+
+    return {
+        "truck_tn": round(truck_tn, 1),
+        "demand_tn": round(demand_tn, 1),
+        "coverage_pct": round(coverage_pct, 2) if coverage_pct is not None else None,
+        "days_to_cover": round(days_to_cover, 1) if days_to_cover is not None else None,
+        "semaforo": semaforo,
+        "factors": {
+            "default_tn_per_truck": TN_PER_TRUCK_DEFAULT,
+            "girasol_tn_per_truck": TN_PER_TRUCK_GIRASOL,
+        },
+        "thresholds_days": {
+            "verde_max": DAYS_GREEN_MAX,
+            "amarillo_max": DAYS_YELLOW_MAX,
+        },
+        "trucks": trucks_est,
+        "demand": demand_est,
+        "vessels_updated_at": (vessels_payload or {}).get("updated_at"),
+        "note": (
+            "Demanda = tn anunciadas Up-River de soja/maíz/trigo/girasol/sorgo/cebada "
+            "excluyendo destino Argentina / Descarga AR. "
+            "Tn camiones = Σ camiones×30 (×25 girasol)."
+        ),
+    }
+
 @app.on_event("startup")
 def _startup_refresh() -> None:
     # Warm cache from disk; kick a background NABSA refresh if stale/missing.
@@ -380,6 +594,17 @@ def trucks():
 def terminals():
     """Approximate WGS84 coords for Up-River grain terminals (NABSA zone map)."""
     return _load_static("terminals.json")
+
+
+
+@app.get("/api/coverage")
+def coverage():
+    """Truck tons vs Up-River grain export demand + semáforo (días cobertura)."""
+    try:
+        payload = compute_coverage()
+        return JSONResponse(payload)
+    except Exception as ex:
+        return JSONResponse({"error": "coverage unavailable", "detail": str(ex)}, status_code=500)
 
 
 @app.get("/")

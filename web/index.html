@@ -29,6 +29,29 @@
       <div class="kpi"><div class="label">Última actualización</div><div class="value" style="font-size:1.15rem" id="kpiUpdated">—</div><div class="hint" id="kpiSource">Fuente NABSA</div></div>
     </section>
 
+    <section class="coverage-grid" id="coverageKpis" aria-label="Cobertura camiones vs demanda">
+      <div class="kpi coverage">
+        <div class="label">Tn camiones (est.)</div>
+        <div class="value" id="kpiTruckTn">—</div>
+        <div class="hint" id="kpiTruckTnHint">Σ camiones × 30/25 tn</div>
+      </div>
+      <div class="kpi coverage">
+        <div class="label">% vs demanda</div>
+        <div class="value" id="kpiCoveragePct">—</div>
+        <div class="hint" id="kpiCoveragePctHint">Flujo diario / stock export</div>
+      </div>
+      <div class="kpi coverage kpi-semaforo" id="kpiSemaforoCard">
+        <div class="label">Días cobertura</div>
+        <div class="value-row">
+          <span class="semaforo-dot" id="semaforoDot" title="Semáforo"></span>
+          <div class="value" id="kpiDaysCover">—</div>
+          <span class="semaforo-label" id="semaforoLabel">—</span>
+        </div>
+        <div class="hint" id="kpiDaysHint">Demanda ÷ tn camiones</div>
+      </div>
+    </section>
+    <p class="coverage-footnote" id="coverageFootnote"></p>
+
     <section class="filters">
       <label>Puerto / zona
         <select id="fZone"><option value="">Todas</option></select>
