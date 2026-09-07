@@ -1,0 +1,107 @@
+{
+  "updated_at": "2026-09-06",
+  "note": "Coordenadas WGS84 aproximadas de complejos portuarios Up-River (Gran Rosario). No son posiciones AIS.",
+  "terminals": [
+    {
+      "id": "timbues",
+      "label": "Timbúes",
+      "lat": -32.6685,
+      "lon": -60.7945,
+      "aliases": ["timbúes", "timbues", "timbués", "a.g.d. timbues", "dreyfus timbues", "a.c.a. timbues"]
+    },
+    {
+      "id": "san_lorenzo",
+      "label": "San Lorenzo",
+      "lat": -32.7482,
+      "lon": -60.7318,
+      "aliases": [
+        "san lorenzo",
+        "renova",
+        "terminal 6",
+        "t.f.a.",
+        "vicentin",
+        "quebracho",
+        "san benito",
+        "dempa",
+        "cofco",
+        "a.c.a.",
+        "minera alumbrera",
+        "pgsm"
+      ]
+    },
+    {
+      "id": "rosario",
+      "label": "Rosario",
+      "lat": -32.9415,
+      "lon": -60.6392,
+      "aliases": [
+        "rosario",
+        "terminal puerto rosario",
+        "unit vi",
+        "unit vii",
+        "unit vii rosario",
+        "new mole south",
+        "cargill vgg"
+      ]
+    },
+    {
+      "id": "punta_alvear",
+      "label": "Punta Alvear",
+      "lat": -33.1388,
+      "lon": -60.5125,
+      "aliases": ["punta alvear", "cargill punta alvear"]
+    },
+    {
+      "id": "gral_lagos",
+      "label": "Gral. Lagos",
+      "lat": -33.1065,
+      "lon": -60.5078,
+      "aliases": [
+        "gral. lagos",
+        "gral lagos",
+        "general lagos",
+        "dreyfus terminal gral. lagos",
+        "dreyfus vgoil"
+      ]
+    },
+    {
+      "id": "arroyo_seco",
+      "label": "Arroyo Seco",
+      "lat": -33.1572,
+      "lon": -60.5085,
+      "aliases": ["arroyo seco", "adm agro arroyo seco", "toepfer"]
+    },
+    {
+      "id": "villa_constitucion",
+      "label": "Villa Constitución",
+      "lat": -33.2285,
+      "lon": -60.3298,
+      "aliases": [
+        "villa constitución",
+        "villa constitucion",
+        "ptp free zone",
+        "unit 2 grain elevator"
+      ]
+    },
+    {
+      "id": "san_nicolas",
+      "label": "San Nicolás",
+      "lat": -33.3468,
+      "lon": -60.2245,
+      "aliases": [
+        "san nicolás",
+        "san nicolas",
+        "new port wharf san nicolas",
+        "siderar",
+        "central termica san nicolas"
+      ]
+    },
+    {
+      "id": "ramallo",
+      "label": "Ramallo",
+      "lat": -33.4852,
+      "lon": -60.0068,
+      "aliases": ["ramallo", "bunge fertilizers", "bunge grain"]
+    }
+  ]
+}

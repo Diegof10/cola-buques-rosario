@@ -1,0 +1,117 @@
+{
+  "updated_at": "2026-09-06T09:30:44.122845-03:00",
+  "date": "2026-09-06",
+  "source": "sample",
+  "source_note": "Muestra realista (seed). Ejecutar refresh intenta MAGyP/BCR; si falla se conserva este JSON.",
+  "unit": "camiones",
+  "total_camiones": 3725,
+  "total_tn": 111750,
+  "by_product": [
+    {
+      "product": "soja",
+      "label": "Soja",
+      "camiones": 1840,
+      "tn": 55200
+    },
+    {
+      "product": "maiz",
+      "label": "Maíz",
+      "camiones": 1260,
+      "tn": 37800
+    },
+    {
+      "product": "trigo",
+      "label": "Trigo",
+      "camiones": 420,
+      "tn": 12600
+    },
+    {
+      "product": "sorgo",
+      "label": "Sorgo",
+      "camiones": 95,
+      "tn": 2850
+    },
+    {
+      "product": "girasol",
+      "label": "Girasol",
+      "camiones": 110,
+      "tn": 3300
+    }
+  ],
+  "by_zone": [
+    {
+      "zone": "San Lorenzo / Timbúes",
+      "camiones": 1680,
+      "by_product": {
+        "soja": 820,
+        "maiz": 540,
+        "trigo": 180,
+        "sorgo": 40,
+        "girasol": 50
+      }
+    },
+    {
+      "zone": "Rosario",
+      "camiones": 720,
+      "by_product": {
+        "soja": 380,
+        "maiz": 220,
+        "trigo": 90,
+        "sorgo": 15,
+        "girasol": 15
+      }
+    },
+    {
+      "zone": "Punta Alvear / Gral. Lagos",
+      "camiones": 780,
+      "by_product": {
+        "soja": 400,
+        "maiz": 280,
+        "trigo": 70,
+        "sorgo": 20,
+        "girasol": 25
+      }
+    },
+    {
+      "zone": "Arroyo Seco",
+      "camiones": 545,
+      "by_product": {
+        "soja": 240,
+        "maiz": 220,
+        "trigo": 80,
+        "sorgo": 20,
+        "girasol": 20
+      }
+    }
+  ],
+  "history_7d": [
+    {
+      "date": "2026-08-31",
+      "camiones": 3422
+    },
+    {
+      "date": "2026-09-01",
+      "camiones": 3385
+    },
+    {
+      "date": "2026-09-02",
+      "camiones": 3348
+    },
+    {
+      "date": "2026-09-03",
+      "camiones": 3311
+    },
+    {
+      "date": "2026-09-04",
+      "camiones": 3274
+    },
+    {
+      "date": "2026-09-05",
+      "camiones": 3237
+    },
+    {
+      "date": "2026-09-06",
+      "camiones": 3200
+    }
+  ]
+}

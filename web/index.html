@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cola de Buques · Up-River Rosario</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="wrap brand" style="margin:0;padding:0;max-width:1280px">
+      <div>
+        <h1 class="brand-title">Cola de Buques · Up-River</h1>
+        <p class="brand-sub">Gran Rosario · logística de granos · prototipo de escritorio</p>
+      </div>
+      <div class="badge-live" id="liveBadge" title="Estado de datos">
+        <span class="dot"></span>
+        <span id="liveLabel">Cargando…</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="kpi-grid" id="kpis">
+      <div class="kpi"><div class="label">Buques en cola</div><div class="value" id="kpiCola">—</div><div class="hint">Cargando / en rada / en espera</div></div>
+      <div class="kpi"><div class="label">Toneladas anunciadas</div><div class="value" id="kpiTons">—</div><div class="hint">Up-River (filtro actual)</div></div>
+      <div class="kpi"><div class="label">Camiones hoy</div><div class="value" id="kpiTrucks">—</div><div class="hint">Gran Rosario (muestra)</div></div>
+      <div class="kpi"><div class="label">Última actualización</div><div class="value" style="font-size:1.15rem" id="kpiUpdated">—</div><div class="hint" id="kpiSource">Fuente NABSA</div></div>
+    </section>
+
+    <section class="filters">
+      <label>Puerto / zona
+        <select id="fZone"><option value="">Todas</option></select>
+      </label>
+      <label>Commodity
+        <select id="fCommodity">
+          <option value="">Todos</option>
+          <option value="soja">Soja</option>
+          <option value="maiz">Maíz</option>
+          <option value="trigo">Trigo</option>
+          <option value="girasol">Girasol</option>
+          <option value="sorgo">Sorgo</option>
+          <option value="cebada">Cebada</option>
+          <option value="otro">Otros</option>
+        </select>
+      </label>
+      <label>Estado
+        <select id="fStatus">
+          <option value="">Todos</option>
+          <option value="cargando">Cargando / ETB-ETF</option>
+          <option value="en_rada">En rada / roads</option>
+          <option value="arribando">Próximos arribos (ETA)</option>
+          <option value="en_cola">En cola</option>
+        </select>
+      </label>
+      <label>Buscar buque
+        <input id="fSearch" type="search" placeholder="Nombre…" />
+      </label>
+      <div class="spacer"></div>
+      <button class="btn secondary" type="button" id="btnReset">Limpiar</button>
+      <button class="btn" type="button" id="btnReload">Recargar</button>
+    </section>
+
+    <section class="panel full map-panel" id="mapPanel">
+      <div class="panel-h">
+        <h2>Mapa Up-River · posición por terminal</h2>
+        <span class="count" id="mapCount">0</span>
+      </div>
+      <div class="panel-b map-panel-b">
+        <div id="map" role="img" aria-label="Mapa de buques por terminal"></div>
+        <div class="map-legend" id="mapLegend"></div>
+        <p class="map-note">Posición aproximada por terminal (NABSA). AIS en tiempo real: próximamente.</p>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="panel" id="queuePanel">
+        <div class="panel-h">
+          <h2>Cola por puerto / terminal</h2>
+          <span class="count" id="queueCount">0</span>
+        </div>
+        <div class="panel-b" id="queueBody"><div class="loading">Cargando lineup…</div></div>
+      </div>
+
+      <div class="panel arrivals" id="arrivalsPanel">
+        <div class="panel-h">
+          <h2>Próximos arribos</h2>
+          <span class="count" id="arrivalsCount">0</span>
+        </div>
+        <div class="panel-b" id="arrivalsBody"><div class="loading">…</div></div>
+      </div>
+
+      <div class="panel full" id="trucksPanel">
+        <div class="panel-h">
+          <h2>Camiones entrando a puertos (hoy)</h2>
+          <span class="count" id="trucksCount">0</span>
+        </div>
+        <div class="panel-b">
+          <div class="bars" id="truckBars"></div>
+          <div class="zone-grid" id="truckZones"></div>
+          <div class="legend" id="legend"></div>
+          <p style="margin:.9rem 0 0;color:var(--muted);font-size:.78rem" id="truckNote"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Fuentes: NABSA · MAGyP · BCR · Prototipo local DHF — sin logos oficiales. Solo uso local / demo.
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
