@@ -797,6 +797,7 @@
     renderArrivals(filtered);
     renderTrucks();
     renderDestinations(filtered);
+    renderCoverage();
   }
 
   async function load() {
