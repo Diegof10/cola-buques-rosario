@@ -66,6 +66,15 @@
     "#AD1457", "#0277BD", "#558B2F", "#5D4037", "#37474F",
     "#7B1FA2", "#0097A7", "#E65100", "#283593", "#546E7A",
   ];
+  /** Conservative charterer → country (same keys as NABSA / DEST_META). */
+  const CHARTERER_DEST_INFER = {
+    "AL GHURAIR": "UNITED ARAB EMIR",
+    "COFCO": "CHINA",
+    "CJ INTERNATIONAL": "KOREA",
+    "CJ CHEILJEDANG": "KOREA",
+    "ARASCO": "SAUDI ARABIA",
+    "AL QAIRAWAN": "YEMEN",
+  };
 
   let vesselsPayload = null;
   let trucksPayload = null;
@@ -204,6 +213,9 @@
       n === "otros"
     );
   }
+  function isUnknownCharterer(ch) {
+    return isUnknownDest(ch);
+  }
   function destKey(raw) {
     return String(raw || "").trim().toUpperCase();
   }
@@ -216,35 +228,94 @@
       .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
       .join(" ");
   }
+  function inferFromCharterer(charterer) {
+    if (isUnknownCharterer(charterer)) return null;
+    const n = destKey(charterer);
+    if (CHARTERER_DEST_INFER[n]) return CHARTERER_DEST_INFER[n];
+    const keys = Object.keys(CHARTERER_DEST_INFER).sort((a, b) => b.length - a.length);
+    for (const key of keys) {
+      if (n.includes(key)) return CHARTERER_DEST_INFER[key];
+    }
+    return null;
+  }
+  /** Effective export/AR destination: NABSA first; else conservative charterer estimate. */
+  function effectiveDestination(v) {
+    if (v.destination_source === "inferred" && v.destination_inferred) {
+      return String(v.destination_inferred).trim();
+    }
+    const raw = rawDestination(v);
+    if (!isUnknownDest(raw)) return raw;
+    if (v.destination_inferred) return String(v.destination_inferred).trim();
+    return inferFromCharterer(v.charterer) || "";
+  }
+  function isDestinationInferred(v) {
+    if (v.destination_source === "inferred" && v.destination_inferred) return true;
+    const raw = rawDestination(v);
+    if (!isUnknownDest(raw)) return false;
+    if (v.destination_inferred) return true;
+    return !!inferFromCharterer(v.charterer);
+  }
+  function formatDestDisplay(v) {
+    const raw = rawDestination(v);
+    if (isDestinationInferred(v)) {
+      const key = destKey(effectiveDestination(v));
+      return (
+        escapeHtml(destLabel(key)) +
+        ' <span class="badge estimado" title="Estimado por charterer">estimado</span>'
+      );
+    }
+    if (isUnknownDest(raw)) return "Sin destino";
+    if (isArgentinaDest(raw)) return "Descarga AR";
+    return escapeHtml(destLabel(destKey(raw)));
+  }
 
-  /** Aggregate tons: export by country, plus descarga AR and Otros. */
+  /** Aggregate tons: known foreign exports, Descarga AR, and Sin destino (NABSA). */
   function aggregateDestinations(list) {
     const exportMap = new Map();
     let arTons = 0;
     let arCount = 0;
-    let otrosTons = 0;
-    let otrosCount = 0;
+    let sinDestTons = 0;
+    let sinDestCount = 0;
+    let inferredCount = 0;
+    let inferredTons = 0;
     for (const v of list) {
       const tons = Number(v.tons) || 0;
       const raw = rawDestination(v);
-      if (isArgentinaDest(raw)) {
+      const inferred = isDestinationInferred(v);
+      const eff = effectiveDestination(v);
+      if (isArgentinaDest(raw) || isArgentinaDest(eff)) {
         arTons += tons;
         arCount += 1;
         continue;
       }
-      if (isUnknownDest(raw)) {
-        otrosTons += tons;
-        otrosCount += 1;
+      if (!eff || isUnknownDest(eff)) {
+        sinDestTons += tons;
+        sinDestCount += 1;
         continue;
       }
-      const key = destKey(raw);
-      const cur = exportMap.get(key) || { key, label: destLabel(key), tons: 0, count: 0 };
+      const key = destKey(eff);
+      const cur = exportMap.get(key) || { key, label: destLabel(key), tons: 0, count: 0, inferredCount: 0 };
       cur.tons += tons;
       cur.count += 1;
+      if (inferred) {
+        cur.inferredCount += 1;
+        inferredCount += 1;
+        inferredTons += tons;
+      }
       exportMap.set(key, cur);
     }
     const exports = [...exportMap.values()].sort((a, b) => b.tons - a.tons || a.label.localeCompare(b.label, "es"));
-    return { exports, arTons, arCount, otrosTons, otrosCount };
+    return {
+      exports,
+      arTons,
+      arCount,
+      sinDestTons,
+      sinDestCount,
+      otrosTons: sinDestTons,
+      otrosCount: sinDestCount,
+      inferredCount,
+      inferredTons,
+    };
   }
 
   function initWorldMap() {
@@ -311,13 +382,15 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, size, size);
 
-    const TOP = 8;
+    // Show enough named countries so "Resto países" is a true remainder of known destinations,
+    // not a misleading "Otros"/unknown bucket (~53% when TOP was 8).
+    const TOP = 14;
     let slices = exports.slice(0, TOP).map((e, i) => ({
       label: e.label, tons: e.tons, color: PIE_COLORS[i % PIE_COLORS.length],
     }));
     const restTons = exports.slice(TOP).reduce((s, e) => s + e.tons, 0);
     if (restTons > 0) {
-      slices.push({ label: "Resto", tons: restTons, color: "#90A4AE" });
+      slices.push({ label: "Resto países", tons: restTons, color: "#90A4AE" });
     }
     const total = slices.reduce((s, x) => s + x.tons, 0);
     const cx = size / 2;
@@ -374,23 +447,42 @@
     $("destArTons").textContent = fmtTons(agg.arTons);
     $("destArHint").textContent =
       agg.arCount + " embarque(s) · destino Argentina = descarga (no export)";
-    $("destOtrosTons").textContent = fmtTons(agg.otrosTons);
+    $("destOtrosTons").textContent = fmtTons(agg.sinDestTons);
+    const sinHint = $("destSinHint") || $("destOtrosHint");
+    if (sinHint) {
+      sinHint.textContent =
+        agg.sinDestCount + " embarque(s) NABSA sin país" +
+        (agg.inferredCount
+          ? " · " + agg.inferredCount + " estimado(s) por charterer ya en la torta"
+          : "");
+    }
     const slices = drawDestPie(agg.exports);
+    const exportTons = agg.exports.reduce((s, e) => s + e.tons, 0);
     $("destChartNote").textContent =
-      "Exportación: " + fmtTons(agg.exports.reduce((s, e) => s + e.tons, 0)) +
-      " · Descarga AR y Otros aparte";
+      "Exportación conocida: " + fmtTons(exportTons) +
+      " · Descarga AR y Sin destino aparte" +
+      (agg.inferredTons ? " · incluye " + fmtTons(agg.inferredTons) + " estimadas" : "");
 
     const colorByLabel = new Map((slices || []).map((s) => [s.label, s.color]));
+    const maxExport = Math.max(...agg.exports.map((e) => e.tons), 1);
     $("destList").innerHTML = agg.exports.length
       ? agg.exports
           .map((e, i) => {
             const col = colorByLabel.get(e.label) || PIE_COLORS[i % PIE_COLORS.length];
+            const est =
+              e.inferredCount > 0
+                ? ' <span class="badge estimado" title="Incluye destino estimado por charterer">estimado</span>'
+                : "";
+            const pct = Math.max(2, Math.round((100 * e.tons) / maxExport));
             return (
               '<div class="dest-row">' +
               '<span class="dest-swatch" style="background:' + col + '"></span>' +
-              '<span class="dest-name">' + escapeHtml(e.label) + "</span>" +
-              '<span class="dest-tons">' + escapeHtml(fmtTonsShort(e.tons)) + "</span>" +
-              "</div>"
+              '<div class="dest-rank">' +
+              '<div class="dest-name-row"><span class="dest-name">' + escapeHtml(e.label) + est +
+              '</span><span class="dest-tons">' + escapeHtml(fmtTonsShort(e.tons)) + "</span></div>" +
+              '<div class="dest-bar-track"><div class="dest-bar-fill" style="width:' + pct +
+              "%;background:" + col + '"></div></div>' +
+              "</div></div>"
             );
           })
           .join("")
@@ -423,7 +515,7 @@
               "<div><div class=\"v-name\">" + escapeHtml(v.vessel) + '</div><div class="v-term">' + escapeHtml(v.terminal || v.port) + "</div></div>" +
               '<div class="v-meta">' + chip(v.commodity, v.commodity_label) + '<div style="margin-top:.35rem">' + statusBadge(v.status) + "</div></div>" +
               '<div class="v-meta"><div class="tons">' + fmtTonsShort(v.tons) + "</div><small>" + escapeHtml(v.ops || "") + "</small></div>" +
-              '<div class="v-meta">' + escapeHtml(timing(v)) + '<div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">' + escapeHtml(v.destination || "") + "</div></div>" +
+              '<div class="v-meta">' + escapeHtml(timing(v)) + '<div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">' + formatDestDisplay(v) + "</div></div>" +
               "</div>"
           )
           .join("");

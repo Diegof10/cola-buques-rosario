@@ -62,6 +62,74 @@ COMMODITY_LABEL = {
     "otro": "Otro",
 }
 
+# Conservative charterer → likely foreign destination when NABSA dest is missing.
+# Only clear, well-known mappings (do not invent for traders with mixed routes).
+CHARTERER_DEST_INFER: dict[str, str] = {
+    "AL GHURAIR": "UNITED ARAB EMIR",  # UAE flour/feed group
+    "COFCO": "CHINA",
+    "CJ INTERNATIONAL": "KOREA",
+    "CJ CHEILJEDANG": "KOREA",
+    "ARASCO": "SAUDI ARABIA",
+    "AL QAIRAWAN": "YEMEN",
+}
+
+_UNKNOWN_DEST = {
+    "",
+    "NOT AVAILABLE",
+    "N/A",
+    "NA",
+    "N A",
+    "UNKNOWN",
+    "TBD",
+    "-",
+    "SIN DESTINO",
+    "OTROS",
+}
+
+
+def _norm_token(s: str | None) -> str:
+    return " ".join(str(s or "").upper().replace("/", " ").split())
+
+
+def is_unknown_destination(dest: str | None) -> bool:
+    return _norm_token(dest) in _UNKNOWN_DEST
+
+
+def is_unknown_charterer(charterer: str | None) -> bool:
+    n = _norm_token(charterer)
+    return (not n) or n in _UNKNOWN_DEST
+
+
+def infer_destination_from_charterer(charterer: str | None) -> str | None:
+    """Return NABSA-style country key when charterer maps confidently; else None."""
+    if is_unknown_charterer(charterer):
+        return None
+    n = _norm_token(charterer)
+    # Exact key first, then substring (longer keys first).
+    if n in CHARTERER_DEST_INFER:
+        return CHARTERER_DEST_INFER[n]
+    for key, dest in sorted(CHARTERER_DEST_INFER.items(), key=lambda kv: -len(kv[0])):
+        if key in n:
+            return dest
+    return None
+
+
+def enrich_vessel_destination(v: dict[str, Any]) -> dict[str, Any]:
+    """Attach destination_source / destination_inferred; never overwrite NABSA dest."""
+    raw = (v.get("destination") or "").strip()
+    if not is_unknown_destination(raw):
+        v["destination_source"] = "nabsa"
+        v["destination_inferred"] = None
+        return v
+    inferred = infer_destination_from_charterer(v.get("charterer"))
+    if inferred:
+        v["destination_inferred"] = inferred
+        v["destination_source"] = "inferred"
+    else:
+        v["destination_inferred"] = None
+        v["destination_source"] = "nabsa"  # true unknown from NABSA
+    return v
+
 
 def ar_tz_now() -> datetime:
     return datetime.now(timezone(timedelta(hours=-3)))
@@ -196,8 +264,7 @@ def parse_lineup(pdf_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
                     zone = zone_for(port, terminal)
                     up_river = port.upper() in UP_RIVER_PORTS
 
-                    vessels.append(
-                        {
+                    row_v = {
                             "vessel": vessel,
                             "port": port.title() if port != port.upper() else port.title(),
                             "port_raw": port,
@@ -218,7 +285,7 @@ def parse_lineup(pdf_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
                             "status": status,
                             "up_river": up_river,
                         }
-                    )
+                    vessels.append(enrich_vessel_destination(row_v))
     return vessels, meta
 
 
@@ -302,7 +369,9 @@ def build_vessels_payload(
     live: bool,
     sailed_ok: bool,
 ) -> dict[str, Any]:
+    vessels = [enrich_vessel_destination(dict(v)) for v in vessels]
     up = [v for v in vessels if v.get("up_river")]
+    inferred_n = sum(1 for v in up if v.get("destination_source") == "inferred")
     return {
         "updated_at": ar_tz_now().isoformat(),
         "live": live,
@@ -318,6 +387,7 @@ def build_vessels_payload(
             "en_cola": sum(1 for v in up if v["status"] in ("en_cola", "en_rada", "cargando")),
             "cargando": sum(1 for v in up if v["status"] == "cargando"),
             "en_rada": sum(1 for v in up if v["status"] == "en_rada"),
+            "dest_inferred": inferred_n,
         },
         "vessels": vessels,
     }

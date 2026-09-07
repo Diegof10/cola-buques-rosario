@@ -71,7 +71,7 @@
         <div class="dest-layout">
           <div class="dest-chart-col">
             <div class="dest-chart-wrap"><canvas id="destChart" width="360" height="360" aria-label="Torta de toneladas por destino"></canvas></div>
-            <p class="dest-chart-note" id="destChartNote">Toneladas a cargar / cargadas · destinos de exportación</p>
+            <p class="dest-chart-note" id="destChartNote">Toneladas a cargar / cargadas · solo destinos extranjeros conocidos (o estimados)</p>
           </div>
           <div class="dest-side">
             <div class="dest-stat descarga">
@@ -79,17 +79,17 @@
               <div class="dest-stat-value" id="destArTons">—</div>
               <div class="dest-stat-hint" id="destArHint">Importación / descarga en Argentina (no export)</div>
             </div>
-            <div class="dest-stat otros">
-              <div class="dest-stat-label">Otros / sin destino</div>
+            <div class="dest-stat otros sin-destino">
+              <div class="dest-stat-label">Sin destino (NABSA)</div>
               <div class="dest-stat-value" id="destOtrosTons">—</div>
-              <div class="dest-stat-hint">NOT AVAILABLE, vacío o desconocido</div>
+              <div class="dest-stat-hint" id="destSinHint">NOT AVAILABLE / vacío — no es “Otros países”</div>
             </div>
             <div class="dest-list" id="destList"></div>
           </div>
         </div>
         <div class="world-map-wrap">
           <div id="worldMap" role="img" aria-label="Mapa mundial de destinos por volumen"></div>
-          <p class="map-note">Círculos = toneladas de exportación por país (centroide). Descarga AR y Otros no se dibujan en el mapa.</p>
+          <p class="map-note">Círculos = toneladas de exportación por país (centroide). Descarga AR y Sin destino no se dibujan. Badge “estimado” = inferido por charterer.</p>
         </div>
       </div>
     </section>

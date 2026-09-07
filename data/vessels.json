@@ -18,7 +18,8 @@
     "arribando": 183,
     "en_cola": 58,
     "cargando": 43,
-    "en_rada": 15
+    "en_rada": 15,
+    "dest_inferred": 3
   },
   "vessels": [
     {
@@ -40,7 +41,9 @@
       "origin": "ARGENTINA",
       "charterer": "URCEL",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "EMMA JANNEKE",
@@ -61,7 +64,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ISKENDERUN-M",
@@ -82,7 +87,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DANK SILVER",
@@ -103,7 +110,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOCHEM CASABLANCA",
@@ -124,7 +133,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CELESTE",
@@ -145,7 +156,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ES JASMINE",
@@ -166,7 +179,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ES JASMINE",
@@ -187,7 +202,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BTG DENALI",
@@ -208,7 +225,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BTG DENALI",
@@ -229,7 +248,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SEAVENUS II",
@@ -250,7 +271,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SEAVENUS II",
@@ -271,7 +294,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SEA TIGER I",
@@ -292,7 +317,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LJUTA",
@@ -313,7 +340,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STOLT ZULU",
@@ -334,7 +363,9 @@
       "origin": "LAIRCGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "IVS DUNES",
@@ -355,7 +386,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOW FRIDA",
@@ -376,7 +409,9 @@
       "origin": "ARGENTINA",
       "charterer": "MARVESA",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "FRANCESCO",
@@ -397,7 +432,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LEONARDO",
@@ -418,7 +455,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LEONARDO",
@@ -439,7 +478,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GUO YUAN 86",
@@ -460,7 +501,9 @@
       "origin": "ARGENTINA",
       "charterer": "ENERFO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TOP GRACE",
@@ -481,7 +524,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TOP GRACE",
@@ -502,7 +547,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TROODOS OAK",
@@ -523,7 +570,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TROODOS OAK",
@@ -544,7 +593,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SALAMINIAN",
@@ -565,7 +616,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PAN CERES",
@@ -586,7 +639,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "H7 HSB5",
@@ -607,7 +662,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "H7 HSB5",
@@ -628,7 +685,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SOFIA",
@@ -649,7 +708,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SOFIA",
@@ -670,7 +731,9 @@
       "origin": "PARAGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PRIMUS",
@@ -691,7 +754,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "CHAMPION BALTIC",
@@ -712,7 +777,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DOLPHIN 21",
@@ -733,7 +800,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MC CALYPSO",
@@ -754,7 +823,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "RUBY",
@@ -775,7 +846,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AGIOS KONSTANTINOS",
@@ -796,7 +869,9 @@
       "origin": "ARGENTINA",
       "charterer": "ENERFO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MYKONOS SEAS",
@@ -817,7 +892,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ARGO B",
@@ -838,7 +915,9 @@
       "origin": "ARGENTINA",
       "charterer": "ASTON",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CAPTAIN GEORGE",
@@ -859,7 +938,9 @@
       "origin": "ARGENTINA",
       "charterer": "CJ INTERNATIONAL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "OBE UNITY",
@@ -880,7 +961,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "DSM HARBOUR",
@@ -901,7 +984,9 @@
       "origin": "ARGENTINA",
       "charterer": "AL QAIRAWAN",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LIVADI",
@@ -922,7 +1007,9 @@
       "origin": "ARGENTINA",
       "charterer": "SEABOARD",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "INGENUITY",
@@ -943,7 +1030,9 @@
       "origin": "ARGENTINA",
       "charterer": "AL GHURAIR",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": "UNITED ARAB EMIR",
+      "destination_source": "inferred"
     },
     {
       "vessel": "MAPLE STAR",
@@ -964,7 +1053,9 @@
       "origin": "ARGENTINA",
       "charterer": "ADM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ILIA",
@@ -985,7 +1076,9 @@
       "origin": "ARGENTINA",
       "charterer": "SYNGENTA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ABK TIGER",
@@ -1006,7 +1099,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "YANNIS",
@@ -1027,7 +1122,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NITRON",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MTM NEW YORK",
@@ -1048,7 +1145,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "BOCHEM CASABLANCA",
@@ -1069,7 +1168,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOCHEM CASABLANCA",
@@ -1090,7 +1191,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KANDY",
@@ -1111,7 +1214,9 @@
       "origin": "ARGENTINA",
       "charterer": "OLAM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOW PANTHER",
@@ -1132,7 +1237,9 @@
       "origin": "ARGENTINA",
       "charterer": "EVONIK",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PHEASANT",
@@ -1153,7 +1260,9 @@
       "origin": "ARGENTINA",
       "charterer": "LUZAR TRADING",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ALANGOVA",
@@ -1174,7 +1283,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOCHEM BUCEPHALAS",
@@ -1195,7 +1306,9 @@
       "origin": "ARGENTINA",
       "charterer": "OLAM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "F.F GLORY",
@@ -1216,7 +1329,9 @@
       "origin": "ARGENTINA",
       "charterer": "SOYA MILLS",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "OCEAN CROWN",
@@ -1237,7 +1352,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "OCEAN CROWN",
@@ -1258,7 +1375,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ANNELIESE",
@@ -1279,7 +1398,9 @@
       "origin": "ARGENTINA",
       "charterer": "LUZAR TRADING",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ODYSSEUS N",
@@ -1300,7 +1421,9 @@
       "origin": "ARGENTINA",
       "charterer": "ADM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "EQUINOX GALINI",
@@ -1321,7 +1444,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOW FRIDA",
@@ -1342,7 +1467,9 @@
       "origin": "ARGENTINA",
       "charterer": "MARVESA",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AGIA PARASKEVI",
@@ -1363,7 +1490,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AGIA PARASKEVI",
@@ -1384,7 +1513,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CS CAPRICE",
@@ -1405,7 +1536,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEREALIS",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CS SARAFINA",
@@ -1426,7 +1559,9 @@
       "origin": "ARGENTINA",
       "charterer": "ENERFO",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AKOUR II",
@@ -1447,7 +1582,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AKOUR II",
@@ -1468,7 +1605,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "JY LAKE",
@@ -1489,7 +1628,9 @@
       "origin": "ARGENTINA",
       "charterer": "ARASCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "JY LAKE",
@@ -1510,7 +1651,9 @@
       "origin": "ARGENTINA",
       "charterer": "ARASCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "JY LAKE",
@@ -1531,7 +1674,9 @@
       "origin": "ARGENTINA",
       "charterer": "ARASCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TRITON",
@@ -1552,7 +1697,9 @@
       "origin": "ARGENTINA",
       "charterer": "DLG AMBA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STADION II",
@@ -1573,7 +1720,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CANOPUS",
@@ -1594,7 +1743,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CANOPUS",
@@ -1615,7 +1766,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "29 EKIM",
@@ -1636,7 +1789,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ECO AVALON",
@@ -1657,7 +1812,9 @@
       "origin": "ARGENTINA",
       "charterer": "DLG AMBA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GUZIDE",
@@ -1678,7 +1835,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GUZIDE",
@@ -1699,7 +1858,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BEATRICE",
@@ -1720,7 +1881,9 @@
       "origin": "ARGENTINA",
       "charterer": "LUZAR TRADING",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TALITHA",
@@ -1741,7 +1904,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TALITHA",
@@ -1762,7 +1927,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BUFFLEHEAD",
@@ -1783,7 +1950,9 @@
       "origin": "ARGENTINA",
       "charterer": "SEABOARD",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TORM SUPREME",
@@ -1804,7 +1973,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MTM KEY WEST",
@@ -1825,7 +1996,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DRINA S",
@@ -1846,7 +2019,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DRINA S",
@@ -1867,7 +2042,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SOUND YOUNG",
@@ -1888,7 +2065,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "YAMI BENEFIT",
@@ -1909,7 +2088,9 @@
       "origin": "ARGENTINA",
       "charterer": "ADM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "YAMI BENEFIT",
@@ -1930,7 +2111,9 @@
       "origin": "ARGENTINA",
       "charterer": "ADM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ROSCO BANYAN",
@@ -1951,7 +2134,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SELO",
@@ -1972,7 +2157,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PVT PERIDOT",
@@ -1993,7 +2180,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ANHUI",
@@ -2014,7 +2203,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ANHUI",
@@ -2035,7 +2226,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ANHUI",
@@ -2056,7 +2249,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CHARISMA GR",
@@ -2077,7 +2272,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "UMEA",
@@ -2098,7 +2295,9 @@
       "origin": "ARGENTINA",
       "charterer": "SEABOARD",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BELLA JUDI",
@@ -2119,7 +2318,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BELLA JUDI",
@@ -2140,7 +2341,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "NORSE BORNHOLM",
@@ -2161,7 +2364,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "NORSE BORNHOLM",
@@ -2182,7 +2387,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KOCIEWE",
@@ -2203,7 +2410,9 @@
       "origin": "MOROCCO",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR WAVE",
@@ -2224,7 +2433,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NITRON",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KEN STAR",
@@ -2245,7 +2456,9 @@
       "origin": "NIGERIA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ULTRA LANIN",
@@ -2266,7 +2479,9 @@
       "origin": "PERU",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ARGENMAR MISTRAL",
@@ -2287,7 +2502,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DOLPHIN 21",
@@ -2308,7 +2525,9 @@
       "origin": "BULGARIA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MOUNT HIKURANGI",
@@ -2329,7 +2548,9 @@
       "origin": "UNITED STATES",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MOUNT HIKURANGI",
@@ -2350,7 +2571,9 @@
       "origin": "UNITED STATES",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "EPSON TRADER",
@@ -2371,7 +2594,9 @@
       "origin": "CHINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AHSOKA",
@@ -2392,7 +2617,9 @@
       "origin": "INDONESIA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "VEZHEN",
@@ -2413,7 +2640,9 @@
       "origin": "TURKMENISTAN",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KANDY",
@@ -2434,7 +2663,9 @@
       "origin": "ARGENTINA",
       "charterer": "OLAM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KEN STAR",
@@ -2455,7 +2686,9 @@
       "origin": "NIGERIA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR WAVE",
@@ -2476,7 +2709,9 @@
       "origin": "ARGENTINA",
       "charterer": "NITRON",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "UNION MARK",
@@ -2497,7 +2732,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MC CALYPSO",
@@ -2518,7 +2755,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR WESTPORT",
@@ -2539,7 +2778,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "MYKONOS SEAS",
@@ -2560,7 +2801,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MYKONOS SEAS",
@@ -2581,7 +2824,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MAGMA INTEGRITY",
@@ -2602,7 +2847,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "APJ PRITI 2",
@@ -2623,7 +2870,9 @@
       "origin": "ARGENTINA",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": "CHINA",
+      "destination_source": "inferred"
     },
     {
       "vessel": "DORIC KATANA",
@@ -2644,7 +2893,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TRUE BROTHER",
@@ -2665,7 +2916,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TORM SUPREME",
@@ -2686,7 +2939,9 @@
       "origin": "PARAGUAY",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "RANA",
@@ -2707,7 +2962,9 @@
       "origin": "ARGENTINA",
       "charterer": "ADM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PVT PERIDOT",
@@ -2728,7 +2985,9 @@
       "origin": "APTAERSAGUAY",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BLACK PEARL",
@@ -2749,7 +3008,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "EMMA JANNEKE",
@@ -2770,7 +3031,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TAI KNOWLEDGE",
@@ -2791,7 +3054,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "RODINA",
@@ -2812,7 +3077,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOW FRIDA",
@@ -2833,7 +3100,9 @@
       "origin": "ARGENTINA",
       "charterer": "MARVESA",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "APOGEE SPIRIT",
@@ -2854,7 +3123,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOCHEM CASABLANCA",
@@ -2875,7 +3146,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STOLT ZULU",
@@ -2896,7 +3169,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STOLT ZULU",
@@ -2917,7 +3192,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CL KIWAMI",
@@ -2938,7 +3215,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KOCIEWE",
@@ -2959,7 +3238,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "APPALOOSA",
@@ -2980,7 +3261,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LEFKADA I",
@@ -3001,7 +3284,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ANNA SCHULTE",
@@ -3022,7 +3307,9 @@
       "origin": "ARGENTINA",
       "charterer": "ACA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GOLDEN DAISY",
@@ -3043,7 +3330,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "NORSE BORNHOLM",
@@ -3064,7 +3353,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "FAITH",
@@ -3085,7 +3376,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CAPRI ISLAND",
@@ -3106,7 +3399,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "EVALOVIA",
@@ -3127,7 +3422,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOURYON CHEMICALS ARG",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BULK ITALY",
@@ -3148,7 +3445,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TOUBKAL PARK",
@@ -3169,7 +3468,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR PISCES",
@@ -3190,7 +3491,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ATLANTIC INFINITY",
@@ -3211,7 +3514,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "LUMPHINI PARK",
@@ -3232,7 +3537,9 @@
       "origin": "LAIRCGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CANOPUS",
@@ -3253,7 +3560,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ASIA LIBERTY",
@@ -3274,7 +3583,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ASIA LIBERTY",
@@ -3295,7 +3606,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR ALLIANCE",
@@ -3316,7 +3629,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CHAMPION BALTIC",
@@ -3337,7 +3652,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "IRENE",
@@ -3358,7 +3675,9 @@
       "origin": "ARGENTINA",
       "charterer": "ADM",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "IRENE",
@@ -3379,7 +3698,9 @@
       "origin": "ARGENTINA",
       "charterer": "ADM",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "PALEXPO",
@@ -3400,7 +3721,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PALEXPO",
@@ -3421,7 +3744,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ARIETTA",
@@ -3442,7 +3767,9 @@
       "origin": "ARGENTINA",
       "charterer": "CROSSLAND",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "YOZAN",
@@ -3463,7 +3790,9 @@
       "origin": "ARGENTINA",
       "charterer": "CJ INTERNATIONAL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": "KOREA",
+      "destination_source": "inferred"
     },
     {
       "vessel": "EVAGELIA",
@@ -3484,7 +3813,9 @@
       "origin": "ARGENTINA",
       "charterer": "INVICTUS",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "F LINE",
@@ -3505,7 +3836,9 @@
       "origin": "ARGENTINA",
       "charterer": "QUADRA COMMODITIES",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "LEM GERANIUM",
@@ -3526,7 +3859,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "INA LOTTE",
@@ -3547,7 +3882,9 @@
       "origin": "ARGENTINA",
       "charterer": "AGROCOORP. INT.",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "KANDY",
@@ -3568,7 +3905,9 @@
       "origin": "ARGENTINA",
       "charterer": "OLAM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CANOPUS",
@@ -3589,7 +3928,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CANOPUS",
@@ -3610,7 +3951,9 @@
       "origin": "ARGENTINA",
       "charterer": "CEFETRA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOCHEM LUXEMBOURG",
@@ -3631,7 +3974,9 @@
       "origin": "LAIRCGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "EQUINOX SOFRANO",
@@ -3652,7 +3997,9 @@
       "origin": "ARGENTINA",
       "charterer": "AMAGGI",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "STINGER",
@@ -3673,7 +4020,9 @@
       "origin": "ARGENTINA",
       "charterer": "INVICTUS",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ELDIA",
@@ -3694,7 +4043,9 @@
       "origin": "ARGENTINA",
       "charterer": "OLAM",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "COMMANDER K",
@@ -3715,7 +4066,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "TOKYO SPIRIT",
@@ -3736,7 +4089,9 @@
       "origin": "BOLIVIA",
       "charterer": "CARGILL",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "BOW FRIDA",
@@ -3757,7 +4112,9 @@
       "origin": "ARGENTINA",
       "charterer": "MARVESA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KAPETANIOS",
@@ -3778,7 +4135,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LEGEND I",
@@ -3799,7 +4158,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CUTLASS GALAXY",
@@ -3820,7 +4181,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "DEANA",
@@ -3841,7 +4204,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MTM BIG APPLE",
@@ -3862,7 +4227,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "NORSE BORNHOLM",
@@ -3883,7 +4250,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ULTRA OSORNO",
@@ -3904,7 +4273,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BUNUN NOBLE",
@@ -3925,7 +4296,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "VEZHEN",
@@ -3946,7 +4319,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DAMSGAARD",
@@ -3967,7 +4342,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "RILA",
@@ -3988,7 +4365,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "RILA",
@@ -4009,7 +4388,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LEFKES",
@@ -4030,7 +4411,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TAI STEADINESS",
@@ -4051,7 +4434,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SOFIA",
@@ -4072,7 +4457,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GLORY FIRST",
@@ -4093,7 +4480,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LOYALTY",
@@ -4114,7 +4503,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LIMNIONAS",
@@ -4135,7 +4526,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "PORT IMABARI",
@@ -4156,7 +4549,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "K BEREKET",
@@ -4177,7 +4572,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "FLORA SCHULTE",
@@ -4198,7 +4595,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "HYDRA DAWN",
@@ -4219,7 +4618,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "APOGEE ENDEAVOUR",
@@ -4240,7 +4641,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "DORIC KATANA",
@@ -4261,7 +4664,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ASPEN TRADER",
@@ -4282,7 +4687,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "ASPEN TRADER",
@@ -4303,7 +4710,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "ASPEN TRADER",
@@ -4324,7 +4733,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "WATER LILY",
@@ -4345,7 +4756,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "TRIGON TRADER",
@@ -4366,7 +4779,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "TRIGON TRADER",
@@ -4387,7 +4802,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "LUCKY YOSHI",
@@ -4408,7 +4825,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "NING JING HAI",
@@ -4429,7 +4848,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "MTM BIG APPLE",
@@ -4450,7 +4871,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "BOW FRIDA",
@@ -4471,7 +4894,9 @@
       "origin": "ARGENTINA",
       "charterer": "MARVESA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOW FRIDA",
@@ -4492,7 +4917,9 @@
       "origin": "ARGENTINA",
       "charterer": "MARVESA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "YM QUEST",
@@ -4513,7 +4940,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MEDITERRANEAN SPIRIT",
@@ -4534,7 +4963,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CL KIBOU",
@@ -4555,7 +4986,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SM SAMCHEONPO",
@@ -4576,7 +5009,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BBG SINGAPORE",
@@ -4597,7 +5032,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LOTUS",
@@ -4618,7 +5055,9 @@
       "origin": "ARGENTINA",
       "charterer": "SINOTRANS",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SHI DAI 9",
@@ -4639,7 +5078,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GEM STAR",
@@ -4660,7 +5101,9 @@
       "origin": "ARGENTINA",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "EASTERN VOYAGER",
@@ -4681,7 +5124,9 @@
       "origin": "UNITED ARAB EMIRATES",
       "charterer": "NITRON",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SOZON",
@@ -4702,7 +5147,9 @@
       "origin": "RUSSIAN FEDERATION",
       "charterer": "NITRON",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MUROVDAG",
@@ -4723,7 +5170,9 @@
       "origin": "MOROCCO",
       "charterer": "CARGILL",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TAI HONOR",
@@ -4744,7 +5193,9 @@
       "origin": "LITHUANIA",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TAI HONOR",
@@ -4765,7 +5216,9 @@
       "origin": "LITHUANIA",
       "charterer": "COFCO",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ANHUI",
@@ -4786,7 +5239,9 @@
       "origin": "COLOMBIA",
       "charterer": "AES ARGENTINA GENERACION S.A.",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MAGMA INTEGRITY",
@@ -4807,7 +5262,9 @@
       "origin": "UNITED STATES",
       "charterer": "TERNIUM ARGENTINA SA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CATHERINE",
@@ -4828,7 +5285,9 @@
       "origin": "UNITED STATES",
       "charterer": "TERNIUM ARGENTINA SA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "HANZE GOTEBORG",
@@ -4849,7 +5308,9 @@
       "origin": "UNITED STATES",
       "charterer": "TERNIUM ARGENTINA SA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "UNITY GRIT",
@@ -4870,7 +5331,9 @@
       "origin": "BRAZIL",
       "charterer": "TERNIUM ARGENTINA SA",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ANNELIESE",
@@ -4891,7 +5354,9 @@
       "origin": "CANADA",
       "charterer": "TERNIUM ARGENTINA SA",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MOUNT HOOD",
@@ -4912,7 +5377,9 @@
       "origin": "PERU",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "NORSE BORNHOLM",
@@ -4933,7 +5400,9 @@
       "origin": "UNITED STATES",
       "charterer": "MOSAIC",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CHAMPION BALTIC",
@@ -4954,7 +5423,9 @@
       "origin": "RUSSIAN FEDERATION",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GUO QIANG 8",
@@ -4975,7 +5446,9 @@
       "origin": "AATREGSENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ULTRA LANIN",
@@ -4996,7 +5469,9 @@
       "origin": "PERU",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DOLPHIN 21",
@@ -5017,7 +5492,9 @@
       "origin": "ITALY",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TUNA S",
@@ -5038,7 +5515,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BERGE ASAHIDAKE",
@@ -5059,7 +5538,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MAYE MANX",
@@ -5080,7 +5561,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "en_rada",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TROODOS OAK",
@@ -5101,7 +5584,9 @@
       "origin": "UNITED KINGDOM",
       "charterer": "BUNGE",
       "status": "arribando",
-      "up_river": true
+      "up_river": true,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AFRICAN QUAIL",
@@ -5122,7 +5607,9 @@
       "origin": "ARGENTINA",
       "charterer": "URCEL",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "DIAMOND SKY",
@@ -5143,7 +5630,9 @@
       "origin": "ARGENTINA",
       "charterer": "SEABOARD",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DIAMOND SKY",
@@ -5164,7 +5653,9 @@
       "origin": "ARGENTINA",
       "charterer": "SEABOARD",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "HYGGE",
@@ -5185,7 +5676,9 @@
       "origin": "PARAGUAY",
       "charterer": "INPASA",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PALEXPO",
@@ -5206,7 +5699,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CATHERINE",
@@ -5227,7 +5722,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PEAK MATTERHORN",
@@ -5248,7 +5745,9 @@
       "origin": "BRAZIL",
       "charterer": "SIDERCA",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "JY LAKE",
@@ -5269,7 +5768,9 @@
       "origin": "CANADA",
       "charterer": "SIDERCA",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ZETA P.",
@@ -5290,7 +5791,9 @@
       "origin": "BRAZIL",
       "charterer": "SIDERCA",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STRANDJA",
@@ -5311,7 +5814,9 @@
       "origin": "ARGENTINA",
       "charterer": "NAVIBULGAR",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PAPUA",
@@ -5332,7 +5837,9 @@
       "origin": "ARGENTINA",
       "charterer": "PAN AMERICAN ENERGY",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SAGA ANDORINHA",
@@ -5353,7 +5860,9 @@
       "origin": "UNITED STATES",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TRIGON TRADER",
@@ -5374,7 +5883,9 @@
       "origin": "UNITED STATES",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GALAPAGOS",
@@ -5395,7 +5906,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOCHEM CALLAO",
@@ -5416,7 +5929,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CAPTAIN JOHN P.",
@@ -5437,7 +5952,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CAPTAIN GEORGE",
@@ -5458,7 +5975,9 @@
       "origin": "ARGENTINA",
       "charterer": "CJ INTERNATIONAL",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "YOZAN",
@@ -5479,7 +5998,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ILIA",
@@ -5500,7 +6021,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LEFKADA I",
@@ -5521,7 +6044,9 @@
       "origin": "ARGENTINA",
       "charterer": "ETG WORLD",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GLORIA",
@@ -5542,7 +6067,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "JAL KALP",
@@ -5563,7 +6090,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CARME",
@@ -5584,7 +6113,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BULK ITALY",
@@ -5605,7 +6136,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AGIOS KONSTANTINOS",
@@ -5626,7 +6159,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PALEXPO",
@@ -5647,7 +6182,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "VILLA DESTE",
@@ -5668,7 +6205,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "CAPETAN VASSILIS II",
@@ -5689,7 +6228,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "RUBY",
@@ -5710,7 +6251,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "FG ROTTERDAM",
@@ -5731,7 +6274,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DANK SILVER",
@@ -5752,7 +6297,9 @@
       "origin": "ARGENTINA",
       "charterer": "BUNGE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GINGA ANGEL",
@@ -5773,7 +6320,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KOCIEWIE",
@@ -5794,7 +6343,9 @@
       "origin": "MOROCCO",
       "charterer": "OCP",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GENCO LADDEY",
@@ -5815,7 +6366,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "YARA",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CAPE GULL",
@@ -5836,7 +6389,9 @@
       "origin": "RUSSIAN FEDERATION",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "YM QUEST",
@@ -5857,7 +6412,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "YAMI BENEFIT",
@@ -5878,7 +6435,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SM SAMCHEONPO",
@@ -5899,7 +6458,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BBG SINGAPORE",
@@ -5920,7 +6481,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TEXEL ISLAND",
@@ -5941,7 +6504,9 @@
       "origin": "ARGENTINA",
       "charterer": "AMBEV",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "JAL KAILASH",
@@ -5962,7 +6527,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ANNA SCHULTE",
@@ -5983,7 +6550,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "CL KIWAMI",
@@ -6004,7 +6573,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "SEAVENUS II",
@@ -6025,7 +6596,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "CHAMPION BALTIC",
@@ -6046,7 +6619,9 @@
       "origin": "IMPORT CARGO",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PHAEDRA",
@@ -6067,7 +6642,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BLACK PEARL",
@@ -6088,7 +6665,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "AGIOS IOANNIS",
@@ -6109,7 +6688,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "DIANE",
@@ -6130,7 +6711,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "PORT ESTRELA",
@@ -6151,7 +6734,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DIAMOND SKY",
@@ -6172,7 +6757,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "RUBY",
@@ -6193,7 +6780,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MAGMA INTEGRITY",
@@ -6214,7 +6803,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR WESTPORT",
@@ -6235,7 +6826,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "INGENUITY",
@@ -6256,7 +6849,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TAI KNOWLEDGE",
@@ -6277,7 +6872,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "IONIC KLEOS",
@@ -6298,7 +6895,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "EXPLORER K",
@@ -6319,7 +6918,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TROODOS SUN",
@@ -6340,7 +6941,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TRANSCENDEN EMERALD",
@@ -6361,7 +6964,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "IONIC KIBOU",
@@ -6382,7 +6987,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "FORTUNE KNIGHT",
@@ -6403,7 +7010,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SOUND YOUNG",
@@ -6424,7 +7033,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TAI STEADINESS",
@@ -6445,7 +7056,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ROSCO BANYAN",
@@ -6466,7 +7079,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SERENDIPITY",
@@ -6487,7 +7102,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR CALYPSO",
@@ -6508,7 +7125,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SEA TIGER I",
@@ -6529,7 +7148,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ECHO.GR",
@@ -6550,7 +7171,9 @@
       "origin": "ARGENTINA",
       "charterer": "LDC",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TAHO EUDAIMONIA",
@@ -6571,7 +7194,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "TAHO EUDAIMONIA",
@@ -6592,7 +7217,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LIMNIONAS",
@@ -6613,7 +7240,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PORT IMABARI",
@@ -6634,7 +7263,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GOLDEN DAISY",
@@ -6655,7 +7286,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "DISCOVERER",
@@ -6676,7 +7309,9 @@
       "origin": "ARGENTINA",
       "charterer": "AMBEV",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LEONARDO",
@@ -6697,7 +7332,9 @@
       "origin": "ARGENTINA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR NARVIK",
@@ -6718,7 +7355,9 @@
       "origin": "CHINA",
       "charterer": "G2O",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SAGA BEIJA FLOR",
@@ -6739,7 +7378,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PELICANA",
@@ -6760,7 +7401,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "SAGA ANDORINHA",
@@ -6781,7 +7424,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "OPTIMANA",
@@ -6802,7 +7447,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "GOOD HEART",
@@ -6823,7 +7470,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "ILLOVO RIVER",
@@ -6844,7 +7493,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PVT PERIDOT",
@@ -6865,7 +7516,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MAPLE STAR",
@@ -6886,7 +7539,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "LIVADI",
@@ -6907,7 +7562,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MERAIO",
@@ -6928,7 +7585,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "STRANDJA",
@@ -6949,7 +7608,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "TG CRAB",
@@ -6970,7 +7631,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ECO AVALON",
@@ -6991,7 +7654,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "EVER SOVEREIGN",
@@ -7012,7 +7677,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MARILITA",
@@ -7033,7 +7700,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "ECHO.GR",
@@ -7054,7 +7723,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "MARINOULA",
@@ -7075,7 +7746,9 @@
       "origin": "BOLIVIA",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "FRANZISKA SCHULTE",
@@ -7096,7 +7769,9 @@
       "origin": "BOLIVIA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "MAPLE GRACE",
@@ -7117,7 +7792,9 @@
       "origin": "BOLIVIA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "WHITE DEFENDER",
@@ -7138,7 +7815,9 @@
       "origin": "PARAGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "CHEMSTAR IRIS",
@@ -7159,7 +7838,9 @@
       "origin": "BOLIVIA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "UNITY GRIT",
@@ -7180,7 +7861,9 @@
       "origin": "BRAZIL",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "LHG RIO",
@@ -7201,7 +7884,9 @@
       "origin": "BRAZIL",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "STOLT ZULU",
@@ -7222,7 +7907,9 @@
       "origin": "BOLIVIA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "AVON TRADER",
@@ -7243,7 +7930,9 @@
       "origin": "BRAZIL",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "BOCHEM CALLAO",
@@ -7264,7 +7953,9 @@
       "origin": "BOLIVIA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "MTM KEY WEST",
@@ -7285,7 +7976,9 @@
       "origin": "BOLIVIA",
       "charterer": "NOT AVAILABLE",
       "status": "arribando",
-      "up_river": false
+      "up_river": false,
+      "destination_inferred": null,
+      "destination_source": "nabsa"
     },
     {
       "vessel": "TAHO AUSTRALIA",
@@ -7306,7 +7999,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "EVER SOVEREIGN",
@@ -7327,7 +8022,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MARILITA",
@@ -7348,7 +8045,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MARINOULA",
@@ -7369,7 +8068,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "NESREENA",
@@ -7390,7 +8091,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "PELICANA",
@@ -7411,7 +8114,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SAGA FLORA",
@@ -7432,7 +8137,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SAGA ANDORINHA",
@@ -7453,7 +8160,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "OPTIMANA",
@@ -7474,7 +8183,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SAGA EXPLORER",
@@ -7495,7 +8206,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "SAGA NAVIGATOR",
@@ -7516,7 +8229,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MTM DUBLIN",
@@ -7537,7 +8252,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "HOSANGER",
@@ -7558,7 +8275,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOCHEM CALLAO",
@@ -7579,7 +8298,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "BOCHEM NEW ORLEANS",
@@ -7600,7 +8321,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "ASPEN TRADER",
@@ -7621,7 +8344,9 @@
       "origin": "SPAIN",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "WELLNESS DIVA",
@@ -7642,7 +8367,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "MACURU ARROW",
@@ -7663,7 +8390,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "STAR WAVE",
@@ -7684,7 +8413,9 @@
       "origin": "BRAZIL",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "GLORIOUS MAPLE",
@@ -7705,7 +8436,9 @@
       "origin": "URUGUAY",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "KEN STAR",
@@ -7726,7 +8459,9 @@
       "origin": "NOT AVAILABLE",
       "charterer": "NOT AVAILABLE",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     },
     {
       "vessel": "LUCKY YOSHI",
@@ -7747,7 +8482,9 @@
       "origin": "CHILE",
       "charterer": "SINOTRANS",
       "status": "cargando",
-      "up_river": false
+      "up_river": false,
+      "destination_source": "nabsa",
+      "destination_inferred": null
     }
   ]
 }

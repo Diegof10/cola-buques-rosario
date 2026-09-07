@@ -248,16 +248,16 @@ body { min-height: 100vh; }
 .dest-stat.descarga .dest-stat-value { color: #0d47a1; }
 .dest-stat-hint { color: var(--muted); font-size: .75rem; margin-top: .2rem; }
 .dest-list {
-  max-height: 280px; overflow: auto; -webkit-overflow-scrolling: touch;
+  max-height: 360px; overflow: auto; -webkit-overflow-scrolling: touch;
   border: 1px solid var(--border); border-radius: 12px; padding: .35rem .45rem;
   background: #fff;
 }
 .dest-row {
   display: grid;
-  grid-template-columns: 12px 1fr auto;
+  grid-template-columns: 12px 1fr;
   gap: .55rem;
   align-items: center;
-  padding: .4rem .35rem;
+  padding: .45rem .35rem;
   border-bottom: 1px solid #f0f3f7;
   font-size: .82rem;
 }
@@ -266,8 +266,29 @@ body { min-height: 100vh; }
   width: 10px; height: 10px; border-radius: 50%;
   box-shadow: 0 0 0 1px rgba(11,31,58,.15);
 }
+.dest-rank { min-width: 0; display: flex; flex-direction: column; gap: .22rem; }
+.dest-name-row { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; }
 .dest-name { font-weight: 600; color: var(--navy); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dest-tons { font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dest-bar-track {
+  height: 6px; border-radius: 999px; background: #e8eef5; overflow: hidden;
+}
+.dest-bar-fill { height: 100%; border-radius: 999px; opacity: .85; }
+.badge.estimado {
+  display: inline-block;
+  margin-left: .35rem;
+  padding: .05rem .4rem;
+  border-radius: 999px;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: #6d4c00;
+  background: #fff3cd;
+  border: 1px solid #f0d78c;
+}
+.dest-stat.sin-destino .dest-stat-value { color: #546e7a; }
 
 .world-map-wrap { margin-top: 1rem; }
 #worldMap {

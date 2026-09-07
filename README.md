@@ -48,8 +48,10 @@ La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Co
 
 - Agrega toneladas del lineup Up-River por campo `destination` (NABSA).
 - **Argentina** (y variantes AR/ARG) → tarjeta **Descarga AR** (importación / descarga). No entra en la torta ni en los círculos de exportación.
-- Destino vacío / `NOT AVAILABLE` / desconocido → bucket **Otros** (aparte de la torta de exportación).
-- Torta (canvas) + lista ordenada por toneladas + mapa Leaflet mundial con círculos en centroides de país (solo exportación).
+- Destino vacío / `NOT AVAILABLE` → tarjeta **Sin destino (NABSA)** (aparte de la torta). Nunca se mezcla en la torta como si fueran países desconocidos.
+- Torta: top ~14 países de exportación conocidos + rebanada **Resto países** (otros destinos *con* país, no “Otros”/unknown).
+- Si NABSA no trae destino pero el charterer tiene mapeo conservador (p. ej. AL GHURAIR→UAE, COFCO→China), se completa con `destination_inferred` / `destination_source: inferred` y badge **estimado** en la UI. No se inventa si el charterer también es NOT AVAILABLE.
+- Lista ordenada por toneladas + mapa Leaflet mundial (solo exportación).
 - Respeta filtros de zona / commodity / estado / búsqueda.
 
 ## API local
