@@ -84,7 +84,7 @@
   let worldMapReady = false;
   let pieHitMeta = null;
   let pieHoverBound = false;
-  // Zones the user opened; default closed until they click the chevron.
+  // Keys the user opened (zone or zone||terminal); default ALL closed.
   const arrivalsOpen = new Set();
   const queueOpen = new Set();
   const $ = (id) => document.getElementById(id);
@@ -565,6 +565,39 @@
     renderWorldMap(agg.exports);
   }
 
+
+  function groupByTerminal(rows) {
+    const m = new Map();
+    for (const v of rows) {
+      const t = (v.terminal || v.port || "Sin terminal").trim() || "Sin terminal";
+      if (!m.has(t)) m.set(t, []);
+      m.get(t).push(v);
+    }
+    return [...m.entries()].sort((a, b) => a[0].localeCompare(b[0], "es"));
+  }
+
+  function bindFolds(root, openSet) {
+    root.querySelectorAll("details.port-fold").forEach((el) => {
+      el.addEventListener("toggle", () => {
+        const k = el.getAttribute("data-fold");
+        if (!k) return;
+        if (el.open) openSet.add(k);
+        else openSet.delete(k);
+      });
+    });
+  }
+
+  function foldShell(key, openSet, titleHtml, metaHtml, bodyHtml, extraClass) {
+    const open = openSet.has(key);
+    return (
+      '<details class="port-fold' + (extraClass ? " " + extraClass : "") + '" data-fold="' + escapeHtml(key) + '"' + (open ? " open" : "") + ">" +
+      '<summary class="port-title"><span class="port-title-main"><span class="fold-chevron" aria-hidden="true"></span>' +
+      titleHtml +
+      '</span><span class="meta">' + metaHtml + "</span></summary>" +
+      '<div class="port-fold-body">' + bodyHtml + "</div></details>"
+    );
+  }
+
   function renderQueue(list) {
     const waiting = list.filter((v) => v.status !== "arribando");
     $("queueCount").textContent = String(waiting.length);
@@ -582,39 +615,42 @@
       .map((zone) => {
         const rows = byZone.get(zone);
         const tons = rows.reduce((s, v) => s + (v.tons || 0), 0);
-        const open = queueOpen.has(zone);
-        const cards = rows
-          .map(
-            (v) =>
-              '<div class="vessel-card">' +
-              "<div><div class=\"v-name\">" + escapeHtml(v.vessel) + '</div><div class="v-term">' + escapeHtml(v.terminal || v.port) + "</div></div>" +
-              '<div class="v-meta">' + chip(v.commodity, v.commodity_label) + '<div style="margin-top:.35rem">' + statusBadge(v.status) + "</div></div>" +
-              '<div class="v-meta"><div class="tons">' + fmtTonsShort(v.tons) + "</div><small>" + escapeHtml(v.ops || "") + "</small></div>" +
-              '<div class="v-meta">' + escapeHtml(timing(v)) + '<div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">' + formatDestDisplay(v) + "</div></div>" +
-              "</div>"
-          )
+        const terms = groupByTerminal(rows);
+        const inner = terms
+          .map(([term, trows]) => {
+            const ttons = trows.reduce((s, v) => s + (v.tons || 0), 0);
+            const cards = trows
+              .map(
+                (v) =>
+                  '<div class="vessel-card">' +
+                  "<div><div class=\"v-name\">" + escapeHtml(v.vessel) + '</div><div class="v-term">' + escapeHtml(v.terminal || v.port) + "</div></div>" +
+                  '<div class="v-meta">' + chip(v.commodity, v.commodity_label) + '<div style="margin-top:.35rem">' + statusBadge(v.status) + "</div></div>" +
+                  '<div class="v-meta"><div class="tons">' + fmtTonsShort(v.tons) + "</div><small>" + escapeHtml(v.ops || "") + "</small></div>" +
+                  '<div class="v-meta">' + escapeHtml(timing(v)) + '<div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">' + formatDestDisplay(v) + "</div></div>" +
+                  "</div>"
+              )
+              .join("");
+            return foldShell(
+              zone + "||" + term,
+              queueOpen,
+              escapeHtml(term),
+              trows.length + " · " + fmtTons(ttons),
+              cards,
+              "terminal-fold"
+            );
+          })
           .join("");
-        return (
-          '<details class="port-fold" data-zone="' + escapeHtml(zone) + '"' + (open ? " open" : "") + ">" +
-          '<summary class="port-title"><span class="port-title-main"><span class="fold-chevron" aria-hidden="true"></span>' +
-          escapeHtml(zone) +
-          '</span><span class="meta">' +
-          rows.length +
-          " buques · " +
-          fmtTons(tons) +
-          "</span></summary>" +
-          '<div class="port-fold-body">' + cards + "</div></details>"
+        return foldShell(
+          zone,
+          queueOpen,
+          escapeHtml(zone),
+          rows.length + " buques · " + fmtTons(tons) + " · " + terms.length + " terminal(es)",
+          inner,
+          ""
         );
       })
       .join("");
-    $("queueBody").querySelectorAll("details.port-fold").forEach((el) => {
-      el.addEventListener("toggle", () => {
-        const z = el.getAttribute("data-zone");
-        if (!z) return;
-        if (el.open) queueOpen.add(z);
-        else queueOpen.delete(z);
-      });
-    });
+    bindFolds($("queueBody"), queueOpen);
   }
 
   function renderArrivals(list) {
@@ -641,36 +677,40 @@
     $("arrivalsBody").innerHTML = zones
       .map((zone) => {
         const rows = byZone.get(zone);
-        const open = arrivalsOpen.has(zone);
-        const cards = rows
-          .map(
-            (v) =>
-              '<div class="vessel-card arrival-card">' +
-              "<div><div class=\"v-name\">" + escapeHtml(v.vessel) + '</div><div class="v-term">' + escapeHtml(v.terminal || "") + "</div></div>" +
-              '<div class="v-meta">' + chip(v.commodity, v.commodity_label) + '<div class="tons" style="margin-top:.35rem">' + fmtTonsShort(v.tons) + "</div></div>" +
-              '<div class="v-meta"><strong>' + escapeHtml(v.eta || "ETA") + '</strong><div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">' + escapeHtml(v.charterer || "") + "</div></div>" +
-              "</div>"
-          )
+        const terms = groupByTerminal(rows);
+        const inner = terms
+          .map(([term, trows]) => {
+            const cards = trows
+              .map(
+                (v) =>
+                  '<div class="vessel-card arrival-card">' +
+                  "<div><div class=\"v-name\">" + escapeHtml(v.vessel) + '</div><div class="v-term">' + escapeHtml(v.terminal || "") + "</div></div>" +
+                  '<div class="v-meta">' + chip(v.commodity, v.commodity_label) + '<div class="tons" style="margin-top:.35rem">' + fmtTonsShort(v.tons) + "</div></div>" +
+                  '<div class="v-meta"><strong>' + escapeHtml(v.eta || "ETA") + '</strong><div style="color:var(--muted);font-size:.75rem;margin-top:.2rem">' + escapeHtml(v.charterer || "") + "</div></div>" +
+                  "</div>"
+              )
+              .join("");
+            return foldShell(
+              zone + "||" + term,
+              arrivalsOpen,
+              escapeHtml(term),
+              trows.length + " · ETA ≥ hoy",
+              cards,
+              "terminal-fold"
+            );
+          })
           .join("");
-        return (
-          '<details class="port-fold" data-zone="' + escapeHtml(zone) + '"' + (open ? " open" : "") + ">" +
-          '<summary class="port-title"><span class="port-title-main"><span class="fold-chevron" aria-hidden="true"></span>' +
-          escapeHtml(zone) +
-          '</span><span class="meta">' +
-          rows.length +
-          " · ETA ≥ hoy</span></summary>" +
-          '<div class="port-fold-body">' + cards + "</div></details>"
+        return foldShell(
+          zone,
+          arrivalsOpen,
+          escapeHtml(zone),
+          rows.length + " · " + terms.length + " terminal(es)",
+          inner,
+          ""
         );
       })
       .join("");
-    $("arrivalsBody").querySelectorAll("details.port-fold").forEach((el) => {
-      el.addEventListener("toggle", () => {
-        const z = el.getAttribute("data-zone");
-        if (!z) return;
-        if (el.open) arrivalsOpen.add(z);
-        else arrivalsOpen.delete(z);
-      });
-    });
+    bindFolds($("arrivalsBody"), arrivalsOpen);
   }
 
 

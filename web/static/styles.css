@@ -477,3 +477,49 @@ body { min-height: 100vh; }
   box-shadow: 0 0 0 1px rgba(255,255,255,.35);
 }
 .dest-pie-tooltip .tip-tons { font-weight: 500; opacity: .92; margin-left: .35rem; }
+
+
+/* Fold UX: closed menus by port → terminal */
+.fold-hint {
+  margin: 0;
+  padding: 0 1rem .35rem;
+  color: var(--muted);
+  font-size: .75rem;
+}
+.port-fold > summary.port-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  padding: .65rem .85rem;
+  border-bottom: none;
+  background: #f4f7fb;
+}
+.port-fold > summary.port-title::-webkit-details-marker,
+.port-fold > summary.port-title::marker { display: none; content: ""; }
+.fold-chevron {
+  display: inline-block;
+  width: 0; height: 0;
+  border-left: 7px solid var(--forest);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  transition: transform .15s ease;
+  flex-shrink: 0;
+}
+.port-fold.terminal-fold {
+  margin: .45rem 0 0;
+  border-radius: 10px;
+  background: #fff;
+}
+.port-fold.terminal-fold > summary.port-title {
+  background: #fff;
+  padding: .5rem .7rem;
+  font-size: .88rem;
+}
+.port-fold.terminal-fold .fold-chevron {
+  border-left-color: #5b6b7c;
+}
