@@ -887,20 +887,26 @@
       return;
     }
     $("trucksCount").textContent = fmtNum(t.total_camiones);
-    const max = Math.max(...t.by_product.map((p) => p.camiones), 1);
-    $("truckBars").innerHTML = t.by_product
-      .map(
-        (p) =>
+    const products = (t.by_product || [])
+      .slice()
+      .sort((a, b) => (b.camiones || 0) - (a.camiones || 0) || String(a.label || "").localeCompare(String(b.label || ""), "es"));
+    const max = Math.max(...products.map((p) => p.camiones), 1);
+    $("truckBars").innerHTML = products
+      .map((p) => {
+        const pct = max > 0 ? (100 * (p.camiones || 0)) / max : 0;
+        const width = p.camiones > 0 ? Math.max(pct, 1.2) : 0; // visible stub for small counts
+        return (
           '<div class="bar-row"><div class="bar-label">' +
           escapeHtml(p.label) +
           '</div><div class="bar-track"><div class="bar-fill ' +
-          p.product +
+          escapeHtml(p.product || "") +
           '" style="width:' +
-          (100 * p.camiones) / max +
+          width +
           '%"></div></div><div class="bar-val">' +
           fmtNum(p.camiones) +
           "</div></div>"
-      )
+        );
+      })
       .join("");
     $("truckZones").innerHTML = (t.by_zone || [])
       .map(
@@ -912,7 +918,10 @@
           " camiones</span></div>"
       )
       .join("");
-    $("legend").innerHTML = ["soja|Soja", "maiz|Maíz", "trigo|Trigo", "girasol|Girasol", "sorgo|Sorgo"]
+    const legendOrder = products.length
+      ? products.map((p) => p.product + "|" + (p.label || p.product))
+      : ["maiz|Maíz", "soja|Soja", "trigo|Trigo", "girasol|Girasol", "cebada|Cebada", "sorgo|Sorgo"];
+    $("legend").innerHTML = legendOrder
       .map((x) => {
         const [c, l] = x.split("|");
         return chip(c, l);

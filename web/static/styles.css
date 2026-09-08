@@ -161,12 +161,13 @@ body { min-height: 100vh; }
 .bar-row { display: grid; grid-template-columns: 90px 1fr 70px; gap: .6rem; align-items: center; }
 .bar-label { font-size: .85rem; font-weight: 600; }
 .bar-track { height: 14px; background: #eef2f6; border-radius: 999px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 999px; }
+.bar-fill { height: 100%; border-radius: 999px; min-width: 3px; }
 .bar-fill.soja { background: var(--soja); }
 .bar-fill.maiz { background: var(--maiz); }
 .bar-fill.trigo { background: var(--trigo); }
 .bar-fill.girasol { background: var(--girasol); }
 .bar-fill.sorgo { background: var(--sorgo); }
+.bar-fill.cebada { background: var(--cebada); }
 .bar-val { font-size: .8rem; font-weight: 700; text-align: right; color: var(--navy); }
 
 .zone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem; margin-top: .9rem; }
