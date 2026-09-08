@@ -82,7 +82,9 @@
   let worldMap = null;
   let worldLayer = null;
   let worldMapReady = false;
-  const arrivalsCollapsed = new Set();
+  // Zones the user opened; default closed until they click the chevron.
+  const arrivalsOpen = new Set();
+  const queueOpen = new Set();
   const $ = (id) => document.getElementById(id);
 
   function fmtNum(n) {
@@ -509,6 +511,7 @@
       .map((zone) => {
         const rows = byZone.get(zone);
         const tons = rows.reduce((s, v) => s + (v.tons || 0), 0);
+        const open = queueOpen.has(zone);
         const cards = rows
           .map(
             (v) =>
@@ -521,18 +524,26 @@
           )
           .join("");
         return (
-          '<div class="port-block"><div class="port-title"><span>' +
+          '<details class="port-fold" data-zone="' + escapeHtml(zone) + '"' + (open ? " open" : "") + ">" +
+          '<summary class="port-title"><span class="port-title-main"><span class="fold-chevron" aria-hidden="true"></span>' +
           escapeHtml(zone) +
           '</span><span class="meta">' +
           rows.length +
           " buques · " +
           fmtTons(tons) +
-          "</span></div>" +
-          cards +
-          "</div>"
+          "</span></summary>" +
+          '<div class="port-fold-body">' + cards + "</div></details>"
         );
       })
       .join("");
+    $("queueBody").querySelectorAll("details.port-fold").forEach((el) => {
+      el.addEventListener("toggle", () => {
+        const z = el.getAttribute("data-zone");
+        if (!z) return;
+        if (el.open) queueOpen.add(z);
+        else queueOpen.delete(z);
+      });
+    });
   }
 
   function renderArrivals(list) {
@@ -559,7 +570,7 @@
     $("arrivalsBody").innerHTML = zones
       .map((zone) => {
         const rows = byZone.get(zone);
-        const collapsed = arrivalsCollapsed.has(zone);
+        const open = arrivalsOpen.has(zone);
         const cards = rows
           .map(
             (v) =>
@@ -571,7 +582,7 @@
           )
           .join("");
         return (
-          '<details class="port-fold" data-zone="' + escapeHtml(zone) + '" ' + (collapsed ? "" : "open") + ">" +
+          '<details class="port-fold" data-zone="' + escapeHtml(zone) + '"' + (open ? " open" : "") + ">" +
           '<summary class="port-title"><span class="port-title-main"><span class="fold-chevron" aria-hidden="true"></span>' +
           escapeHtml(zone) +
           '</span><span class="meta">' +
@@ -585,8 +596,8 @@
       el.addEventListener("toggle", () => {
         const z = el.getAttribute("data-zone");
         if (!z) return;
-        if (el.open) arrivalsCollapsed.delete(z);
-        else arrivalsCollapsed.add(z);
+        if (el.open) arrivalsOpen.add(z);
+        else arrivalsOpen.delete(z);
       });
     });
   }
