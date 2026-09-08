@@ -82,6 +82,8 @@
   let worldMap = null;
   let worldLayer = null;
   let worldMapReady = false;
+  let pieHitMeta = null;
+  let pieHoverBound = false;
   // Zones the user opened; default closed until they click the chevron.
   const arrivalsOpen = new Set();
   const queueOpen = new Set();
@@ -371,6 +373,61 @@
     setTimeout(() => worldMap.invalidateSize(), 50);
   }
 
+
+  function ensurePieHover() {
+    if (pieHoverBound) return;
+    const canvas = $("destChart");
+    const tip = $("destPieTooltip");
+    if (!canvas || !tip) return;
+    pieHoverBound = true;
+
+    function hitSlice(ev) {
+      if (!pieHitMeta || !pieHitMeta.slices?.length || pieHitMeta.total <= 0) return null;
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = (pieHitMeta.cx * 2) / rect.width;
+      const scaleY = (pieHitMeta.cy * 2) / rect.height;
+      const x = (ev.clientX - rect.left) * scaleX;
+      const y = (ev.clientY - rect.top) * scaleY;
+      const dx = x - pieHitMeta.cx;
+      const dy = y - pieHitMeta.cy;
+      const dist = Math.hypot(dx, dy);
+      if (dist > pieHitMeta.radius || dist < pieHitMeta.inner) return null;
+      let a = Math.atan2(dy, dx); // -PI..PI, 0 = +x
+      for (const sl of pieHitMeta.slices) {
+        let start = sl.startAng;
+        let end = sl.endAng;
+        // normalize a into [start, start+2PI) then compare
+        let aa = a;
+        while (aa < start) aa += Math.PI * 2;
+        while (aa >= start + Math.PI * 2) aa -= Math.PI * 2;
+        if (aa >= start && aa < end) return sl;
+      }
+      return null;
+    }
+
+    canvas.addEventListener("mousemove", (ev) => {
+      const sl = hitSlice(ev);
+      if (!sl) {
+        tip.classList.remove("visible");
+        canvas.style.cursor = "default";
+        return;
+      }
+      canvas.style.cursor = "pointer";
+      tip.innerHTML =
+        '<span class="tip-swatch" style="background:' + sl.color + '"></span>' +
+        escapeHtml(sl.label) +
+        '<span class="tip-tons">' + escapeHtml(fmtTonsShort(sl.tons)) + "</span>";
+      tip.classList.add("visible");
+      const wrap = canvas.parentElement.getBoundingClientRect();
+      tip.style.left = ev.clientX - wrap.left + "px";
+      tip.style.top = ev.clientY - wrap.top + "px";
+    });
+    canvas.addEventListener("mouseleave", () => {
+      tip.classList.remove("visible");
+      canvas.style.cursor = "default";
+    });
+  }
+
   function drawDestPie(exports) {
     const canvas = $("destChart");
     if (!canvas) return;
@@ -415,12 +472,24 @@
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText("Sin exportaciones", cx, cy);
+      pieHitMeta = { slices: [], total: 0, cx, cy, radius, inner };
+      ensurePieHover();
       return slices;
     }
 
     let angle = -Math.PI / 2;
+    const hitSlices = [];
     for (const sl of slices) {
       const sweep = (sl.tons / total) * Math.PI * 2;
+      const start = angle + Math.PI / 2; // store in same space as hit test (0 at top, clockwise via atan2 remap)
+      // Better: store raw canvas angles and convert in hit test consistently.
+      hitSlices.push({
+        label: sl.label,
+        tons: sl.tons,
+        color: sl.color,
+        startAng: angle,
+        endAng: angle + sweep,
+      });
       ctx.beginPath();
       ctx.moveTo(cx, cy);
       ctx.arc(cx, cy, radius, angle, angle + sweep);
@@ -441,6 +510,8 @@
     ctx.fillStyle = "#5b6b7c";
     ctx.font = "600 11px system-ui,sans-serif";
     ctx.fillText("export tn", cx, cy + 12);
+    pieHitMeta = { slices: hitSlices, total, cx, cy, radius, inner };
+    ensurePieHover();
     return slices;
   }
 

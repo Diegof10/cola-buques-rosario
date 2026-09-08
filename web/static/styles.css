@@ -447,3 +447,33 @@ body { min-height: 100vh; }
   #arrivalsBody { max-height: min(70vh, 520px); overflow: auto; -webkit-overflow-scrolling: touch; }
   #queueBody { max-height: min(70vh, 560px); overflow: auto; -webkit-overflow-scrolling: touch; }
 }
+
+
+/* Pie chart hover tooltip */
+.dest-chart-wrap { position: relative; }
+.dest-pie-tooltip {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  display: none;
+  max-width: min(260px, 80vw);
+  padding: .45rem .65rem;
+  border-radius: 8px;
+  background: #0B1F3A;
+  color: #fff;
+  font: 600 13px/1.35 system-ui, sans-serif;
+  box-shadow: 0 8px 24px rgba(11,31,58,.28);
+  white-space: nowrap;
+  transform: translate(-50%, calc(-100% - 10px));
+}
+.dest-pie-tooltip.visible { display: block; }
+.dest-pie-tooltip .tip-swatch {
+  display: inline-block;
+  width: .65rem;
+  height: .65rem;
+  border-radius: 2px;
+  margin-right: .4rem;
+  vertical-align: -1px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.35);
+}
+.dest-pie-tooltip .tip-tons { font-weight: 500; opacity: .92; margin-left: .35rem; }
