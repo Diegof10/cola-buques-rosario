@@ -519,16 +519,14 @@
     const agg = aggregateDestinations(list);
     $("destCount").textContent = String(agg.exports.length);
     $("destArTons").textContent = fmtTons(agg.arTons);
-    $("destArHint").textContent =
-      agg.arCount + " embarque(s) · destino Argentina = descarga (no export)";
     $("destOtrosTons").textContent = fmtTons(agg.sinDestTons);
-    const sinHint = $("destSinHint") || $("destOtrosHint");
-    if (sinHint) {
-      sinHint.textContent =
-        agg.sinDestCount + " embarque(s) NABSA sin país" +
-        (agg.inferredCount
-          ? " · " + agg.inferredCount + " estimado(s) por charterer ya en la torta"
-          : "");
+    const asideHint = $("destAsideHint");
+    if (asideHint) {
+      asideHint.textContent =
+        "fuera de la torta · " +
+        agg.arCount + " descarga AR · " +
+        agg.sinDestCount + " sin país NABSA" +
+        (agg.inferredCount ? " · " + agg.inferredCount + " estimado(s) en torta" : "");
     }
     const slices = drawDestPie(agg.exports);
     const exportTons = agg.exports.reduce((s, e) => s + e.tons, 0);

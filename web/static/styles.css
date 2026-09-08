@@ -524,3 +524,32 @@ body { min-height: 100vh; }
 .port-fold.terminal-fold .fold-chevron {
   border-left-color: #5b6b7c;
 }
+
+
+/* Compact AR / sin destino under pie (not big panels) */
+.dest-aside-note {
+  margin: .45rem auto 0;
+  max-width: 340px;
+  padding: .35rem .55rem;
+  border-radius: 8px;
+  background: #f4f7fb;
+  border: 1px dashed #d5dde8;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.35;
+  text-align: center;
+}
+.dest-aside-note strong { color: #455a64; font-weight: 700; }
+.dest-aside-note #destArTons,
+.dest-aside-note #destOtrosTons {
+  font-weight: 700;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+.dest-aside-note .dot { margin: 0 .25rem; opacity: .7; }
+.dest-aside-hint {
+  display: block;
+  margin-top: .15rem;
+  font-size: .68rem;
+  opacity: .9;
+}

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cola de Buques · Up-River Rosario</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="/static/styles.css?v=bars1" />
+  <link rel="stylesheet" href="/static/styles.css?v=destaside1" />
 </head>
 <body>
   <header class="app-header">
@@ -95,18 +95,14 @@
           <div class="dest-chart-col">
             <div class="dest-chart-wrap"><canvas id="destChart" width="360" height="360" aria-label="Torta de toneladas por destino"></canvas><div class="dest-pie-tooltip" id="destPieTooltip" role="tooltip"></div></div>
             <p class="dest-chart-note" id="destChartNote">Toneladas a cargar / cargadas · solo destinos extranjeros conocidos (o estimados)</p>
+            <p class="dest-aside-note" id="destAsideNote">
+              <span><strong>Descarga AR</strong> <span id="destArTons">—</span></span>
+              <span class="dot">·</span>
+              <span><strong>Sin destino</strong> <span id="destOtrosTons">—</span></span>
+              <span class="dest-aside-hint" id="destAsideHint">fuera de la torta</span>
+            </p>
           </div>
           <div class="dest-side">
-            <div class="dest-stat descarga">
-              <div class="dest-stat-label">Descarga AR</div>
-              <div class="dest-stat-value" id="destArTons">—</div>
-              <div class="dest-stat-hint" id="destArHint">Importación / descarga en Argentina (no export)</div>
-            </div>
-            <div class="dest-stat otros sin-destino">
-              <div class="dest-stat-label">Sin destino (NABSA)</div>
-              <div class="dest-stat-value" id="destOtrosTons">—</div>
-              <div class="dest-stat-hint" id="destSinHint">NOT AVAILABLE / vacío — no es “Otros países”</div>
-            </div>
             <div class="dest-list" id="destList"></div>
           </div>
         </div>
@@ -156,6 +152,6 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="/static/app.js?v=bars1"></script>
+  <script src="/static/app.js?v=destaside1"></script>
 </body>
 </html>
