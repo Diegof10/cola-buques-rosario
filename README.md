@@ -6,7 +6,7 @@ Muestra:
 - **Cola de buques** agrupada por puerto/zona (San Lorenzo, Timbúes, Rosario, Punta Alvear, Gral. Lagos, Arroyo Seco, etc.)
 - **Próximos arribos** (ETA anunciados, filtra ETA pasadas, agrupados por puerto)
 - **Volumen por destino** (torta + mapa mundial): toneladas agregadas por país de destino NABSA
-- **Camiones** del día por producto y zona (muestra realista si no hay API MAGyP/BCR)
+- **Camiones** del día (MAGyP tabla diaria Rosario y aledaños; mix por producto prorrateado del total nacional)
 - **Cobertura camiones vs demanda**: tn estimadas (30 tn/camión; 25 girasol) vs stock export Up-River; % cobertura, días a cubrir y semáforo Verde/Amarillo/Rojo
 
 ## Requisitos
@@ -35,6 +35,8 @@ Abrir **http://127.0.0.1:5173**
 
 En el sitio desplegado, `GET /api/vessels` refresca NABSA automáticamente si `vessels.json` tiene más de ~45 min (configurable con `VESSELS_MAX_AGE_SEC`) o falta. El refresh corre en background; la API responde de inmediato con el último cache bueno. En Render (FS efímero) escribe bajo `/tmp/cola-buques-data` (o `DATA_DIR`). También: `POST /api/vessels/refresh`, y `GET /api/health` muestra edad del cache.
 
+**Camiones (MAGyP):** `scripts/refresh_data.py` y el refresh de vessels también scrapean la tabla diaria de entrada de camiones/vagones (Rosario y aledaños). El mix por producto se prorratea del total nacional del día (`by_product` suma ≈ Rosario). Endpoints: `GET /api/trucks`, `POST /api/trucks/refresh`. Tras deploy en Render puede hacer falta Manual Deploy / un refresh para que el seed no quede como “current”.
+
 La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Cordoba) sea **anterior a hoy**. Los arribos se agrupan por puerto/zona (secciones colapsables).
 
 `scripts/refresh_data.py` intenta:
@@ -43,7 +45,7 @@ La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Co
 2. Parsear con **pdfplumber** (buque, terminal, ETA/ETB/ETF, toneladas, commodity, destino, charterer)
 3. Clasificar: `cargando` / `en_rada` / `arribando` / `en_cola`
 4. Guardar `data/vessels.json` (+ copia `data/sample-vessels.json`)
-5. Camiones: si MAGyP/BCR no ofrecen JSON usable, mantiene `data/trucks.json` (seed realista) y `data/sample-trucks.json`
+5. Camiones: scrape HTML MAGyP (entrada diaria por zona/producto) → `data/trucks.json` (+ `sample-trucks.json`). Si falla, conserva el JSON anterior y loguea el error (nunca finge que el seed es live).
 
 ## Volumen por destino
 
@@ -74,7 +76,8 @@ Calibración histórica (pie de UI + comentario en código): MAGyP 2025 Rosario 
 
 - `GET /api/health`
 - `GET /api/vessels`
-- `GET /api/trucks`
+- `GET /api/trucks` (MAGyP live o seed previo)
+- `POST /api/trucks/refresh`
 - `GET /api/coverage` (tn camiones est. vs demanda export Up-River + semáforo)
 - `GET /api/terminals` (coords legacy; la UI ya no usa el mapa de terminales Up-River)
 - UI estática en `/` y `/static/*`

@@ -1,117 +1,108 @@
 {
-  "updated_at": "2026-09-06T09:30:44.122845-03:00",
-  "date": "2026-09-06",
-  "source": "sample",
-  "source_note": "Muestra realista (seed). Ejecutar refresh intenta MAGyP/BCR; si falla se conserva este JSON.",
+  "updated_at": "2026-09-08T08:16:42.467618-03:00",
+  "date": "2026-09-07",
+  "source": "magyp",
+  "source_url": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/_archivos/000023_Posici%C3%B3n%20de%20Camiones%20y%20Vagones/000020_Entrada%20diaria%20de%20camiones%20y%20vagones%20a%20puertos,%20f%C3%A1bricas%20y%20molinos%20(por%20zona%20portuaria%20y%20por%20producto).php",
+  "source_note": "Rosario y aledaños (MAGyP). Mix por producto prorrateado del total nacional del día.",
   "unit": "camiones",
-  "total_camiones": 3725,
-  "total_tn": 111200,
+  "total_camiones": 2249,
+  "total_tn": null,
   "by_product": [
     {
-      "product": "soja",
-      "label": "Soja",
-      "camiones": 1840,
-      "tn": 55200
+      "product": "trigo",
+      "label": "Trigo",
+      "camiones": 469
     },
     {
       "product": "maiz",
       "label": "Maíz",
-      "camiones": 1260,
-      "tn": 37800
-    },
-    {
-      "product": "trigo",
-      "label": "Trigo",
-      "camiones": 420,
-      "tn": 12600
+      "camiones": 983
     },
     {
       "product": "sorgo",
       "label": "Sorgo",
-      "camiones": 95,
-      "tn": 2850
+      "camiones": 5
+    },
+    {
+      "product": "cebada",
+      "label": "Cebada",
+      "camiones": 50
+    },
+    {
+      "product": "soja",
+      "label": "Soja",
+      "camiones": 653
     },
     {
       "product": "girasol",
       "label": "Girasol",
-      "camiones": 110,
-      "tn": 2750
+      "camiones": 89
     }
   ],
   "by_zone": [
     {
-      "zone": "San Lorenzo / Timbúes",
-      "camiones": 1680,
+      "zone": "Rosario y aledaños",
+      "camiones": 2249,
       "by_product": {
-        "soja": 820,
-        "maiz": 540,
-        "trigo": 180,
-        "sorgo": 40,
-        "girasol": 50
-      }
-    },
-    {
-      "zone": "Rosario",
-      "camiones": 720,
-      "by_product": {
-        "soja": 380,
-        "maiz": 220,
-        "trigo": 90,
-        "sorgo": 15,
-        "girasol": 15
-      }
-    },
-    {
-      "zone": "Punta Alvear / Gral. Lagos",
-      "camiones": 780,
-      "by_product": {
-        "soja": 400,
-        "maiz": 280,
-        "trigo": 70,
-        "sorgo": 20,
-        "girasol": 25
-      }
-    },
-    {
-      "zone": "Arroyo Seco",
-      "camiones": 545,
-      "by_product": {
-        "soja": 240,
-        "maiz": 220,
-        "trigo": 80,
-        "sorgo": 20,
-        "girasol": 20
+        "trigo": 469,
+        "maiz": 983,
+        "sorgo": 5,
+        "cebada": 50,
+        "soja": 653,
+        "girasol": 89
       }
     }
   ],
   "history_7d": [
     {
-      "date": "2026-08-31",
-      "camiones": 3422
-    },
-    {
       "date": "2026-09-01",
-      "camiones": 3385
+      "camiones": 3223
     },
     {
       "date": "2026-09-02",
-      "camiones": 3348
+      "camiones": 3955
     },
     {
       "date": "2026-09-03",
-      "camiones": 3311
+      "camiones": 4480
     },
     {
       "date": "2026-09-04",
-      "camiones": 3274
+      "camiones": 4431
     },
     {
       "date": "2026-09-05",
-      "camiones": 3237
+      "camiones": 3783
     },
     {
       "date": "2026-09-06",
-      "camiones": 3200
+      "camiones": 0
+    },
+    {
+      "date": "2026-09-07",
+      "camiones": 2249
     }
-  ]
+  ],
+  "national_total": 2942,
+  "raw": {
+    "page_month": "2026-09",
+    "date_cell": "7-sept",
+    "zones": {
+      "rosario": 2249,
+      "darsena": 214,
+      "necochea": 145,
+      "bahia_blanca": 334,
+      "zones_total": 2942
+    },
+    "national_products": {
+      "trigo": 614,
+      "maiz": 1286,
+      "sorgo": 6,
+      "cebada": 66,
+      "soja": 854,
+      "girasol": 116
+    },
+    "vagones": 866,
+    "days_parsed": 7
+  }
 }

@@ -159,9 +159,9 @@ def _ensure_writable_data() -> Path:
     return WRITABLE_DATA
 
 
-def _run_refresh() -> dict[str, Any]:
+def _run_refresh(*, refresh_trucks: bool = True) -> dict[str, Any]:
     global _last_refresh_error, _last_refresh_at, _refresh_in_progress
-    from refresh_data import refresh_vessels  # type: ignore
+    from refresh_data import ensure_trucks, refresh_vessels  # type: ignore
 
     data_dir = _ensure_writable_data()
     try:
@@ -173,6 +173,21 @@ def _run_refresh() -> dict[str, Any]:
         )
         payload = dict(payload)
         payload["refreshed_via"] = "server"
+        if refresh_trucks:
+            try:
+                trucks = ensure_trucks(
+                    data_dir,
+                    write_sample=False,
+                    timeout=min(REFRESH_TIMEOUT_SEC, 45),
+                )
+                payload["trucks_refreshed"] = {
+                    "source": trucks.get("source"),
+                    "date": trucks.get("date"),
+                    "total_camiones": trucks.get("total_camiones"),
+                }
+            except Exception as tex:
+                print(f"[refresh] trucks failed: {tex}", file=sys.stderr)
+                payload["trucks_refreshed"] = {"error": str(tex)}
         _set_vessels_cache(payload, str(data_dir / "vessels.json"))
         _last_refresh_error = None
         _last_refresh_at = payload.get("updated_at")
@@ -276,7 +291,17 @@ def get_vessels_payload(*, force_refresh: bool = False) -> dict[str, Any]:
 
 
 def _load_static(name: str) -> JSONResponse:
-    """Load trucks/terminals from writable then bundled data."""
+    """Load trucks/terminals from writable then bundled data.
+
+    Prefer freshest trucks.json (by updated_at) over sample-* so a live MAGyP
+    scrape is never shadowed by an older sample seed.
+    """
+    if name == "trucks.json":
+        payload = _load_trucks_payload()
+        if payload:
+            return JSONResponse(payload)
+        return JSONResponse({"error": "missing trucks.json"}, status_code=404)
+
     for base in (WRITABLE_DATA, BUNDLED_DATA):
         path = base / name
         if path.exists():
@@ -355,13 +380,34 @@ def _truck_factor(product: str) -> int:
 
 
 def _load_trucks_payload() -> dict[str, Any] | None:
-    for base in (WRITABLE_DATA, BUNDLED_DATA):
-        for name in ("trucks.json", "sample-trucks.json"):
-            path = base / name
-            payload = _read_json(path)
-            if payload:
-                return payload
-    return None
+    """Prefer freshest trucks.json (writable then bundled); avoid stale sample when live exists."""
+    best: dict[str, Any] | None = None
+    best_ts = -1.0
+    best_rank = 99
+    candidates = [
+        (WRITABLE_DATA / "trucks.json", 0),
+        (BUNDLED_DATA / "trucks.json", 1),
+        (WRITABLE_DATA / "sample-trucks.json", 2),
+        (BUNDLED_DATA / "sample-trucks.json", 3),
+    ]
+    for path, rank in candidates:
+        payload = _read_json(path)
+        if not payload:
+            continue
+        ts = _parse_updated_at(payload)
+        if ts is None:
+            try:
+                ts = path.stat().st_mtime
+            except OSError:
+                ts = 0.0
+        # Prefer magyp over sample when timestamps are close/equal.
+        src_bonus = 0.5 if payload.get("source") == "magyp" else 0.0
+        score = float(ts) + src_bonus
+        if score > best_ts or (score == best_ts and rank < best_rank):
+            best_ts = score
+            best_rank = rank
+            best = payload
+    return best
 
 
 def estimate_truck_tn(trucks: dict[str, Any] | None) -> dict[str, Any]:
@@ -507,7 +553,7 @@ def compute_coverage(
 
 @app.on_event("startup")
 def _startup_refresh() -> None:
-    # Warm cache from disk; kick a background NABSA refresh if stale/missing.
+    # Warm cache from disk; kick a background NABSA (+ trucks) refresh if stale/missing.
     disk, path = _load_vessels_from_disk()
     if disk is not None:
         _set_vessels_cache(disk, str(path) if path else None)
@@ -517,7 +563,13 @@ def _startup_refresh() -> None:
             mtime = path.stat().st_mtime
         except OSError:
             pass
-    if disk is None or _is_stale(disk, mtime):
+    trucks = _load_trucks_payload()
+    trucks_stale = (
+        trucks is None
+        or trucks.get("source") != "magyp"
+        or _is_stale(trucks)
+    )
+    if disk is None or _is_stale(disk, mtime) or trucks_stale:
         _trigger_background_refresh()
 
 
@@ -588,6 +640,31 @@ def vessels_refresh():
 @app.get("/api/trucks")
 def trucks():
     return _load_static("trucks.json")
+
+
+@app.post("/api/trucks/refresh")
+def trucks_refresh():
+    """Force MAGyP trucks scrape into writable data dir."""
+    from refresh_data import ensure_trucks  # type: ignore
+
+    data_dir = _ensure_writable_data()
+    try:
+        payload = ensure_trucks(
+            data_dir,
+            write_sample=False,
+            timeout=min(REFRESH_TIMEOUT_SEC, 45),
+        )
+        return {
+            "ok": payload.get("source") == "magyp",
+            "source": payload.get("source"),
+            "date": payload.get("date"),
+            "total_camiones": payload.get("total_camiones"),
+            "national_total": payload.get("national_total"),
+            "updated_at": payload.get("updated_at"),
+            "source_note": payload.get("source_note"),
+        }
+    except Exception as ex:
+        return JSONResponse({"ok": False, "error": str(ex)}, status_code=502)
 
 
 @app.get("/api/terminals")

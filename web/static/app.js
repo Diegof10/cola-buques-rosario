@@ -834,9 +834,11 @@
     $("kpiDaysHint").textContent = sem.hint || "Demanda ÷ tn camiones";
 
     const sampleCaveat =
-      trucksPayload?.source === "sample"
-        ? " Camiones: datos muestra (no MAGyP en vivo)."
-        : "";
+      trucksPayload?.source === "magyp"
+        ? " Camiones: MAGyP en vivo (" + (trucksPayload.date || "") + ")."
+        : trucksPayload?.source === "sample"
+          ? " Camiones: datos muestra (no MAGyP en vivo)."
+          : "";
     $("coverageFootnote").textContent =
       "Cobertura: tn camiones = Σ by_product.camiones × 30 tn (girasol × 25). " +
       "Demanda = tn anunciadas Up-River (soja, maíz, trigo, girasol, sorgo, cebada) excl. Argentina / Descarga AR. " +
@@ -852,7 +854,19 @@
     const tons = list.reduce((s, v) => s + (v.tons || 0), 0);
     $("kpiCola").textContent = fmtNum(uniqueCola.size);
     $("kpiTons").textContent = tons >= 1000 ? fmtNum(Math.round(tons / 1000)) + "k" : fmtNum(tons);
-    if (trucksPayload) $("kpiTrucks").textContent = fmtNum(trucksPayload.total_camiones);
+    if (trucksPayload) {
+      $("kpiTrucks").textContent = fmtNum(trucksPayload.total_camiones);
+      const hint = $("kpiTrucksHint") || document.querySelector("#kpis .kpi:nth-child(3) .hint");
+      if (hint) {
+        if (trucksPayload.source === "magyp") {
+          hint.textContent = "MAGyP · Rosario" + (trucksPayload.date ? " · " + trucksPayload.date : "");
+        } else if (trucksPayload.source === "sample") {
+          hint.textContent = "Gran Rosario (muestra)";
+        } else {
+          hint.textContent = "Gran Rosario";
+        }
+      }
+    }
     const updated = vesselsPayload?.updated_at || trucksPayload?.updated_at;
     $("kpiUpdated").textContent = toAR(updated);
     const live = vesselsPayload?.live && vesselsPayload?.parse_ok;
@@ -904,10 +918,18 @@
         return chip(c, l);
       })
       .join("");
-    $("truckNote").textContent =
-      t.source === "sample"
-        ? "Camiones: muestra realista local (MAGyP/BCR sin API estructurada)."
-        : "Fuente camiones: " + t.source;
+    let note;
+    if (t.source === "magyp") {
+      note =
+        "Fuente: MAGyP · Rosario y aledaños · " +
+        (t.date || "") +
+        (t.source_note ? " — " + t.source_note : "");
+    } else if (t.source === "sample") {
+      note = "Camiones: muestra realista local (MAGyP scrape no disponible).";
+    } else {
+      note = "Fuente camiones: " + (t.source || "desconocida");
+    }
+    $("truckNote").textContent = note;
   }
 
   function renderAll() {

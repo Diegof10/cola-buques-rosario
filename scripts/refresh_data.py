@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fetch NABSA lineup PDF and write data/vessels.json (+ optional sailed).
-Also writes/keeps data/trucks.json (seed if MAGyP/BCR scrape fails).
+Also fetches MAGyP daily trucks HTML → data/trucks.json (keeps previous on scrape failure).
 """
 from __future__ import annotations
 
@@ -290,8 +290,305 @@ def parse_lineup(pdf_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
 
 
 
+MAGYP_TRUCKS_URL = (
+    "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/"
+    "_archivos/000023_Posici%C3%B3n%20de%20Camiones%20y%20Vagones/"
+    "000020_Entrada%20diaria%20de%20camiones%20y%20vagones%20a%20puertos,"
+    "%20f%C3%A1bricas%20y%20molinos%20(por%20zona%20portuaria%20y%20por%20producto).php"
+)
+
+MAGYP_PRODUCTS = (
+    ("trigo", "Trigo"),
+    ("maiz", "Maíz"),
+    ("sorgo", "Sorgo"),
+    ("cebada", "Cebada"),
+    ("soja", "Soja"),
+    ("girasol", "Girasol"),
+)
+
+_ES_MONTHS = {
+    "enero": 1,
+    "ene": 1,
+    "febrero": 2,
+    "feb": 2,
+    "marzo": 3,
+    "mar": 3,
+    "abril": 4,
+    "abr": 4,
+    "mayo": 5,
+    "may": 5,
+    "junio": 6,
+    "jun": 6,
+    "julio": 7,
+    "jul": 7,
+    "agosto": 8,
+    "ago": 8,
+    "septiembre": 9,
+    "sept": 9,
+    "sep": 9,
+    "octubre": 10,
+    "oct": 10,
+    "noviembre": 11,
+    "nov": 11,
+    "diciembre": 12,
+    "dic": 12,
+}
+
+
+def _parse_magyp_int(raw: str | None) -> int:
+    """Parse MAGyP ints with dot thousands: '3.223' → 3223."""
+    s = str(raw or "").strip().replace("\xa0", "").replace(" ", "")
+    if not s or s in {"-", "—"}:
+        return 0
+    s = s.replace(".", "")
+    try:
+        return int(s)
+    except ValueError:
+        digits = re.sub(r"[^\d]", "", s)
+        return int(digits) if digits else 0
+
+
+def _parse_month_year_header(text: str) -> tuple[int, int] | None:
+    m = re.search(
+        r"(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\s+(\d{4})",
+        text or "",
+        re.I,
+    )
+    if not m:
+        return None
+    month = _ES_MONTHS.get(m.group(1).lower())
+    if not month:
+        return None
+    return int(m.group(2)), month
+
+
+def _parse_day_cell(cell: str, page_year: int, page_month: int) -> str | None:
+    """'1-sept' + Septiembre 2026 → '2026-09-01'."""
+    m = re.fullmatch(
+        r"(\d{1,2})\s*[-/]\s*([a-záéíóúñ]+)",
+        (cell or "").strip().lower(),
+        re.I,
+    )
+    if not m:
+        return None
+    day = int(m.group(1))
+    abbr = (
+        m.group(2)
+        .replace("á", "a")
+        .replace("é", "e")
+        .replace("í", "i")
+        .replace("ó", "o")
+        .replace("ú", "u")
+    )
+    month = _ES_MONTHS.get(abbr) or page_month
+    year = page_year
+    # Month wrap near year boundary (e.g. page Enero, cell 31-dic)
+    if page_month == 1 and month == 12:
+        year = page_year - 1
+    elif page_month == 12 and month == 1:
+        year = page_year + 1
+    try:
+        from datetime import date as _date
+
+        return _date(year, month, day).isoformat()
+    except ValueError:
+        return None
+
+
+class _MagypTableParser:
+    """Minimal HTML table extractor (stdlib html.parser)."""
+
+    def __init__(self) -> None:
+        from html.parser import HTMLParser
+
+        outer = self
+
+        class _P(HTMLParser):
+            def __init__(self) -> None:
+                super().__init__()
+                self.rows: list[list[str]] = []
+                self._cur: list[str] = []
+                self._cell: list[str] = []
+                self._in_cell = False
+
+            def handle_starttag(self, tag, attrs):  # type: ignore[no-untyped-def]
+                if tag in ("td", "th"):
+                    self._in_cell = True
+                    self._cell = []
+                elif tag == "br" and self._in_cell:
+                    self._cell.append(" ")
+
+            def handle_endtag(self, tag):  # type: ignore[no-untyped-def]
+                if tag in ("td", "th") and self._in_cell:
+                    text = re.sub(r"\s+", " ", "".join(self._cell)).strip()
+                    self._cur.append(text)
+                    self._in_cell = False
+                elif tag == "tr":
+                    if self._cur:
+                        self.rows.append(self._cur)
+                    self._cur = []
+
+            def handle_data(self, data):  # type: ignore[no-untyped-def]
+                if self._in_cell:
+                    self._cell.append(data)
+
+        self._parser = _P()
+
+    def feed(self, html: str) -> list[list[str]]:
+        self._parser.feed(html)
+        self._parser.close()
+        return self._parser.rows
+
+
+def _scale_products_to_rosario(
+    national_products: dict[str, int], rosario: int, national_total: int
+) -> list[dict[str, Any]]:
+    """Prorrateo nacional → Rosario; suma exacta = rosario (ajuste en el mayor)."""
+    labels = {k: lab for k, lab in MAGYP_PRODUCTS}
+    order = [k for k, _ in MAGYP_PRODUCTS]
+    if rosario <= 0:
+        return [{"product": k, "label": labels[k], "camiones": 0} for k in order]
+    if national_total <= 0:
+        # Sin total nacional: todo en soja (fallback)
+        out = [{"product": k, "label": labels[k], "camiones": 0} for k in order]
+        out[order.index("soja")]["camiones"] = rosario
+        return out
+    scale = rosario / national_total
+    raw = {k: national_products.get(k, 0) * scale for k in order}
+    rounded = {k: int(round(v)) for k, v in raw.items()}
+    diff = rosario - sum(rounded.values())
+    if diff != 0:
+        # Ajustar el producto con mayor conteo (o soja si empate/cero)
+        pivot = max(order, key=lambda k: (rounded[k], raw[k], k == "soja"))
+        rounded[pivot] = max(0, rounded[pivot] + diff)
+        # Si el ajuste dejó suma incorrecta por clamp, repartir en otro
+        diff2 = rosario - sum(rounded.values())
+        if diff2 != 0:
+            for k in sorted(order, key=lambda x: -rounded[x]):
+                if k == pivot:
+                    continue
+                rounded[k] = max(0, rounded[k] + diff2)
+                break
+    return [{"product": k, "label": labels[k], "camiones": rounded[k]} for k in order]
+
+
+def parse_magyp_trucks_html(html: str, *, source_url: str = MAGYP_TRUCKS_URL) -> dict[str, Any]:
+    """Parse MAGyP daily trucks HTML table into trucks.json schema."""
+    rows = _MagypTableParser().feed(html)
+    page_year: int | None = None
+    page_month: int | None = None
+    for row in rows:
+        for cell in row:
+            my = _parse_month_year_header(cell)
+            if my:
+                page_year, page_month = my
+                break
+        if page_year:
+            break
+    if not page_year or not page_month:
+        raise ValueError("MAGyP trucks: no se encontró cabecera de mes/año")
+
+    day_rows: list[dict[str, Any]] = []
+    for row in rows:
+        if len(row) < 14:
+            continue
+        date_iso = _parse_day_cell(row[0], page_year, page_month)
+        if not date_iso:
+            continue
+        rosario = _parse_magyp_int(row[1])
+        darsena = _parse_magyp_int(row[2])
+        necochea = _parse_magyp_int(row[3])
+        bb = _parse_magyp_int(row[4])
+        zones_total = _parse_magyp_int(row[5])
+        products = {
+            "trigo": _parse_magyp_int(row[6]),
+            "maiz": _parse_magyp_int(row[7]),
+            "sorgo": _parse_magyp_int(row[8]),
+            "cebada": _parse_magyp_int(row[9]),
+            "soja": _parse_magyp_int(row[10]),
+            "girasol": _parse_magyp_int(row[11]),
+        }
+        national_total = _parse_magyp_int(row[12])
+        vagones = _parse_magyp_int(row[13]) if len(row) > 13 else 0
+        day_rows.append(
+            {
+                "date": date_iso,
+                "rosario": rosario,
+                "darsena": darsena,
+                "necochea": necochea,
+                "bahia_blanca": bb,
+                "zones_total": zones_total,
+                "products": products,
+                "national_total": national_total,
+                "vagones": vagones,
+                "date_cell": row[0],
+            }
+        )
+
+    if not day_rows:
+        raise ValueError("MAGyP trucks: sin filas diarias parseables")
+
+    day_rows.sort(key=lambda r: r["date"])
+    chosen = None
+    for row in reversed(day_rows):
+        if row["rosario"] > 0:
+            chosen = row
+            break
+    if chosen is None:
+        raise ValueError("MAGyP trucks: ninguna fila con Rosario > 0")
+
+    by_product = _scale_products_to_rosario(
+        chosen["products"], chosen["rosario"], chosen["national_total"]
+    )
+    by_product_map = {p["product"]: p["camiones"] for p in by_product}
+
+    # history_7d: últimos 7 días de la tabla hasta la fecha elegida (incluye ceros)
+    hist_candidates = [r for r in day_rows if r["date"] <= chosen["date"]]
+    hist_slice = hist_candidates[-7:]
+    history_7d = [{"date": r["date"], "camiones": r["rosario"]} for r in hist_slice]
+
+    payload: dict[str, Any] = {
+        "updated_at": ar_tz_now().isoformat(),
+        "date": chosen["date"],
+        "source": "magyp",
+        "source_url": source_url,
+        "source_note": (
+            "Rosario y aledaños (MAGyP). Mix por producto prorrateado del total nacional del día."
+        ),
+        "unit": "camiones",
+        "total_camiones": chosen["rosario"],
+        "total_tn": None,
+        "by_product": by_product,
+        "by_zone": [
+            {
+                "zone": "Rosario y aledaños",
+                "camiones": chosen["rosario"],
+                "by_product": by_product_map,
+            }
+        ],
+        "history_7d": history_7d,
+        "national_total": chosen["national_total"],
+        "raw": {
+            "page_month": f"{page_year}-{page_month:02d}",
+            "date_cell": chosen["date_cell"],
+            "zones": {
+                "rosario": chosen["rosario"],
+                "darsena": chosen["darsena"],
+                "necochea": chosen["necochea"],
+                "bahia_blanca": chosen["bahia_blanca"],
+                "zones_total": chosen["zones_total"],
+            },
+            "national_products": chosen["products"],
+            "vagones": chosen["vagones"],
+            "days_parsed": len(day_rows),
+        },
+    }
+    return payload
+
+
 def _history_7d(today: str) -> list[dict[str, Any]]:
     from datetime import date, timedelta
+
     d0 = date.fromisoformat(today)
     return [
         {"date": (d0 - timedelta(days=i)).isoformat(), "camiones": 3200 + (i * 37) % 400}
@@ -336,7 +633,7 @@ def seed_trucks() -> dict[str, Any]:
         "updated_at": ar_tz_now().isoformat(),
         "date": today,
         "source": "sample",
-        "source_note": "Muestra realista (seed). Ejecutar refresh intenta MAGyP/BCR; si falla se conserva este JSON.",
+        "source_note": "Muestra realista (seed). Ejecutar refresh intenta MAGyP; si falla se conserva este JSON.",
         "unit": "camiones",
         "total_camiones": sum(p["camiones"] for p in by_product),
         "total_tn": sum(p["tn"] for p in by_product),
@@ -346,20 +643,34 @@ def seed_trucks() -> dict[str, Any]:
     }
 
 
-def try_fetch_trucks() -> dict[str, Any] | None:
-    """Best-effort: MAGyP / BCR pages are dynamic; return None to keep seed."""
-    candidates = [
-        "https://www.magyp.gob.ar/",
-        "https://www.bcr.com.ar/",
-    ]
-    for url in candidates:
-        try:
-            r = requests.get(url, timeout=20, headers={"User-Agent": "cola-buques-rosario/1.0"})
-            if r.status_code == 200:
-                print(f"Reachable {url} (no structured truck API — keeping seed trucks)")
-        except Exception as ex:
-            print(f"Truck source skip {url}: {ex}")
-    return None
+def try_fetch_trucks(*, timeout: int = 45) -> dict[str, Any] | None:
+    """Fetch+parse MAGyP daily trucks table. Returns None on failure (keep previous)."""
+    import urllib.error
+    import urllib.request
+
+    url = MAGYP_TRUCKS_URL
+    try:
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "cola-buques-rosario/1.0",
+                "Accept": "text/html,application/xhtml+xml",
+                "Accept-Language": "es-AR,es;q=0.9",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read()
+            charset = resp.headers.get_content_charset() or "utf-8"
+        html = raw.decode(charset, errors="replace")
+        payload = parse_magyp_trucks_html(html, source_url=url)
+        print(
+            f"OK MAGyP trucks date={payload['date']} "
+            f"rosario={payload['total_camiones']} national={payload.get('national_total')}"
+        )
+        return payload
+    except Exception as ex:
+        print(f"FAIL MAGyP trucks scrape: {ex}", file=sys.stderr)
+        return None
 
 
 def build_vessels_payload(
@@ -471,32 +782,56 @@ def refresh_vessels(
     return payload
 
 
-def ensure_trucks(data_dir: Path | None = None) -> dict[str, Any]:
+def ensure_trucks(
+    data_dir: Path | None = None,
+    *,
+    write_sample: bool = True,
+    timeout: int = 45,
+) -> dict[str, Any]:
+    """Refresh trucks from MAGyP. On success write trucks.json (+ sample). On failure keep previous."""
     data_dir = Path(data_dir) if data_dir else DATA
     data_dir.mkdir(parents=True, exist_ok=True)
     trucks_path = data_dir / "trucks.json"
-    live_trucks = try_fetch_trucks()
+    live_trucks = try_fetch_trucks(timeout=timeout)
     if live_trucks:
-        trucks_path.write_text(json.dumps(live_trucks, ensure_ascii=False, indent=2), encoding="utf-8")
+        blob = json.dumps(live_trucks, ensure_ascii=False, indent=2)
+        trucks_path.write_text(blob, encoding="utf-8")
+        if write_sample:
+            try:
+                (data_dir / "sample-trucks.json").write_text(blob, encoding="utf-8")
+            except OSError as ex:
+                print(f"WARN could not write sample-trucks.json: {ex}", file=sys.stderr)
+        print(f"Wrote {trucks_path} (source=magyp date={live_trucks.get('date')})")
         return live_trucks
-    if not trucks_path.exists():
-        # Prefer bundled sample if present
-        for candidate in (DATA / "trucks.json", DATA / "sample-trucks.json"):
-            if candidate.exists() and candidate != trucks_path:
-                text = candidate.read_text(encoding="utf-8")
-                trucks_path.write_text(text, encoding="utf-8")
-                return json.loads(text)
-        seed = seed_trucks()
-        trucks_path.write_text(json.dumps(seed, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # Failure: never silently pretend seed is live.
+    if trucks_path.exists():
+        prev = json.loads(trucks_path.read_text(encoding="utf-8"))
+        src = prev.get("source", "?")
+        print(
+            f"MAGyP trucks scrape failed — keeping previous trucks.json "
+            f"(source={src} date={prev.get('date')})",
+            file=sys.stderr,
+        )
+        return prev
+
+    for candidate in (DATA / "trucks.json", DATA / "sample-trucks.json"):
+        if candidate.exists() and candidate != trucks_path:
+            text = candidate.read_text(encoding="utf-8")
+            trucks_path.write_text(text, encoding="utf-8")
+            print(f"MAGyP trucks scrape failed — seeded from {candidate.name}", file=sys.stderr)
+            return json.loads(text)
+
+    seed = seed_trucks()
+    blob = json.dumps(seed, ensure_ascii=False, indent=2)
+    trucks_path.write_text(blob, encoding="utf-8")
+    if write_sample:
         try:
-            (data_dir / "sample-trucks.json").write_text(
-                json.dumps(seed, ensure_ascii=False, indent=2), encoding="utf-8"
-            )
+            (data_dir / "sample-trucks.json").write_text(blob, encoding="utf-8")
         except OSError:
             pass
-        print("Wrote seed trucks.json")
-        return seed
-    return json.loads(trucks_path.read_text(encoding="utf-8"))
+    print("MAGyP trucks scrape failed — wrote seed trucks.json (source=sample)", file=sys.stderr)
+    return seed
 
 
 def main() -> int:
