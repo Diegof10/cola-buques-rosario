@@ -92,3 +92,11 @@ Filtros: puerto/zona, commodity, estado, búsqueda por buque (sincronizados con 
 
 - Sin logos oficiales BCR/NABSA.
 - Pie: Fuentes NABSA · MAGyP · BCR · Prototipo local DHF
+
+
+## Deploy (Vercel)
+
+- Entry: `api/index.py` (FastAPI ASGI).
+- Config: `vercel.json` (60s functions, weekday crons for NABSA/MAGyP refresh).
+- Production URL after link: `https://cola-buques-rosario.vercel.app` (or the alias Vercel assigns).
+- Seed JSON in `data/` ships with each deploy; live refresh uses `/tmp` and Cron `GET /api/*/refresh`.

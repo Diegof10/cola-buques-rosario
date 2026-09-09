@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.py"
+    }
+  ],
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "memory": 1024,
+      "includeFiles": "{data/**,web/**,scripts/**,server.py}"
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/vessels/refresh",
+      "schedule": "15 10 * * 1-5"
+    },
+    {
+      "path": "/api/trucks/refresh",
+      "schedule": "20 10 * * 1-5"
+    }
+  ]
+}

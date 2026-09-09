@@ -1,0 +1,12 @@
+.venv
+cloudflared
+__pycache__
+**/__pycache__
+*.pyc
+.git
+screenshot-*.png
+dev.sh
+start-tunnel.sh
+render.yaml
+Procfile
+runtime.txt

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """API + static UI for Cola de Buques Rosario (Up-River).
 
-On Render the filesystem is ephemeral/read-only for the app tree, so vessel
-refreshes write under /tmp (or an in-memory cache) when data/ is not writable.
+On Render/Vercel the app tree is read-only; vessel/truck refreshes write under
+/tmp (or DATA_DIR). On Vercel serverless /tmp is per-instance — the weekday
+GitHub seed push + Vercel Cron keep data fresh.
 """
 from __future__ import annotations
 
@@ -600,7 +601,7 @@ def vessels(refresh: int = 0):
     return JSONResponse(payload)
 
 
-@app.post("/api/vessels/refresh")
+@app.api_route("/api/vessels/refresh", methods=["GET", "POST"])
 def vessels_refresh():
     """Force a NABSA refresh (sync, may take ~30–50s)."""
     global _refresh_in_progress
@@ -642,7 +643,7 @@ def trucks():
     return _load_static("trucks.json")
 
 
-@app.post("/api/trucks/refresh")
+@app.api_route("/api/trucks/refresh", methods=["GET", "POST"])
 def trucks_refresh():
     """Force MAGyP trucks scrape into writable data dir."""
     from refresh_data import ensure_trucks  # type: ignore
