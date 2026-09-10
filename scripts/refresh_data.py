@@ -581,6 +581,17 @@ def parse_magyp_trucks_html(html: str, *, source_url: str = MAGYP_TRUCKS_URL) ->
             "national_products": chosen["products"],
             "vagones": chosen["vagones"],
             "days_parsed": len(day_rows),
+            # National camiones by product for each day on the page (stock ledger).
+            "national_days": [
+                {
+                    "date": r["date"],
+                    "products": dict(r["products"]),
+                    "national_total": r["national_total"],
+                    "rosario": r["rosario"],
+                }
+                for r in day_rows
+                if str(r["date"]).startswith(f"{page_year}-{page_month:02d}")
+            ],
         },
     }
     return payload
@@ -782,6 +793,111 @@ def refresh_vessels(
     return payload
 
 
+
+STOCK_LEDGER_PRODUCTS = ("maiz", "soja", "trigo", "girasol", "sorgo", "cebada")
+
+
+def _ledger_day_entry(products: dict[str, Any], national_total: int) -> dict[str, int]:
+    entry = {k: int(products.get(k) or 0) for k in STOCK_LEDGER_PRODUCTS}
+    entry["national_total"] = int(national_total or 0)
+    return entry
+
+
+def update_truck_inflow_ledger(
+    data_dir: Path | None,
+    trucks: dict[str, Any],
+) -> dict[str, Any] | None:
+    """Upsert national MAGyP products into truck_inflow_ledger.json.
+
+    Uses raw.national_days (full month table) when present; else raw.national_products
+    for trucks.date. Rolls the ledger when the calendar month changes.
+    """
+    if not trucks or trucks.get("source") not in {"magyp", "sample"}:
+        # Still accept magyp-shaped payloads even if source missing.
+        raw = trucks.get("raw") if trucks else None
+        if not isinstance(raw, dict) or not (
+            raw.get("national_products") or raw.get("national_days")
+        ):
+            return None
+
+    data_dir = Path(data_dir) if data_dir else DATA
+    data_dir.mkdir(parents=True, exist_ok=True)
+    ledger_path = data_dir / "truck_inflow_ledger.json"
+
+    date_str = str(trucks.get("date") or "").strip()
+    if not date_str or len(date_str) < 7:
+        print("WARN ledger: trucks.date missing — skip", file=sys.stderr)
+        return None
+    month = date_str[:7]
+    baseline_as_of = f"{month}-01"
+
+    ledger: dict[str, Any]
+    if ledger_path.exists():
+        try:
+            ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+        except Exception:
+            ledger = {}
+    else:
+        # Prefer bundled seed when writable copy missing (Vercel /tmp).
+        bundled = DATA / "truck_inflow_ledger.json"
+        if bundled.exists() and bundled != ledger_path:
+            try:
+                ledger = json.loads(bundled.read_text(encoding="utf-8"))
+            except Exception:
+                ledger = {}
+        else:
+            ledger = {}
+
+    if ledger.get("month") != month:
+        ledger = {
+            "month": month,
+            "baseline_as_of": baseline_as_of,
+            "days": {},
+            "updated_at": ar_tz_now().isoformat(),
+        }
+    else:
+        ledger.setdefault("month", month)
+        ledger.setdefault("baseline_as_of", baseline_as_of)
+        ledger.setdefault("days", {})
+
+    days: dict[str, Any] = dict(ledger.get("days") or {})
+    raw = trucks.get("raw") or {}
+    national_days = raw.get("national_days") or []
+    upserted = 0
+    if isinstance(national_days, list) and national_days:
+        for row in national_days:
+            if not isinstance(row, dict):
+                continue
+            d_iso = str(row.get("date") or "").strip()
+            if not d_iso or not d_iso.startswith(month):
+                continue
+            products = row.get("products") or {}
+            days[d_iso] = _ledger_day_entry(products, int(row.get("national_total") or 0))
+            upserted += 1
+    else:
+        products = raw.get("national_products") or {}
+        if products:
+            days[date_str] = _ledger_day_entry(
+                products, int(trucks.get("national_total") or 0)
+            )
+            upserted = 1
+
+    if upserted == 0:
+        print("WARN ledger: no national products to upsert", file=sys.stderr)
+        return ledger if ledger.get("days") else None
+
+    ledger["days"] = dict(sorted(days.items()))
+    ledger["updated_at"] = ar_tz_now().isoformat()
+    ledger_path.write_text(
+        json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    print(
+        f"Wrote {ledger_path} month={month} days={len(ledger['days'])} "
+        f"(upserted={upserted})"
+    )
+    return ledger
+
+
 def ensure_trucks(
     data_dir: Path | None = None,
     *,
@@ -802,6 +918,10 @@ def ensure_trucks(
             except OSError as ex:
                 print(f"WARN could not write sample-trucks.json: {ex}", file=sys.stderr)
         print(f"Wrote {trucks_path} (source=magyp date={live_trucks.get('date')})")
+        try:
+            update_truck_inflow_ledger(data_dir, live_trucks)
+        except Exception as lex:
+            print(f"WARN ledger update failed: {lex}", file=sys.stderr)
         return live_trucks
 
     # Failure: never silently pretend seed is live.
@@ -813,6 +933,10 @@ def ensure_trucks(
             f"(source={src} date={prev.get('date')})",
             file=sys.stderr,
         )
+        try:
+            update_truck_inflow_ledger(data_dir, prev)
+        except Exception as lex:
+            print(f"WARN ledger update (prev) failed: {lex}", file=sys.stderr)
         return prev
 
     for candidate in (DATA / "trucks.json", DATA / "sample-trucks.json"):

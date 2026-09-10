@@ -77,6 +77,7 @@
   };
 
   let vesselsPayload = null;
+  let stocksPayload = null;
   let trucksPayload = null;
   let coveragePayload = null;
   let worldMap = null;
@@ -939,6 +940,66 @@
     $("truckNote").textContent = note;
   }
 
+
+  function renderStocksEstimado() {
+    const s = stocksPayload;
+    const body = $("stocksBody");
+    const monthEl = $("stocksMonth");
+    const meta = $("stocksMeta");
+    const disc = $("stocksDisclaimer");
+    if (!body) return;
+    if (!s || !s.products) {
+      body.innerHTML = '<tr><td colspan="6" class="empty">Sin datos de stock estimado.</td></tr>';
+      if (monthEl) monthEl.textContent = "—";
+      return;
+    }
+    if (monthEl) monthEl.textContent = s.month || "—";
+    if (meta) {
+      const parts = [];
+      if (s.baseline_as_of) parts.push("Baseline MAGyP al " + s.baseline_as_of);
+      if (s.last_truck_date) parts.push("último día camiones " + s.last_truck_date);
+      if (s.days_counted != null) parts.push(s.days_counted + " día(s) acumulados");
+      parts.push("fórmula: " + (s.formula || "stock 1° + Σ camiones×factor"));
+      meta.textContent = parts.join(" · ");
+    }
+    if (disc && s.disclaimer) {
+      disc.textContent =
+        s.disclaimer +
+        " · " +
+        (s.method || "Estimación = stock 1° mes + Σ camiones×factor (no resta egresos).");
+    }
+    const rows = (s.products || []).slice();
+    body.innerHTML = rows
+      .map((p) => {
+        const key = escapeHtml(p.product || "");
+        return (
+          "<tr>" +
+          '<td><div class="cereal-cell"><span class="swatch ' +
+          key +
+          '"></span>' +
+          escapeHtml(p.label || p.product) +
+          "</div></td>" +
+          '<td class="num">' +
+          fmtNum(p.baseline_tn) +
+          "</td>" +
+          '<td class="num">' +
+          fmtNum(p.inflow_camiones) +
+          "</td>" +
+          '<td class="num">' +
+          fmtNum(p.inflow_tn) +
+          "</td>" +
+          '<td class="num estimado">' +
+          fmtMt(p.estimado_tn) +
+          "</td>" +
+          '<td class="num">' +
+          fmtNum(p.factor) +
+          " tn</td>" +
+          "</tr>"
+        );
+      })
+      .join("");
+  }
+
   function renderAll() {
     const base = upRiverVessels();
     fillZones(base);
@@ -949,14 +1010,24 @@
     renderTrucks();
     renderDestinations(filtered);
     renderCoverage();
+    renderStocksEstimado();
   }
 
   async function load() {
     $("queueBody").innerHTML = '<div class="loading">Cargando lineup…</div>';
     try {
-      const [vRes, tRes] = await Promise.all([fetch("/api/vessels"), fetch("/api/trucks")]);
+      const [vRes, tRes, sRes] = await Promise.all([
+        fetch("/api/vessels"),
+        fetch("/api/trucks"),
+        fetch("/api/stocks-estimado"),
+      ]);
       vesselsPayload = await vRes.json();
       trucksPayload = await tRes.json();
+      try {
+        stocksPayload = sRes.ok ? await sRes.json() : null;
+      } catch {
+        stocksPayload = null;
+      }
       initWorldMap();
       renderAll();
       if (vesselsPayload?.cache?.refresh_in_progress || vesselsPayload?.cache?.stale) {

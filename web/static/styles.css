@@ -620,3 +620,54 @@ body { min-height: 100vh; }
 @media (max-width: 720px) {
   .contact-form .contact-grid { grid-template-columns: 1fr; }
 }
+
+/* —— Stock estimado —— */
+.stocks-panel { margin-bottom: 1.1rem; }
+.stocks-meta {
+  margin: 0 0 .75rem;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.35;
+}
+.stocks-table-wrap { overflow-x: auto; }
+.stocks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+.stocks-table th,
+.stocks-table td {
+  padding: .55rem .65rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.stocks-table th {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--muted);
+  font-weight: 700;
+  background: #f8fafc;
+}
+.stocks-table th.num,
+.stocks-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.stocks-table tbody tr:hover { background: #f8fafc; }
+.stocks-table .cereal-cell {
+  display: flex; align-items: center; gap: .45rem; font-weight: 600; color: var(--navy);
+}
+.stocks-table .swatch {
+  width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
+}
+.stocks-table .swatch.maiz { background: var(--maiz); }
+.stocks-table .swatch.soja { background: var(--soja); }
+.stocks-table .swatch.trigo { background: var(--trigo); }
+.stocks-table .swatch.girasol { background: var(--girasol); }
+.stocks-table .swatch.sorgo { background: var(--sorgo); }
+.stocks-table .swatch.cebada { background: var(--cebada); }
+.stocks-table .estimado { font-weight: 700; color: var(--navy); }
+.stocks-disclaimer {
+  margin: .85rem 0 0;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.4;
+}

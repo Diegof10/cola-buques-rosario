@@ -1,0 +1,28 @@
+{
+  "source_url": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/areas/granos/_archivos/000058_Estad%C3%ADsticas/000030_Existencia%20f%C3%ADsica%20de%20granos%20en%20plantas%20de%20almacenaje,%20de%20servicios%20e%20industria.php",
+  "unit": "t",
+  "note": "Existencia física en plantas (acopio, industria, elevadores terminales) al 1° de cada mes. Excluye existencias en poder de productores (silobolsas). Series principales: maíz común, soja, trigo pan, girasol, sorgo, cebada (cervecera+forrajera+maltería).",
+  "months": {
+    "2026-09": {
+      "as_of": "2026-09-01",
+      "products": {
+        "maiz": 26570979,
+        "soja": 20466643,
+        "trigo": 5046590,
+        "girasol": 1561332,
+        "sorgo": 513950,
+        "cebada": 1051058
+      },
+      "cebada_detail": {
+        "cervecera": 717116,
+        "forrajera": 322409,
+        "malteria": 11533
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      }
+    }
+  }
+}

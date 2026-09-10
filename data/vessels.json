@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-10T07:14:31.654005-03:00",
+  "updated_at": "2026-09-10T12:34:37.702140-03:00",
   "live": true,
   "parse_ok": true,
   "source": "NABSA vessel_update.pdf",
@@ -11,7 +11,7 @@
     "lineup_date": "2026-09-09",
     "circular": "167"
   },
-  "sailed_pdf": true,
+  "sailed_pdf": false,
   "counts": {
     "all": 338,
     "up_river": 230,

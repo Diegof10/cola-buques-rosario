@@ -151,7 +151,14 @@ def _get_vessels_cache() -> dict[str, Any] | None:
 def _ensure_writable_data() -> Path:
     WRITABLE_DATA.mkdir(parents=True, exist_ok=True)
     # Seed trucks/terminals from bundled data if missing (read-only app dir).
-    for name in ("trucks.json", "sample-trucks.json", "terminals.json", "sample-vessels.json"):
+    for name in (
+        "trucks.json",
+        "sample-trucks.json",
+        "terminals.json",
+        "sample-vessels.json",
+        "existencias_baseline.json",
+        "truck_inflow_ledger.json",
+    ):
         dest = WRITABLE_DATA / name
         src = BUNDLED_DATA / name
         if not dest.exists() and src.exists():
@@ -554,6 +561,140 @@ def compute_coverage(
         ),
     }
 
+
+STOCK_PRODUCTS = (
+    ("maiz", "Maíz"),
+    ("soja", "Soja"),
+    ("trigo", "Trigo"),
+    ("girasol", "Girasol"),
+    ("sorgo", "Sorgo"),
+    ("cebada", "Cebada"),
+)
+
+
+def _load_json_prefer_writable(name: str) -> dict[str, Any] | None:
+    """Load JSON from writable data dir, else bundled."""
+    for base in (WRITABLE_DATA, BUNDLED_DATA):
+        payload = _read_json(base / name)
+        if payload:
+            return payload
+    return None
+
+
+def compute_stocks_estimado() -> dict[str, Any]:
+    """Estimated plant stock = MAGyP 1°-of-month baseline + national truck inflows.
+
+    Uses national camiones by product (not Rosario-scaled by_product).
+    Does NOT subtract milling/export outflows — not a real closing stock.
+    """
+    baseline_doc = _load_json_prefer_writable("existencias_baseline.json") or {}
+    ledger = _load_json_prefer_writable("truck_inflow_ledger.json") or {}
+    trucks = _load_trucks_payload() or {}
+
+    # Prefer ledger month; else trucks.date; else AR "today" month
+    month = str(ledger.get("month") or "").strip()
+    if not month:
+        tdate = str(trucks.get("date") or "").strip()
+        if len(tdate) >= 7:
+            month = tdate[:7]
+    if not month:
+        # America/Argentina/Cordoba ≈ UTC-3
+        from datetime import timedelta
+
+        month = datetime.now(timezone(timedelta(hours=-3))).strftime("%Y-%m")
+
+    baseline_as_of = str(ledger.get("baseline_as_of") or f"{month}-01")
+    months = baseline_doc.get("months") or {}
+    month_block = months.get(month) or {}
+    products_base = dict(month_block.get("products") or {})
+    if month_block.get("as_of"):
+        baseline_as_of = str(month_block["as_of"])
+
+    days = dict(ledger.get("days") or {})
+    # If ledger empty/stale month, bootstrap from current trucks national_products
+    trucks_month = str(trucks.get("date") or "")[:7]
+    if trucks_month == month:
+        raw = trucks.get("raw") or {}
+        nat_days = raw.get("national_days") or []
+        if nat_days:
+            for row in nat_days:
+                d = str((row or {}).get("date") or "")
+                if d.startswith(month):
+                    prods = (row or {}).get("products") or {}
+                    days[d] = {
+                        **{k: int(prods.get(k) or 0) for k, _ in STOCK_PRODUCTS},
+                        "national_total": int((row or {}).get("national_total") or 0),
+                    }
+        elif raw.get("national_products") and trucks.get("date"):
+            prods = raw["national_products"]
+            d = str(trucks["date"])
+            days.setdefault(
+                d,
+                {
+                    **{k: int(prods.get(k) or 0) for k, _ in STOCK_PRODUCTS},
+                    "national_total": int(trucks.get("national_total") or 0),
+                },
+            )
+
+    day_keys = sorted(days.keys())
+    days_counted = len(day_keys)
+    last_truck_date = day_keys[-1] if day_keys else (trucks.get("date") or None)
+
+    product_rows: list[dict[str, Any]] = []
+    for key, label in STOCK_PRODUCTS:
+        baseline_tn = int(products_base.get(key) or 0)
+        inflow_camiones = 0
+        for d in day_keys:
+            entry = days.get(d) or {}
+            inflow_camiones += int(entry.get(key) or 0)
+        factor = _truck_factor(key)
+        inflow_tn = inflow_camiones * factor
+        estimado_tn = baseline_tn + inflow_tn
+        product_rows.append(
+            {
+                "product": key,
+                "label": label,
+                "baseline_tn": baseline_tn,
+                "inflow_camiones": inflow_camiones,
+                "inflow_tn": inflow_tn,
+                "estimado_tn": estimado_tn,
+                "factor": factor,
+                "days_counted": days_counted,
+            }
+        )
+
+    method = (
+        "estimación = stock 1° mes (MAGyP existencia física en plantas) "
+        "+ Σ camiones nacionales × factor (30 tn/camión; 25 tn/camión girasol). "
+        "NO resta egresos; no es stock real de cierre."
+    )
+    disclaimer = (
+        "No incluye silobolsas / existencias en poder del productor. "
+        "No resta molienda ni exportación. "
+        "Camiones = nacional MAGyP (no prorrateo Rosario)."
+    )
+
+    return {
+        "month": month,
+        "baseline_as_of": baseline_as_of,
+        "last_truck_date": last_truck_date,
+        "days_counted": days_counted,
+        "products": product_rows,
+        "factors": {
+            "default_tn_per_truck": TN_PER_TRUCK_DEFAULT,
+            "girasol_tn_per_truck": TN_PER_TRUCK_GIRASOL,
+        },
+        "method": method,
+        "formula": "estimación = stock 1° mes + Σ camiones×factor",
+        "disclaimer": disclaimer,
+        "source_url": baseline_doc.get("source_url"),
+        "baseline_note": baseline_doc.get("note"),
+        "ledger_updated_at": ledger.get("updated_at"),
+        "trucks_updated_at": trucks.get("updated_at"),
+        "unit": "t",
+    }
+
+
 @app.on_event("startup")
 def _startup_refresh() -> None:
     # Warm cache from disk; kick a background NABSA (+ trucks) refresh if stale/missing.
@@ -686,6 +827,17 @@ def coverage():
     except Exception as ex:
         return JSONResponse({"error": "coverage unavailable", "detail": str(ex)}, status_code=500)
 
+
+@app.get("/api/stocks-estimado")
+def stocks_estimado():
+    """Stock estimado = existencia MAGyP al 1° del mes + ingreso camiones nacionales."""
+    try:
+        return JSONResponse(compute_stocks_estimado())
+    except Exception as ex:
+        return JSONResponse(
+            {"error": "stocks-estimado unavailable", "detail": str(ex)},
+            status_code=500,
+        )
 
 
 
