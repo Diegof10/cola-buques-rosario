@@ -158,6 +158,7 @@ def _ensure_writable_data() -> Path:
         "sample-vessels.json",
         "existencias_baseline.json",
         "truck_inflow_ledger.json",
+        "sailed_month.json",
     ):
         dest = WRITABLE_DATA / name
         src = BUNDLED_DATA / name
@@ -178,7 +179,7 @@ def _run_refresh(*, refresh_trucks: bool = True) -> dict[str, Any]:
         payload = refresh_vessels(
             data_dir,
             write_sample=False,
-            download_sailed=False,
+            download_sailed=True,
             timeout=min(REFRESH_TIMEOUT_SEC, 55),
         )
         payload = dict(payload)
@@ -582,13 +583,15 @@ def _load_json_prefer_writable(name: str) -> dict[str, Any] | None:
 
 
 def compute_stocks_estimado() -> dict[str, Any]:
-    """Estimated plant stock = MAGyP 1°-of-month baseline + national truck inflows.
+    """Estimated plant stock = MAGyP 1°-of-month baseline + national truck inflows
+    − NABSA sailed export tonnes for the same calendar month.
 
     Uses national camiones by product (not Rosario-scaled by_product).
-    Does NOT subtract milling/export outflows — not a real closing stock.
+    Allows negative estimado (rare) — raw formula, no clamp.
     """
     baseline_doc = _load_json_prefer_writable("existencias_baseline.json") or {}
     ledger = _load_json_prefer_writable("truck_inflow_ledger.json") or {}
+    sailed_doc = _load_json_prefer_writable("sailed_month.json") or {}
     trucks = _load_trucks_payload() or {}
 
     # Prefer ledger month; else trucks.date; else AR "today" month
@@ -640,6 +643,18 @@ def compute_stocks_estimado() -> dict[str, Any]:
     days_counted = len(day_keys)
     last_truck_date = day_keys[-1] if day_keys else (trucks.get("date") or None)
 
+    # Sailed exports for same calendar month
+    sailed_products: dict[str, float] = {}
+    sailed_month = str(sailed_doc.get("month") or "").strip()
+    if sailed_month == month:
+        sailed_products = dict(sailed_doc.get("products") or {})
+    elif sailed_doc.get("by_day"):
+        # Fallback: sum by_day keys matching month
+        for d, day in (sailed_doc.get("by_day") or {}).items():
+            if str(d).startswith(month):
+                for k, v in (day or {}).items():
+                    sailed_products[k] = float(sailed_products.get(k) or 0) + float(v or 0)
+
     product_rows: list[dict[str, Any]] = []
     for key, label in STOCK_PRODUCTS:
         baseline_tn = int(products_base.get(key) or 0)
@@ -649,7 +664,8 @@ def compute_stocks_estimado() -> dict[str, Any]:
             inflow_camiones += int(entry.get(key) or 0)
         factor = _truck_factor(key)
         inflow_tn = inflow_camiones * factor
-        estimado_tn = baseline_tn + inflow_tn
+        export_tn = round(float(sailed_products.get(key) or 0), 2)
+        estimado_tn = baseline_tn + inflow_tn - export_tn
         product_rows.append(
             {
                 "product": key,
@@ -657,6 +673,7 @@ def compute_stocks_estimado() -> dict[str, Any]:
                 "baseline_tn": baseline_tn,
                 "inflow_camiones": inflow_camiones,
                 "inflow_tn": inflow_tn,
+                "export_tn": export_tn,
                 "estimado_tn": estimado_tn,
                 "factor": factor,
                 "days_counted": days_counted,
@@ -665,12 +682,14 @@ def compute_stocks_estimado() -> dict[str, Any]:
 
     method = (
         "estimación = stock 1° mes (MAGyP existencia física en plantas) "
-        "+ Σ camiones nacionales × factor (30 tn/camión; 25 tn/camión girasol). "
-        "NO resta egresos; no es stock real de cierre."
+        "+ Σ camiones nacionales × factor (30 tn/camión; 25 tn/camión girasol) "
+        "− embarques NABSA sailed del mes (complejo soja meal/oil/bean → soja). "
+        "No es stock real de cierre; puede ser negativo si egresos > baseline+ingresos."
     )
     disclaimer = (
         "No incluye silobolsas / existencias en poder del productor. "
-        "No resta molienda ni exportación. "
+        "Resta embarques NABSA sailed del mes; no modela molienda doméstica "
+        "más allá de lo implícito en sails de meal/oil. "
         "Camiones = nacional MAGyP (no prorrateo Rosario)."
     )
 
@@ -685,10 +704,13 @@ def compute_stocks_estimado() -> dict[str, Any]:
             "girasol_tn_per_truck": TN_PER_TRUCK_GIRASOL,
         },
         "method": method,
-        "formula": "estimación = stock 1° mes + Σ camiones×factor",
+        "formula": "estimación = stock 1° mes + Σ camiones×factor − embarques NABSA sailed",
         "disclaimer": disclaimer,
         "source_url": baseline_doc.get("source_url"),
         "baseline_note": baseline_doc.get("note"),
+        "sailed_source_url": sailed_doc.get("source_url"),
+        "sailed_updated_at": sailed_doc.get("updated_at"),
+        "sailed_month": sailed_month or None,
         "ledger_updated_at": ledger.get("updated_at"),
         "trucks_updated_at": trucks.get("updated_at"),
         "unit": "t",
@@ -830,7 +852,7 @@ def coverage():
 
 @app.get("/api/stocks-estimado")
 def stocks_estimado():
-    """Stock estimado = existencia MAGyP al 1° del mes + ingreso camiones nacionales."""
+    """Stock estimado = existencia MAGyP 1° mes + camiones − embarques NABSA sailed."""
     try:
         return JSONResponse(compute_stocks_estimado())
     except Exception as ex:

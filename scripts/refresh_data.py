@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Fetch NABSA lineup PDF and write data/vessels.json (+ optional sailed).
+
 Also fetches MAGyP daily trucks HTML → data/trucks.json (keeps previous on scrape failure).
+When sailed PDF is downloaded, parses sailed rows → data/sailed_month.json
+(per-product export tonnes for the current calendar month).
 """
 from __future__ import annotations
 
@@ -158,6 +161,200 @@ def parse_tons(raw: str | None) -> float | None:
             return float(digits)
         except ValueError:
             return None
+
+
+
+def parse_sailed_tons(raw: str | None) -> float | None:
+    """Parse NABSA sailed Tons with weird spacing / European decimals.
+
+    Examples: ``1 6.999,86`` → 16999.86, ``4 .632,00`` → 4632.0, ``3 7,00`` → 37.0.
+    """
+    if not raw:
+        return None
+    s = str(raw).strip().replace(" ", "").replace("\xa0", "")
+    if not s:
+        return None
+    # European thousands '.' / decimal ','
+    if "," in s:
+        intpart, frac = s.rsplit(",", 1)
+        intpart = intpart.replace(".", "")
+        try:
+            return float(f"{intpart}.{frac}")
+        except ValueError:
+            return None
+    # Dot as thousands: 33.000 / 1.234.567
+    if re.fullmatch(r"\d{1,3}(\.\d{3})+", s):
+        return float(s.replace(".", ""))
+    if re.fullmatch(r"\d+\.\d{3}", s):
+        return float(s.replace(".", ""))
+    try:
+        return float(s)
+    except ValueError:
+        digits = re.sub(r"[^\d.]", "", s)
+        if not digits:
+            return None
+        try:
+            return float(digits)
+        except ValueError:
+            return None
+
+
+def map_sailed_commodity(cargo_raw: str | None) -> str:
+    """Map NABSA Cargo text → maiz|soja|trigo|girasol|sorgo|cebada|otro (contains)."""
+    c = str(cargo_raw or "").lower()
+    if "corn" in c:
+        return "maiz"
+    # Soy complex (meal/oil/beans/hulls) counts against soja stock
+    if (
+        "soybean meal" in c
+        or "soybeanmeal" in c
+        or "soybean oil" in c
+        or "soybeanoil" in c
+        or "soy bean" in c
+        or "soybean" in c
+        or "soya" in c
+    ):
+        return "soja"
+    if "wheat" in c:
+        return "trigo"
+    if "sun flower" in c or "sunflower" in c:
+        return "girasol"
+    if "sorghum" in c:
+        return "sorgo"
+    if "barley" in c:
+        return "cebada"
+    return "otro"
+
+
+def _parse_sailed_date(raw: str | None) -> str | None:
+    """DD/MM/YYYY → YYYY-MM-DD."""
+    s = str(raw or "").strip()
+    m = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", s)
+    if not m:
+        return None
+    d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    try:
+        return f"{y:04d}-{mo:02d}-{d:02d}"
+    except Exception:
+        return None
+
+
+def parse_sailed_pdf(pdf_path: Path) -> list[dict[str, Any]]:
+    """Extract sailed vessel lines from NABSA vessels_sailed_update.pdf."""
+    rows: list[dict[str, Any]] = []
+    with pdfplumber.open(pdf_path) as pdf:
+        for page in pdf.pages:
+            for table in page.extract_tables() or []:
+                for row in table or []:
+                    if not row or len(row) < 7:
+                        continue
+                    status = str(row[3] or "").strip().upper()
+                    if status != "SAILED":
+                        continue
+                    date_iso = _parse_sailed_date(row[4])
+                    if not date_iso:
+                        continue
+                    tons = parse_sailed_tons(row[5])
+                    if tons is None:
+                        continue
+                    cargo_raw = str(row[6] or "").strip()
+                    commodity = map_sailed_commodity(cargo_raw)
+                    rows.append(
+                        {
+                            "date": date_iso,
+                            "tons": round(float(tons), 2),
+                            "cargo_raw": cargo_raw,
+                            "commodity": commodity,
+                            "port": str(row[0] or "").strip(),
+                            "vessel": str(row[2] or "").strip(),
+                        }
+                    )
+    return rows
+
+
+def build_sailed_month(
+    sailed_rows: list[dict[str, Any]],
+    *,
+    month: str | None = None,
+) -> dict[str, Any]:
+    """Aggregate sailed tonnes by product for a calendar month (YYYY-MM)."""
+    if not month:
+        month = ar_tz_now().strftime("%Y-%m")
+    products = {k: 0.0 for k in STOCK_LEDGER_PRODUCTS}
+    by_day: dict[str, dict[str, float]] = {}
+    raw_count = 0
+    ignored_otro = 0.0
+    for row in sailed_rows:
+        d = str(row.get("date") or "")
+        if not d.startswith(month):
+            continue
+        raw_count += 1
+        commodity = str(row.get("commodity") or "otro")
+        tons = float(row.get("tons") or 0)
+        if commodity not in products:
+            ignored_otro += tons
+            continue
+        products[commodity] += tons
+        day = by_day.setdefault(d, {k: 0.0 for k in STOCK_LEDGER_PRODUCTS})
+        day[commodity] += tons
+    # Round for JSON stability
+    products_out = {k: round(v, 2) for k, v in products.items()}
+    by_day_out = {
+        d: {k: round(v, 2) for k, v in day.items()}
+        for d, day in sorted(by_day.items())
+    }
+    return {
+        "month": month,
+        "updated_at": ar_tz_now().isoformat(),
+        "source": "NABSA vessels_sailed_update.pdf",
+        "source_url": SAILED_URL,
+        "products": products_out,
+        "by_day": by_day_out,
+        "rows_in_month": raw_count,
+        "ignored_otro_tn": round(ignored_otro, 2),
+        "unit": "t",
+        "note": (
+            "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity "
+            "en el mes calendario. Complejo soja (meal/oil/bean) → soja; "
+            "sun flower → girasol. Productos 'otro' no restan del stock de granos."
+        ),
+    }
+
+
+def write_sailed_month(
+    data_dir: Path,
+    pdf_path: Path | None = None,
+    *,
+    month: str | None = None,
+) -> dict[str, Any] | None:
+    """Parse sailed PDF (if present) and write data/sailed_month.json."""
+    data_dir = Path(data_dir)
+    pdf_path = Path(pdf_path) if pdf_path else data_dir / "vessels_sailed_update.pdf"
+    if not pdf_path.exists():
+        print(f"WARN sailed: missing {pdf_path.name}", file=sys.stderr)
+        return None
+    try:
+        rows = parse_sailed_pdf(pdf_path)
+    except Exception as ex:
+        print(f"FAIL parse sailed PDF: {ex}", file=sys.stderr)
+        return None
+    if not month:
+        # Prefer latest date in PDF if same month as AR today; else AR today month
+        month = ar_tz_now().strftime("%Y-%m")
+        if rows:
+            latest = max(str(r.get("date") or "") for r in rows)
+            if latest[:7]:
+                month = latest[:7]
+    payload = build_sailed_month(rows, month=month)
+    out = data_dir / "sailed_month.json"
+    out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    prods = payload.get("products") or {}
+    print(
+        f"Wrote {out} month={payload['month']} rows={payload['rows_in_month']} "
+        f"maiz={prods.get('maiz')} soja={prods.get('soja')} trigo={prods.get('trigo')}"
+    )
+    return payload
+
 
 
 def zone_for(port: str, terminal: str) -> str:
@@ -748,8 +945,15 @@ def refresh_vessels(
 
     live = _download(VESSEL_URL, pdf_path)
     sailed_ok = False
+    sailed_pdf_path = data_dir / "vessels_sailed_update.pdf"
     if download_sailed:
-        sailed_ok = _download(SAILED_URL, data_dir / "vessels_sailed_update.pdf")
+        sailed_ok = _download(SAILED_URL, sailed_pdf_path)
+    # Parse sailed PDF whenever present (fresh download or prior file)
+    if sailed_pdf_path.exists():
+        try:
+            write_sailed_month(data_dir, sailed_pdf_path)
+        except Exception as sex:
+            print(f"WARN sailed_month write failed: {sex}", file=sys.stderr)
 
     vessels: list[dict[str, Any]] = []
     meta: dict[str, Any] = {}

@@ -947,9 +947,10 @@
     const monthEl = $("stocksMonth");
     const meta = $("stocksMeta");
     const disc = $("stocksDisclaimer");
+    const factorsEl = $("stocksFactors");
     if (!body) return;
     if (!s || !s.products) {
-      body.innerHTML = '<tr><td colspan="6" class="empty">Sin datos de stock estimado.</td></tr>';
+      body.innerHTML = '<tr><td colspan="5" class="empty">Sin datos de stock estimado.</td></tr>';
       if (monthEl) monthEl.textContent = "—";
       return;
     }
@@ -959,14 +960,26 @@
       if (s.baseline_as_of) parts.push("Baseline MAGyP al " + s.baseline_as_of);
       if (s.last_truck_date) parts.push("último día camiones " + s.last_truck_date);
       if (s.days_counted != null) parts.push(s.days_counted + " día(s) acumulados");
-      parts.push("fórmula: " + (s.formula || "stock 1° + Σ camiones×factor"));
+      if (s.sailed_updated_at) parts.push("embarques NABSA actualizados");
+      parts.push("fórmula: " + (s.formula || "stock 1° + camiones − embarques NABSA"));
       meta.textContent = parts.join(" · ");
+    }
+    if (factorsEl) {
+      const f = s.factors || {};
+      const defTn = f.default_tn_per_truck != null ? f.default_tn_per_truck : 30;
+      const girTn = f.girasol_tn_per_truck != null ? f.girasol_tn_per_truck : 25;
+      factorsEl.textContent =
+        defTn +
+        " tn/camión · girasol " +
+        girTn +
+        " · fuente embarques: NABSA sailed cumulative · baseline: MAGyP";
     }
     if (disc && s.disclaimer) {
       disc.textContent =
         s.disclaimer +
         " · " +
-        (s.method || "Estimación = stock 1° mes + Σ camiones×factor (no resta egresos).");
+        (s.method ||
+          "Estimación = stock 1° mes + Σ camiones×factor − embarques NABSA sailed.");
     }
     const rows = (s.products || []).slice();
     body.innerHTML = rows
@@ -982,18 +995,17 @@
           '<td class="num">' +
           fmtNum(p.baseline_tn) +
           "</td>" +
-          '<td class="num">' +
+          '<td class="num" title="' +
           fmtNum(p.inflow_camiones) +
+          ' camiones">' +
+          fmtNum(p.inflow_tn) +
           "</td>" +
           '<td class="num">' +
-          fmtNum(p.inflow_tn) +
+          fmtNum(p.export_tn) +
           "</td>" +
           '<td class="num estimado">' +
           fmtMt(p.estimado_tn) +
           "</td>" +
-          '<td class="num">' +
-          fmtNum(p.factor) +
-          " tn</td>" +
           "</tr>"
         );
       })

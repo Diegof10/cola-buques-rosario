@@ -1,0 +1,92 @@
+{
+  "month": "2026-09",
+  "updated_at": "2026-09-10T12:47:10.473633-03:00",
+  "source": "NABSA vessels_sailed_update.pdf",
+  "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
+  "products": {
+    "maiz": 880816.46,
+    "soja": 1457260.69,
+    "trigo": 228164.01,
+    "girasol": 63744.0,
+    "sorgo": 0.0,
+    "cebada": 29996.0
+  },
+  "by_day": {
+    "2026-09-01": {
+      "maiz": 120246.44,
+      "soja": 165960.24,
+      "trigo": 23790.0,
+      "girasol": 13300.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-09-02": {
+      "maiz": 49499.85,
+      "soja": 185426.42,
+      "trigo": 0.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-09-03": {
+      "maiz": 59359.84,
+      "soja": 111667.85,
+      "trigo": 60500.0,
+      "girasol": 850.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-09-04": {
+      "maiz": 195766.66,
+      "soja": 238808.89,
+      "trigo": 0.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-09-05": {
+      "maiz": 99306.73,
+      "soja": 189062.96,
+      "trigo": 53894.01,
+      "girasol": 39504.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-09-06": {
+      "maiz": 52320.76,
+      "soja": 224098.65,
+      "trigo": 63850.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 29996.0
+    },
+    "2026-09-07": {
+      "maiz": 106722.33,
+      "soja": 123011.67,
+      "trigo": 26130.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-09-08": {
+      "maiz": 82421.84,
+      "soja": 187740.51,
+      "trigo": 0.0,
+      "girasol": 10090.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-09-09": {
+      "maiz": 115172.01,
+      "soja": 31483.5,
+      "trigo": 0.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    }
+  },
+  "rows_in_month": 155,
+  "ignored_otro_tn": 493198.93,
+  "unit": "t",
+  "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos."
+}

@@ -665,6 +665,11 @@ body { min-height: 100vh; }
 .stocks-table .swatch.sorgo { background: var(--sorgo); }
 .stocks-table .swatch.cebada { background: var(--cebada); }
 .stocks-table .estimado { font-weight: 700; color: var(--navy); }
+.stocks-factors {
+  margin: 0.55rem 0 0.15rem;
+  font-size: 0.78rem;
+  color: var(--muted, #64748b);
+}
 .stocks-disclaimer {
   margin: .85rem 0 0;
   color: var(--muted);

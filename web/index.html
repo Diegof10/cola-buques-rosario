@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cola de Buques · Up-River Rosario</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="/static/styles.css?v=stocks1" />
+  <link rel="stylesheet" href="/static/styles.css?v=stocks2" />
 </head>
 <body>
   <header class="app-header">
@@ -55,7 +55,7 @@
 
     <section class="panel full stocks-panel" id="stocksPanel" aria-label="Stock estimado">
       <div class="panel-h">
-        <h2>Stock estimado (1° mes + camiones)</h2>
+        <h2>Stock estimado (1° + camiones − embarques)</h2>
         <span class="count" id="stocksMonth">—</span>
       </div>
       <div class="panel-b">
@@ -65,21 +65,21 @@
             <thead>
               <tr>
                 <th>Cereal</th>
-                <th class="num">Baseline 1°</th>
-                <th class="num">Camiones acum.</th>
-                <th class="num">Tn ingreso</th>
+                <th class="num">Stock 1°</th>
+                <th class="num">Camiones (tn)</th>
+                <th class="num">Embarques (tn)</th>
                 <th class="num">Estimado</th>
-                <th class="num">Factor</th>
               </tr>
             </thead>
             <tbody id="stocksBody">
-              <tr><td colspan="6" class="loading">Cargando…</td></tr>
+              <tr><td colspan="5" class="loading">Cargando…</td></tr>
             </tbody>
           </table>
         </div>
+        <p class="stocks-factors" id="stocksFactors">30 tn/camión · girasol 25</p>
         <p class="stocks-disclaimer" id="stocksDisclaimer">
-          No incluye silobolsas productor · no resta molienda/export · camiones = nacional MAGyP.
-          Estimación = stock 1° mes + Σ camiones×factor (no es stock real de cierre).
+          No incluye silobolsas productor · resta embarques NABSA sailed del mes · camiones = nacional MAGyP.
+          Estimación = stock 1° mes + camiones − embarques (fuente NABSA sailed cumulative · baseline MAGyP).
         </p>
       </div>
     </section>
@@ -218,6 +218,6 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="/static/app.js?v=stocks1"></script>
+  <script src="/static/app.js?v=stocks2"></script>
 </body>
 </html>
