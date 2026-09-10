@@ -1016,25 +1016,60 @@
       btn.disabled = true;
       status.className = "contact-status";
       status.textContent = "Enviando…";
+      const CONTACT_TO = "ferrari.dhf@gmail.com";
       try {
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(payload),
-        });
-        let data = null;
-        try { data = await res.json(); } catch { /* ignore */ }
-        if (res.ok && data && data.ok) {
+        // Prefer browser → FormSubmit (Vercel server IPs often get HTTP 403)
+        let ok = false;
+        let errMsg = "";
+        try {
+          const fsRes = await fetch("https://formsubmit.co/ajax/" + CONTACT_TO, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({
+              nombre: payload.nombre,
+              apellido: payload.apellido,
+              email: payload.mail,
+              telefono: payload.telefono,
+              _subject: "Contacto cola-buques-rosario",
+              _template: "table",
+              _captcha: "false",
+            }),
+          });
+          let fsData = null;
+          try { fsData = await fsRes.json(); } catch { /* ignore */ }
+          if (fsRes.ok && (!fsData || fsData.success !== "false")) {
+            ok = true;
+          } else {
+            errMsg = "FormSubmit HTTP " + fsRes.status;
+          }
+        } catch (e) {
+          errMsg = "FormSubmit red";
+        }
+        if (!ok) {
+          const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(payload),
+          });
+          let data = null;
+          try { data = await res.json(); } catch { /* ignore */ }
+          if (res.ok && data && data.ok) {
+            ok = true;
+          } else if (res.status === 422) {
+            status.className = "contact-status err";
+            status.textContent = "Revisá los datos (mail o campos incompletos).";
+            return;
+          } else {
+            errMsg = (data && (data.error || data.detail)) || errMsg || ("Error " + res.status);
+          }
+        }
+        if (ok) {
           status.className = "contact-status ok";
           status.textContent = "Mensaje enviado. ¡Gracias!";
           contactForm.reset();
-        } else if (res.status === 422) {
-          status.className = "contact-status err";
-          status.textContent = "Revisá los datos (mail o campos incompletos).";
         } else {
-          const err = (data && (data.error || data.detail)) || ("Error " + res.status);
           status.className = "contact-status err";
-          status.textContent = "No se pudo enviar: " + (typeof err === "string" ? err : "intentá más tarde");
+          status.textContent = "No se pudo enviar: " + (typeof errMsg === "string" ? errMsg : "intentá más tarde");
         }
       } catch (err) {
         status.className = "contact-status err";

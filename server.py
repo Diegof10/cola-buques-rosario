@@ -724,42 +724,78 @@ class ContactRequest(BaseModel):
         return v
 
 
-@app.post("/api/contact")
-def contact(payload: ContactRequest):
-    """Accept contact form JSON and forward via FormSubmit AJAX."""
-    if payload.website:
-        return JSONResponse({"ok": False, "error": "rejected"}, status_code=400)
+def _send_contact_email(*, nombre: str, apellido: str, mail: str, telefono: str) -> tuple[bool, str]:
+    """Send contact mail. Prefer Gmail SMTP (GMAIL_APP_PASSWORD); else FormSubmit."""
+    to_addr = os.environ.get("CONTACT_TO", "ferrari.dhf@gmail.com").strip()
+    subject = "Contacto cola-buques-rosario"
+    body_txt = (
+        f"Nombre: {nombre}\n"
+        f"Apellido: {apellido}\n"
+        f"Mail: {mail}\n"
+        f"Teléfono: {telefono}\n"
+    )
+    app_pw = (os.environ.get("GMAIL_APP_PASSWORD") or "").strip().replace(" ", "")
+    smtp_user = (os.environ.get("GMAIL_USER") or to_addr).strip()
+    if app_pw:
+        import smtplib
+        from email.message import EmailMessage
 
-    body = {
-        "nombre": payload.nombre,
-        "apellido": payload.apellido,
-        "email": payload.mail,
-        "telefono": payload.telefono,
-        "_subject": "Contacto cola-buques-rosario",
-    }
+        msg = EmailMessage()
+        msg["Subject"] = subject
+        msg["From"] = smtp_user
+        msg["To"] = to_addr
+        msg["Reply-To"] = mail
+        msg.set_content(body_txt)
+        try:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as smtp:
+                smtp.login(smtp_user, app_pw)
+                smtp.send_message(msg)
+            return True, "smtp"
+        except Exception as ex:
+            return False, f"SMTP: {ex}"
+
+    # FormSubmit often 403s from Vercel datacenter IPs — last-resort server path
     try:
         resp = requests.post(
-            "https://formsubmit.co/ajax/ferrari.dhf@gmail.com",
-            json=body,
+            f"https://formsubmit.co/ajax/{to_addr}",
+            json={
+                "nombre": nombre,
+                "apellido": apellido,
+                "email": mail,
+                "telefono": telefono,
+                "_subject": subject,
+                "_template": "table",
+                "_captcha": "false",
+            },
             headers={
                 "Content-Type": "application/json",
                 "Accept": "application/json",
+                "User-Agent": "Mozilla/5.0 (compatible; cola-buques-rosario/1.0)",
             },
             timeout=20,
         )
         if resp.status_code >= 400:
-            detail = None
-            try:
-                detail = resp.json()
-            except Exception:
-                detail = (resp.text or "")[:200]
-            return JSONResponse(
-                {"ok": False, "error": f"FormSubmit HTTP {resp.status_code}", "detail": detail},
-                status_code=502,
-            )
-        return {"ok": True}
+            return False, f"FormSubmit HTTP {resp.status_code}"
+        return True, "formsubmit"
     except requests.RequestException as ex:
-        return JSONResponse({"ok": False, "error": str(ex)}, status_code=502)
+        return False, str(ex)
+
+
+@app.post("/api/contact")
+def contact(payload: ContactRequest):
+    """Accept contact form JSON and email ferrari.dhf@gmail.com."""
+    if payload.website:
+        return JSONResponse({"ok": False, "error": "rejected"}, status_code=400)
+
+    ok, detail = _send_contact_email(
+        nombre=payload.nombre,
+        apellido=payload.apellido,
+        mail=payload.mail,
+        telefono=payload.telefono,
+    )
+    if not ok:
+        return JSONResponse({"ok": False, "error": detail}, status_code=502)
+    return {"ok": True, "via": detail}
 
 
 @app.get("/")
