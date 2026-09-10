@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cola de Buques · Up-River Rosario</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="/static/styles.css?v=destaside1" />
+  <link rel="stylesheet" href="/static/styles.css?v=contact1" />
 </head>
 <body>
   <header class="app-header">
@@ -145,6 +145,40 @@
         </div>
       </div>
     </section>
+
+    <section class="panel full contact-panel" id="contacto" aria-label="Contacto">
+      <div class="panel-h">
+        <h2>Contacto</h2>
+      </div>
+      <div class="panel-b">
+        <p class="contact-intro">¿Consultas o sugerencias? Escribinos y te respondemos a la brevedad.</p>
+        <form id="contactForm" class="contact-form" novalidate>
+          <div class="contact-grid">
+            <label>Nombre
+              <input type="text" name="nombre" id="cNombre" required autocomplete="given-name" maxlength="120" placeholder="Juan" />
+            </label>
+            <label>Apellido
+              <input type="text" name="apellido" id="cApellido" required autocomplete="family-name" maxlength="120" placeholder="Pérez" />
+            </label>
+            <label>Mail
+              <input type="email" name="mail" id="cMail" required autocomplete="email" maxlength="200" placeholder="juan@empresa.com" />
+            </label>
+            <label>Teléfono
+              <input type="tel" name="telefono" id="cTelefono" required autocomplete="tel" maxlength="40" placeholder="+54 341 …" />
+            </label>
+          </div>
+          <!-- honeypot -->
+          <label class="hp" aria-hidden="true">Website
+            <input type="text" name="website" id="cWebsite" tabindex="-1" autocomplete="off" />
+          </label>
+          <div class="contact-actions">
+            <button class="btn" type="submit" id="btnContact">Enviar</button>
+            <span class="contact-status" id="contactStatus" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <footer class="app-footer">
@@ -152,6 +186,6 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="/static/app.js?v=destaside1"></script>
+  <script src="/static/app.js?v=contact1"></script>
 </body>
 </html>

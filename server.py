@@ -18,9 +18,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import requests
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field, field_validator
 
 ROOT = Path(__file__).resolve().parent
 BUNDLED_DATA = ROOT / "data"
@@ -683,6 +685,81 @@ def coverage():
         return JSONResponse(payload)
     except Exception as ex:
         return JSONResponse({"error": "coverage unavailable", "detail": str(ex)}, status_code=500)
+
+
+
+
+_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+class ContactRequest(BaseModel):
+    nombre: str = Field(..., min_length=1, max_length=120)
+    apellido: str = Field(..., min_length=1, max_length=120)
+    mail: str = Field(..., min_length=3, max_length=200)
+    telefono: str = Field(..., min_length=1, max_length=40)
+    website: str | None = Field(default=None, max_length=200)  # honeypot
+
+    @field_validator("nombre", "apellido", "telefono", "mail", mode="before")
+    @classmethod
+    def _strip_required(cls, v: Any) -> Any:
+        if isinstance(v, str):
+            v = v.strip()
+        return v
+
+    @field_validator("mail")
+    @classmethod
+    def _valid_email(cls, v: str) -> str:
+        if not _EMAIL_RE.match(v):
+            raise ValueError("mail inválido")
+        return v
+
+    @field_validator("website", mode="before")
+    @classmethod
+    def _strip_optional(cls, v: Any) -> Any:
+        if v is None:
+            return None
+        if isinstance(v, str):
+            v = v.strip()
+            return v or None
+        return v
+
+
+@app.post("/api/contact")
+def contact(payload: ContactRequest):
+    """Accept contact form JSON and forward via FormSubmit AJAX."""
+    if payload.website:
+        return JSONResponse({"ok": False, "error": "rejected"}, status_code=400)
+
+    body = {
+        "nombre": payload.nombre,
+        "apellido": payload.apellido,
+        "email": payload.mail,
+        "telefono": payload.telefono,
+        "_subject": "Contacto cola-buques-rosario",
+    }
+    try:
+        resp = requests.post(
+            "https://formsubmit.co/ajax/ferrari.dhf@gmail.com",
+            json=body,
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            timeout=20,
+        )
+        if resp.status_code >= 400:
+            detail = None
+            try:
+                detail = resp.json()
+            except Exception:
+                detail = (resp.text or "")[:200]
+            return JSONResponse(
+                {"ok": False, "error": f"FormSubmit HTTP {resp.status_code}", "detail": detail},
+                status_code=502,
+            )
+        return {"ok": True}
+    except requests.RequestException as ex:
+        return JSONResponse({"ok": False, "error": str(ex)}, status_code=502)
 
 
 @app.get("/")

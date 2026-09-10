@@ -992,6 +992,59 @@
     $("fSearch").value = "";
     renderAll();
   });
+
+  // —— Contact form ——
+  const contactForm = $("contactForm");
+  if (contactForm) {
+    contactForm.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const btn = $("btnContact");
+      const status = $("contactStatus");
+      const website = ($("cWebsite")?.value || "").trim();
+      const payload = {
+        nombre: ($("cNombre")?.value || "").trim(),
+        apellido: ($("cApellido")?.value || "").trim(),
+        mail: ($("cMail")?.value || "").trim(),
+        telefono: ($("cTelefono")?.value || "").trim(),
+        website: website || "",
+      };
+      if (!payload.nombre || !payload.apellido || !payload.mail || !payload.telefono) {
+        status.className = "contact-status err";
+        status.textContent = "Completá todos los campos.";
+        return;
+      }
+      btn.disabled = true;
+      status.className = "contact-status";
+      status.textContent = "Enviando…";
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload),
+        });
+        let data = null;
+        try { data = await res.json(); } catch { /* ignore */ }
+        if (res.ok && data && data.ok) {
+          status.className = "contact-status ok";
+          status.textContent = "Mensaje enviado. ¡Gracias!";
+          contactForm.reset();
+        } else if (res.status === 422) {
+          status.className = "contact-status err";
+          status.textContent = "Revisá los datos (mail o campos incompletos).";
+        } else {
+          const err = (data && (data.error || data.detail)) || ("Error " + res.status);
+          status.className = "contact-status err";
+          status.textContent = "No se pudo enviar: " + (typeof err === "string" ? err : "intentá más tarde");
+        }
+      } catch (err) {
+        status.className = "contact-status err";
+        status.textContent = "Error de red. Intentá de nuevo.";
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+
   $("btnReload").addEventListener("click", load);
   window.addEventListener("resize", () => {
     if (vesselsPayload) {
