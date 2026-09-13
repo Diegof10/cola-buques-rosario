@@ -3,14 +3,14 @@
 Diseño acordado para que el Loop (agente / humano) abra issues, implemente
 cambios en una rama y —más adelante— los mergeé con un gate de tests.
 
-**Stage 1 está hecho.** Stages 2+ no están implementados a propósito.
+**Stages 1–2 están hechos.** Stages 3+ no están implementados a propósito.
 
 ## Diseño acordado (alto nivel)
 
 | Pieza | Ahora (stage 1) | Después |
 | --- | --- | --- |
-| Señales | Labels + issue form `Loop signal` | Detector routine (stage 2) que abra issues `signal:data-stale` si MAGyP/NABSA están atrasados |
-| Cadencia | Manual | Weekday, **una vez al día** (stage 3) |
+| Señales | Labels + form + detector `scripts/loop_detect_stale.py` (stage 2) | Stage 3 Loop coder sobre issues triage |
+| Cadencia | Detector weekday ~14:00 ART (stage 2 routine) | Weekday coder once-daily (stage 3) |
 | Merge | Manual | Auto-merge del PR del Loop si CI verde (stage 3–4) |
 | Gate | `pytest -q` en GitHub Actions | Pre-merge script + checks requeridos (stage 4) |
 | Métrica | — | Issues Loop abiertos / mergeados / revertidos por semana; edad del seed NABSA+MAGyP |
@@ -27,11 +27,33 @@ El refresh matutino **sigue pusheando seeds a `main`** (`data/*.json`). Por eso
 - Tests offline (`tests/`) + workflow `.github/workflows/ci.yml` (`pytest -q`).
 - Este documento. Recomendaciones de branch protection **solo documentadas**.
 
-### Stage 2 — no empezado
+### Stage 2 — hecho (detector)
 
-Detector routine (cron / script) que compare `updated_at` / fechas MAGyP y NABSA
-contra el día hábil en `America/Argentina/Cordoba` y abra un issue con
-`loop` + `signal:data-stale` + `status:triage`.
+Script: `scripts/loop_detect_stale.py`.
+
+Compara `GET {site}/api/trucks` → `date` y `GET {site}/api/vessels` →
+`meta.lineup_date` contra el **día hábil anterior** en
+`America/Argentina/Cordoba` (si hoy es lunes, esperado = viernes previo).
+Si alguno está atrasado, abre un issue `loop` + `signal:data-stale` +
+`status:triage` + `type:data` + `priority:P1` (o `P0` si **ambos** van
+atrasados por más de 1 día hábil). Deduplica contra issues abiertos con
+la misma ventana (`<!-- loop:stale-window ... -->` en el body).
+
+Dry-run (sin crear issue):
+
+```bash
+python scripts/loop_detect_stale.py --dry-run \
+  --repo Diegof10/cola-buques-rosario \
+  --site-url https://cola-buques-rosario.vercel.app
+```
+
+Una routine de Grok Bot debe llamarlo **una vez por día hábil** hacia la
+**tarde (~14:00 ART)**: MAGyP suele demorar la tabla de la mañana; a esa
+hora el “día anterior” ya debería estar publicado. No auto-merge. Stage 3
+(coder) todavía no.
+
+Tests offline: `tests/test_loop_detect_stale.py` (helpers de fecha /
+comparación, sin red).
 
 ### Stage 3 — no empezado
 
@@ -87,11 +109,13 @@ Flujo: `status:triage` → `status:plan-ok` → `status:in-progress` →
 
 - Helpers puros en `scripts/stock_math.py` (factor camión, fórmula de stock,
   mapa de cargo NABSA sailed). `server.py` y `refresh_data.py` los importan.
+- Helpers de fecha del detector en `scripts/loop_detect_stale.py`
+  (`previous_business_day`, `is_stale`, …).
 - `pytest -q` no usa red. Deps de test: `requirements-dev.txt` o
   `pip install pytest` además de `requirements.txt`.
 - Workflow: push a `main` y `pull_request` → Python 3.12 → `pytest -q`.
 
-## Fuera de stage 1
+## Fuera de stage 2
 
-No hay detector, no hay auto-merge, no hay pre-merge script, no hay
-protección dura de `main`.
+Hay detector (stage 2). Todavía **no** hay Loop coder diario, auto-merge,
+pre-merge script ni protección dura de `main`.
