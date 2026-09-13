@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Loop Engineering (docs)
+    url: https://github.com/Diegof10/cola-buques-rosario/blob/main/docs/LOOP.md
+    about: Diseño acordado, labels, estados y por qué no hay branch protection aún.

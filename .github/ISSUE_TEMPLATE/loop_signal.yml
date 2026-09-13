@@ -1,0 +1,62 @@
+name: Loop signal
+description: Señal del Loop (dato stale, bug o cambio) para triage.
+title: "[loop] "
+labels: ["loop", "status:triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Señal para el Loop Engineering. Completá evidencia para que el triage
+        no dependa de adivinar. Ver `docs/LOOP.md`.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Qué se detectó, en una línea.
+      placeholder: MAGyP trucks.json no se actualizó desde ayer
+    validations:
+      required: true
+  - type: dropdown
+    id: signal_source
+    attributes:
+      label: Signal source
+      description: Origen de la señal.
+      options:
+        - MAGyP
+        - NABSA
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Fechas, URLs, snippets de API o campos de JSON.
+      placeholder: |
+        updated_at: 2026-09-10T12:00:00-03:00
+        GET /api/health → vessels_age_seconds=…
+        https://www.nabsa.com.ar/assets/vessel_update.pdf
+    validations:
+      required: true
+  - type: textarea
+    id: expected_vs_actual
+    attributes:
+      label: Expected vs actual
+      description: Qué debería pasar y qué está pasando.
+      placeholder: |
+        Expected: trucks.date = hoy (America/Argentina/Cordoba)
+        Actual: trucks.date = 2026-09-10
+    validations:
+      required: true
+  - type: dropdown
+    id: suggested_priority
+    attributes:
+      label: Suggested priority
+      description: P0 bloquea el escritorio; P1 dato stale usable; P2 mejora.
+      options:
+        - P0
+        - P1
+        - P2
+      default: 1
+    validations:
+      required: true

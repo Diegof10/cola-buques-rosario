@@ -39,6 +39,13 @@ REFRESH_TIMEOUT_SEC = int(os.environ.get("VESSELS_REFRESH_TIMEOUT_SEC", "50"))
 
 sys.path.insert(0, str(SCRIPTS))
 
+from stock_math import (  # noqa: E402
+    TN_PER_TRUCK_DEFAULT,
+    TN_PER_TRUCK_GIRASOL,
+    estimate_stock_tn,
+    truck_factor as _truck_factor,
+)
+
 app = FastAPI(title="Cola Buques Rosario", version="1.2.0")
 
 _cache_lock = threading.Lock()
@@ -339,8 +346,7 @@ def _load_static(name: str) -> JSONResponse:
 # - Stock Up-River típico ~3,5–5 Mt (BCR/NABSA/AAACI)
 # At ~4,8 Mt: promedio anual ~60d (rojo), flujo bueno ~40d (amarillo), picos ≤30d (verde)
 GRAIN_COMMODITIES = frozenset({"soja", "maiz", "trigo", "girasol", "sorgo", "cebada"})
-TN_PER_TRUCK_DEFAULT = 30
-TN_PER_TRUCK_GIRASOL = 25
+# TN_PER_TRUCK_* and _truck_factor come from scripts/stock_math.py
 # Semáforo on days_to_cover (truck flow vs stock): Verde≤30 Alto, Amarillo 30–55 Normal, Rojo>55 Bajo
 DAYS_GREEN_MAX = 30
 DAYS_YELLOW_MAX = 55
@@ -383,11 +389,6 @@ def _effective_destination(v: dict[str, Any]) -> str:
     if v.get("destination_inferred"):
         return str(v["destination_inferred"]).strip()
     return ""
-
-
-def _truck_factor(product: str) -> int:
-    # Diego: 30 tn/camión general; 25 tn/camión solo girasol. Ignore stale tn fields.
-    return TN_PER_TRUCK_GIRASOL if str(product or "").lower() == "girasol" else TN_PER_TRUCK_DEFAULT
 
 
 def _load_trucks_payload() -> dict[str, Any] | None:
@@ -665,7 +666,7 @@ def compute_stocks_estimado() -> dict[str, Any]:
         factor = _truck_factor(key)
         inflow_tn = inflow_camiones * factor
         export_tn = round(float(sailed_products.get(key) or 0), 2)
-        estimado_tn = baseline_tn + inflow_tn - export_tn
+        estimado_tn = estimate_stock_tn(baseline_tn, inflow_tn, export_tn)
         product_rows.append(
             {
                 "product": key,

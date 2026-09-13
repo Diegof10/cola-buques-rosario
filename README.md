@@ -100,3 +100,19 @@ Filtros: puerto/zona, commodity, estado, búsqueda por buque (sincronizados con 
 - Config: `vercel.json` (60s functions, weekday crons for NABSA/MAGyP refresh).
 - Production URL after link: `https://cola-buques-rosario.vercel.app` (or the alias Vercel assigns).
 - Seed JSON in `data/` ships with each deploy; live refresh uses `/tmp` and Cron `GET /api/*/refresh`.
+
+## Loop Engineering
+
+Stage 1 (labels, issue form, pytest CI) is in place. Later stages (detector,
+weekday once-daily, auto-merge, branch protection) are **not** started.
+
+See [docs/LOOP.md](docs/LOOP.md). Branch protection is deferred so the morning
+data-seed push to `main` keeps working.
+
+Local tests:
+
+```bash
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/pytest -q
+```
+
