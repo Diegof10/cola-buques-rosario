@@ -430,7 +430,7 @@ def build_sailed_destinations_ytd(
 ) -> dict[str, Any]:
     """Aggregate YTD sailed export tonnes by destination (all PDF rows = source of truth).
 
-    Argentina goes to ar_* (excluded from exports pie). Unknown/empty → unknown_*.
+    Only grain commodities (maiz/soja/trigo/girasol/sorgo/cebada). Argentina → ar_*; unknown → unknown_*; non-grains skipped.
     """
     dates = [str(r.get("date") or "") for r in sailed_rows if r.get("date")]
     through = max(dates) if dates else None
@@ -448,11 +448,20 @@ def build_sailed_destinations_ytd(
     unknown_count = 0
     rows_used = 0
 
+    ignored_non_grain_tn = 0.0
+    ignored_non_grain_n = 0
+    grain_keys = frozenset({"maiz", "soja", "trigo", "girasol", "sorgo", "cebada"})
+
     for row in sailed_rows:
         d = str(row.get("date") or "")
         if d and len(d) >= 4 and d[:4].isdigit() and int(d[:4]) != year:
             continue
+        commodity = str(row.get("commodity") or "otro").lower()
         tons = float(row.get("tons") or 0)
+        if commodity not in grain_keys:
+            ignored_non_grain_tn += tons
+            ignored_non_grain_n += 1
+            continue
         rows_used += 1
         raw_dest = row.get("destination")
         key = normalize_dest_key(raw_dest if isinstance(raw_dest, str) else str(raw_dest or ""))
@@ -493,14 +502,18 @@ def build_sailed_destinations_ytd(
         "source_url": SAILED_URL,
         "unit": "t",
         "note": (
-            "Acumulado YTD de embarques SAILED NABSA por destino "
-            "(excluye Argentina descarga)."
+            "Acumulado YTD de embarques SAILED NABSA por destino — solo granos "
+            "(maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). "
+            "Excluye Argentina descarga."
         ),
+        "grains_only": True,
         "exports": exports,
         "ar_tons": round(ar_tons, 2),
         "ar_count": ar_count,
         "unknown_tons": round(unknown_tons, 2),
         "unknown_count": unknown_count,
+        "ignored_non_grain_tn": round(ignored_non_grain_tn, 2),
+        "ignored_non_grain_count": ignored_non_grain_n,
         "total_export_tons": total_export,
         "rows": rows_used,
     }

@@ -75,3 +75,21 @@ def test_ytd_through_from_max_date_when_year_inferred():
     assert payload["through"] == "2026-08-20"
     assert payload["exports"][0]["key"] == "india"
     assert payload["exports"][0]["tons"] == 30.0
+
+
+def test_ytd_excludes_non_grain_cargo():
+    rows = [
+        _row("2026-09-01", 1000.0, "CHINA", commodity="soja", cargo_raw="SOYA BEAN"),
+        _row("2026-09-03", 45000.0, "CHINA", commodity="otro", cargo_raw="IRON ORE"),
+        _row("2026-09-04", 500.0, "PERU", commodity="maiz", cargo_raw="CORN"),
+        _row("2026-09-05", 7000.0, "PERU", commodity="otro", cargo_raw="MALT"),
+    ]
+    payload = build_sailed_destinations_ytd(rows, year=2026)
+    assert payload.get("grains_only") is True
+    by_key = {e["key"]: e for e in payload["exports"]}
+    assert by_key["china"]["tons"] == 1000.0
+    assert by_key["china"]["count"] == 1
+    assert by_key["peru"]["tons"] == 500.0
+    assert payload["ignored_non_grain_tn"] == 52000.0
+    assert payload["ignored_non_grain_count"] == 2
+    assert payload["total_export_tons"] == 1500.0

@@ -2,23 +2,24 @@
   "year": 2026,
   "from": "2026-01-01",
   "through": "2026-09-11",
-  "updated_at": "2026-09-14T15:02:13.953238-03:00",
+  "updated_at": "2026-09-14T15:07:24.350727-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "unit": "t",
-  "note": "Acumulado YTD de embarques SAILED NABSA por destino (excluye Argentina descarga).",
+  "note": "Acumulado YTD de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga.",
+  "grains_only": true,
   "exports": [
     {
       "key": "china",
       "label": "China",
-      "tons": 502447.13,
-      "count": 14
+      "tons": 457406.45,
+      "count": 13
     },
     {
       "key": "peru",
       "label": "Perú",
-      "tons": 308281.51,
-      "count": 15
+      "tons": 301281.51,
+      "count": 14
     },
     {
       "key": "vietnam",
@@ -35,8 +36,8 @@
     {
       "key": "brazil",
       "label": "Brasil",
-      "tons": 184620.01,
-      "count": 7
+      "tons": 170520.01,
+      "count": 6
     },
     {
       "key": "malaysia",
@@ -71,26 +72,14 @@
     {
       "key": "ecuador",
       "label": "Ecuador",
-      "tons": 113371.32,
-      "count": 6
-    },
-    {
-      "key": "united states",
-      "label": "Estados Unidos",
-      "tons": 103784.35,
-      "count": 7
+      "tons": 107371.32,
+      "count": 5
     },
     {
       "key": "spain",
       "label": "España",
       "tons": 92957.1,
       "count": 3
-    },
-    {
-      "key": "netherlands",
-      "label": "Países Bajos",
-      "tons": 71470.46,
-      "count": 6
     },
     {
       "key": "philippines",
@@ -111,12 +100,6 @@
       "count": 2
     },
     {
-      "key": "uruguay",
-      "label": "Uruguay",
-      "tons": 43800.0,
-      "count": 3
-    },
-    {
       "key": "ireland",
       "label": "Irlanda",
       "tons": 42608.98,
@@ -135,16 +118,10 @@
       "count": 3
     },
     {
-      "key": "portugal",
-      "label": "Portugal",
-      "tons": 41000.0,
-      "count": 1
-    },
-    {
-      "key": "paraguay",
-      "label": "Paraguay",
-      "tons": 39857.0,
-      "count": 1
+      "key": "netherlands",
+      "label": "Países Bajos",
+      "tons": 37509.46,
+      "count": 3
     },
     {
       "key": "colombia",
@@ -189,12 +166,6 @@
       "count": 5
     },
     {
-      "key": "mexico",
-      "label": "México",
-      "tons": 24260.0,
-      "count": 6
-    },
-    {
       "key": "korea",
       "label": "Corea",
       "tons": 23344.07,
@@ -223,6 +194,12 @@
       "label": "Congo",
       "tons": 16999.86,
       "count": 1
+    },
+    {
+      "key": "mexico",
+      "label": "México",
+      "tons": 16050.0,
+      "count": 5
     },
     {
       "key": "germany",
@@ -261,10 +238,10 @@
       "count": 3
     },
     {
-      "key": "russia",
-      "label": "Rusia",
-      "tons": 5000.0,
-      "count": 1
+      "key": "united states",
+      "label": "Estados Unidos",
+      "tons": 6400.0,
+      "count": 2
     },
     {
       "key": "honduras",
@@ -279,10 +256,12 @@
       "count": 1
     }
   ],
-  "ar_tons": 200499.9,
-  "ar_count": 8,
-  "unknown_tons": 67294.26,
-  "unknown_count": 3,
-  "total_export_tons": 3532350.9,
-  "rows": 192
+  "ar_tons": 0.0,
+  "ar_count": 0,
+  "unknown_tons": 41948.26,
+  "unknown_count": 1,
+  "ignored_non_grain_tn": 567198.93,
+  "ignored_non_grain_count": 29,
+  "total_export_tons": 3190997.87,
+  "rows": 163
 }

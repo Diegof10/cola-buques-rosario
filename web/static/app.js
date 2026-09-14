@@ -585,7 +585,7 @@
     const ytdHint = $("destYtdHint");
     if (ytdHint) {
       ytdHint.textContent = ytdMode
-        ? ("Acumulado desde principio de año hasta " + throughFmt + " (NABSA sailed) · independiente de filtros de cola")
+        ? ("Acumulado YTD solo granos desde principio de año hasta " + throughFmt + " (NABSA sailed) · independiente de filtros de cola")
         : "Volumen de la cola actual (lineup) · aplica filtros de zona/commodity";
     }
     const mapNote = $("destMapNote");
@@ -612,7 +612,7 @@
     const slices = drawDestPie(agg.exports, { ytd: ytdMode });
     const exportTons = agg.exports.reduce((s, e) => s + e.tons, 0);
     $("destChartNote").textContent = ytdMode
-      ? ("Acumulado desde principio de año hasta " + throughFmt +
+      ? ("Acumulado YTD solo granos desde principio de año hasta " + throughFmt +
          " · Exportación: " + fmtTons(exportTons) +
          " · Descarga AR y Sin destino aparte")
       : (
