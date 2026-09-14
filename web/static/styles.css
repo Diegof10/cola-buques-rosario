@@ -676,3 +676,19 @@ body { min-height: 100vh; }
   font-size: .78rem;
   line-height: 1.4;
 }
+
+/* Data freshness warning (>2 days lag) */
+.stale-banners { display: flex; flex-direction: column; gap: .55rem; margin: .75rem 0 0; }
+.stale-banner {
+  display: flex; gap: .65rem; align-items: flex-start;
+  padding: .7rem .9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(220, 160, 40, .45);
+  background: rgba(220, 160, 40, .12);
+  color: var(--text, #e8eef7);
+  font-size: .88rem;
+  line-height: 1.35;
+}
+.stale-banner strong { font-weight: 650; }
+.stale-banner .stale-ico { flex: 0 0 auto; opacity: .9; }
+.stale-banner .stale-meta { color: var(--muted, #9aa8bc); font-size: .8rem; margin-top: .15rem; }

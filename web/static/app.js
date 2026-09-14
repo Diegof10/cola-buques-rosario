@@ -847,6 +847,91 @@
       sampleCaveat;
   }
 
+
+  function cordobaTodayYmd() {
+    // America/Argentina/Cordoba calendar date as YYYY-MM-DD
+    try {
+      return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "America/Argentina/Cordoba",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(new Date());
+    } catch {
+      const d = new Date();
+      return d.toISOString().slice(0, 10);
+    }
+  }
+
+  function parseYmd(s) {
+    if (!s || typeof s !== "string") return null;
+    const m = s.trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) return null;
+    return { y: +m[1], mo: +m[2], d: +m[3], raw: m[0] };
+  }
+
+  function daysBetweenYmd(a, b) {
+    // whole calendar days b - a (UTC noon to avoid DST issues)
+    if (!a || !b) return null;
+    const ta = Date.UTC(a.y, a.mo - 1, a.d, 12);
+    const tb = Date.UTC(b.y, b.mo - 1, b.d, 12);
+    return Math.round((tb - ta) / 86400000);
+  }
+
+  function fmtDateAr(ymd) {
+    if (!ymd) return "—";
+    const p = typeof ymd === "string" ? parseYmd(ymd) : ymd;
+    if (!p) return String(ymd);
+    return String(p.d).padStart(2, "0") + "/" + String(p.mo).padStart(2, "0") + "/" + p.y;
+  }
+
+  function renderStaleBanners() {
+    const host = $("dataStaleBanners");
+    if (!host) return;
+    const today = parseYmd(cordobaTodayYmd());
+    const items = [];
+    const truckDate = trucksPayload?.date;
+    const truckLag = daysBetweenYmd(parseYmd(truckDate), today);
+    if (truckDate && truckLag != null && truckLag > 2) {
+      items.push({
+        source: "MAGyP (camiones)",
+        last: truckDate,
+        lag: truckLag,
+      });
+    }
+    const lineup = vesselsPayload?.meta?.lineup_date;
+    const nabsaLag = daysBetweenYmd(parseYmd(lineup), today);
+    if (lineup && nabsaLag != null && nabsaLag > 2) {
+      items.push({
+        source: "NABSA (line-up)",
+        last: lineup,
+        lag: nabsaLag,
+      });
+    }
+    if (!items.length) {
+      host.innerHTML = "";
+      host.hidden = true;
+      return;
+    }
+    host.hidden = false;
+    host.innerHTML = items
+      .map((it) => {
+        return (
+          '<div class="stale-banner" role="status">' +
+          '<span class="stale-ico" aria-hidden="true">⚠</span>' +
+          "<div><strong>Sin información actualizada de origen (" +
+          escapeHtml(it.source) +
+          ").</strong>" +
+          '<div class="stale-meta">Última fecha: ' +
+          escapeHtml(fmtDateAr(it.last)) +
+          " · " +
+          it.lag +
+          " días de atraso</div></div></div>"
+        );
+      })
+      .join("");
+  }
+
   function renderKpis(list) {
     const cola = list.filter((v) => v.status !== "arribando");
     const uniqueCola = new Set(cola.map((v) => v.vessel + "|" + v.terminal));
@@ -1020,6 +1105,7 @@
     renderQueue(filtered);
     renderArrivals(filtered);
     renderTrucks();
+    renderStaleBanners();
     renderDestinations(filtered);
     renderCoverage();
     renderStocksEstimado();
