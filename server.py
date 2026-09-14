@@ -165,6 +165,7 @@ def _ensure_writable_data() -> Path:
         "sample-vessels.json",
         "existencias_baseline.json",
         "truck_inflow_ledger.json",
+        "sailed_rows_ledger.json",
         "sailed_month.json",
         "sailed_destinations_ytd.json",
     ):
