@@ -2,8 +2,11 @@
 __pycache__/
 *.pyc
 data/*.pdf
+data/*.xlsx
 .DS_Store
 cloudflared
 start-tunnel.sh
-# Bulky NABSA sailed PDF archive (ledger JSON stays committed)
+# Bulky NABSA sailed archive (ledger JSON stays committed)
 data/sailed_archive/*.pdf
+data/sailed_archive/*.xlsx
+data/sailed_archive/hunt/
