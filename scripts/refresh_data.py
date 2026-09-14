@@ -2,17 +2,18 @@
 """Fetch NABSA lineup PDF and write data/vessels.json (+ optional sailed).
 
 Also fetches MAGyP daily trucks HTML → data/trucks.json (keeps previous on scrape failure).
-When sailed PDF is downloaded, parses sailed rows → data/sailed_month.json
+When sailed PDF/XLSX is downloaded, parses sailed rows → data/sailed_month.json
 (per-product export tonnes for the current calendar month), upserts into
-data/sailed_rows_ledger.json (accumulates across NABSA rolling PDF refreshes),
-and rebuilds data/sailed_destinations_ytd.json FROM THE LEDGER (not from one PDF).
+data/sailed_rows_ledger.json (accumulates across NABSA rolling PDF + historical
+xlsx refreshes), and rebuilds data/sailed_destinations_ytd.json FROM THE LEDGER
+(not from one PDF). Historical months: data/sailed_archive/*nabsa_sailed*.xlsx.
 """
 from __future__ import annotations
 
 import json
 import re
 import sys
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -35,6 +36,9 @@ SAILED_PRIOR_URLS = tuple(
 )
 SAILED_LEDGER_NAME = "sailed_rows_ledger.json"
 SAILED_ARCHIVE_DIRNAME = "sailed_archive"
+# Historical / current cumulative spreadsheet (meta-refresh under /SAILED/).
+SAILED_XLSX_INDEX_URL = "https://www.nabsa.com.ar/SAILED/"
+SAILED_XLSX_URL_TMPL = "https://www.nabsa.com.ar/SAILED/sailed{yyyymmdd}.xlsx"
 
 UP_RIVER_PORTS = {
     "SAN LORENZO",
@@ -330,17 +334,47 @@ def parse_sailed_tons(raw: str | None) -> float | None:
             return None
 
 
-def _parse_sailed_date(raw: str | None) -> str | None:
-    """DD/MM/YYYY → YYYY-MM-DD."""
-    s = str(raw or "").strip()
+def _parse_sailed_date(raw: Any) -> str | None:
+    """datetime/date or DD/MM/YYYY / YYYY-MM-DD → YYYY-MM-DD."""
+    if raw is None:
+        return None
+    if isinstance(raw, datetime):
+        return raw.date().isoformat()
+    if isinstance(raw, date):
+        return raw.isoformat()
+    s = str(raw).strip()
+    if not s:
+        return None
     m = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", s)
-    if not m:
+    if m:
+        d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        try:
+            return f"{y:04d}-{mo:02d}-{d:02d}"
+        except Exception:
+            return None
+    m = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", s)
+    if m:
+        return s[:10]
+    # Excel serial as int/float is uncommon once data_only=True + datetime cells,
+    # but accept ISO-ish prefixes.
+    if len(s) >= 10 and s[4] == "-" and s[7] == "-":
+        try:
+            date.fromisoformat(s[:10])
+            return s[:10]
+        except ValueError:
+            return None
+    return None
+
+
+def _parse_sailed_tons_cell(raw: Any) -> float | None:
+    """Tons from xlsx (int/float) or PDF-style string."""
+    if raw is None or raw == "":
         return None
-    d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
-    try:
-        return f"{y:04d}-{mo:02d}-{d:02d}"
-    except Exception:
+    if isinstance(raw, bool):
         return None
+    if isinstance(raw, (int, float)):
+        return float(raw)
+    return parse_sailed_tons(str(raw))
 
 
 def parse_sailed_pdf(pdf_path: Path) -> list[dict[str, Any]]:
@@ -379,6 +413,225 @@ def parse_sailed_pdf(pdf_path: Path) -> list[dict[str, Any]]:
                         }
                     )
     return rows
+
+
+def parse_sailed_xlsx(path: Path) -> list[dict[str, Any]]:
+    """Extract sailed vessel lines from NABSA sailedYYYYMMDD.xlsx.
+
+    Same row dict shape as ``parse_sailed_pdf``. Detects the header row that
+    contains Port + Status, then reads columns in NABSA order.
+    """
+    try:
+        from openpyxl import load_workbook
+    except ImportError as ex:
+        raise ImportError(
+            "openpyxl required to parse NABSA sailed xlsx — "
+            ".venv/bin/pip install openpyxl"
+        ) from ex
+
+    path = Path(path)
+    wb = load_workbook(path, read_only=True, data_only=True)
+    try:
+        ws = wb.active
+        header_idx: int | None = None
+        col: dict[str, int] = {}
+        rows_out: list[dict[str, Any]] = []
+        for i, row in enumerate(ws.iter_rows(values_only=True)):
+            cells = list(row or ())
+            if header_idx is None:
+                labels = [str(c or "").strip() for c in cells]
+                upper = [x.upper() for x in labels]
+                if "PORT" in upper and "STATUS" in upper:
+                    header_idx = i
+                    for j, lab in enumerate(upper):
+                        if lab and lab not in col:
+                            col[lab] = j
+                    continue
+                continue
+            if not cells:
+                continue
+            def _cell(name: str, default: int | None = None) -> Any:
+                j = col.get(name, default)
+                if j is None or j >= len(cells):
+                    return None
+                return cells[j]
+
+            status = str(_cell("STATUS", 3) or "").strip().upper()
+            if status != "SAILED":
+                continue
+            date_iso = _parse_sailed_date(_cell("DATE", 4))
+            if not date_iso:
+                continue
+            tons = _parse_sailed_tons_cell(_cell("TONS", 5))
+            if tons is None:
+                continue
+            cargo_raw = str(_cell("CARGO", 6) or "").strip()
+            commodity = map_sailed_commodity(cargo_raw)
+            rows_out.append(
+                {
+                    "date": date_iso,
+                    "tons": round(float(tons), 2),
+                    "cargo_raw": cargo_raw,
+                    "commodity": commodity,
+                    "port": str(_cell("PORT", 0) or "").strip(),
+                    "terminal": str(_cell("TERMINAL", 1) or "").strip(),
+                    "vessel": str(_cell("VESSEL", 2) or "").strip(),
+                    "origin": str(_cell("ORIGIN", 7) or "").strip(),
+                    "destination": str(_cell("DESTINATION", 8) or "").strip(),
+                }
+            )
+        return rows_out
+    finally:
+        wb.close()
+
+
+def list_sailed_archive_xlsx(
+    data_dir: Path,
+    *,
+    include_snapshots: bool = False,
+) -> list[Path]:
+    """Return sorted ``*nabsa_sailed*.xlsx`` under data/sailed_archive/.
+
+    Skips ``*snapshot*`` by default (redundant with month files when present).
+    """
+    archive = Path(data_dir) / SAILED_ARCHIVE_DIRNAME
+    if not archive.is_dir():
+        return []
+    out: list[Path] = []
+    for p in sorted(archive.glob("*nabsa_sailed*.xlsx")):
+        if not include_snapshots and "snapshot" in p.name.lower():
+            continue
+        out.append(p)
+    return out
+
+
+def ingest_sailed_archive_xlsx(
+    data_dir: Path,
+    *,
+    paths: list[Path] | None = None,
+    include_snapshots: bool = False,
+    rebuild_ytd: bool = True,
+    year: int | None = None,
+) -> dict[str, Any]:
+    """Parse archive xlsx files, upsert ledger, optionally rebuild destinations YTD."""
+    data_dir = Path(data_dir)
+    files = paths if paths is not None else list_sailed_archive_xlsx(
+        data_dir, include_snapshots=include_snapshots
+    )
+    all_rows: list[dict[str, Any]] = []
+    for fp in files:
+        try:
+            rows = parse_sailed_xlsx(fp)
+            print(f"Parsed sailed xlsx {fp.name}: {len(rows)} SAILED rows")
+            all_rows.extend(rows)
+        except Exception as ex:
+            print(f"WARN parse sailed xlsx {fp.name}: {ex}", file=sys.stderr)
+    ledger = update_sailed_rows_ledger(data_dir, all_rows, year=year)
+    if rebuild_ytd:
+        ytd = build_sailed_destinations_ytd(ledger_rows_list(ledger), year=year)
+        ytd_out = data_dir / "sailed_destinations_ytd.json"
+        ytd_out.write_text(
+            json.dumps(ytd, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        top = ", ".join(
+            f"{e['key']}={e['tons']}" for e in (ytd.get("exports") or [])[:5]
+        )
+        print(
+            f"Wrote {ytd_out} from={ytd.get('from')} through={ytd.get('through')} "
+            f"rows={ytd.get('rows')} export_tn={ytd.get('total_export_tons')} top=[{top}]"
+        )
+    return ledger
+
+
+def resolve_current_sailed_xlsx_url(
+    *,
+    timeout: int = 30,
+    probe_days: int = 14,
+) -> str | None:
+    """Resolve live NABSA sailed xlsx URL via /SAILED/ meta-refresh or date probe."""
+    headers = {"User-Agent": "cola-buques-rosario/1.0"}
+    try:
+        r = requests.get(SAILED_XLSX_INDEX_URL, timeout=timeout, headers=headers)
+        r.raise_for_status()
+        html = r.text
+        m = re.search(
+            r'url\s*=\s*["\']?([^"\'\s>]+sailed\d{8}\.xlsx)',
+            html,
+            flags=re.I,
+        )
+        if m:
+            url = m.group(1).strip()
+            if url.startswith("//"):
+                url = "https:" + url
+            elif url.startswith("http://"):
+                url = "https://" + url[len("http://") :]
+            elif url.startswith("/"):
+                url = "https://www.nabsa.com.ar" + url
+            return url
+    except Exception as ex:
+        print(f"WARN sailed xlsx index: {ex}", file=sys.stderr)
+
+    # Probe recent calendar days (AR tz)
+    today = ar_tz_now().date()
+    for delta in range(0, max(1, probe_days)):
+        d = today - timedelta(days=delta)
+        url = SAILED_XLSX_URL_TMPL.format(yyyymmdd=d.strftime("%Y%m%d"))
+        try:
+            head = requests.head(
+                url, timeout=timeout, headers=headers, allow_redirects=True
+            )
+            if head.status_code == 200 and "spreadsheet" in (
+                head.headers.get("Content-Type") or ""
+            ):
+                return url
+            # Some hosts omit content-type on HEAD — accept 200 with length
+            if head.status_code == 200:
+                return url
+        except Exception:
+            continue
+    return None
+
+
+def download_current_sailed_xlsx(
+    data_dir: Path,
+    *,
+    timeout: int = 45,
+    archive: bool = True,
+) -> Path | None:
+    """Download current NABSA sailed xlsx into data_dir (+ optional archive copy)."""
+    data_dir = Path(data_dir)
+    data_dir.mkdir(parents=True, exist_ok=True)
+    url = resolve_current_sailed_xlsx_url(timeout=min(timeout, 30))
+    if not url:
+        print("WARN sailed xlsx: could not resolve current URL", file=sys.stderr)
+        return None
+    dest = data_dir / "vessels_sailed_update.xlsx"
+    try:
+        r = requests.get(
+            url,
+            timeout=timeout,
+            headers={"User-Agent": "cola-buques-rosario/1.0"},
+            allow_redirects=True,
+        )
+        r.raise_for_status()
+        dest.write_bytes(r.content)
+        print(f"OK download {url} -> {dest.name} ({len(r.content)} bytes)")
+    except Exception as ex:
+        print(f"FAIL download sailed xlsx {url}: {ex}", file=sys.stderr)
+        return None
+
+    if archive:
+        archive_dir = data_dir / SAILED_ARCHIVE_DIRNAME
+        try:
+            archive_dir.mkdir(parents=True, exist_ok=True)
+            m = re.search(r"sailed(\d{8})\.xlsx", url, flags=re.I)
+            stamp = m.group(1) if m else ar_tz_now().strftime("%Y%m%d")
+            arch = archive_dir / f"sailed{stamp}.xlsx"
+            arch.write_bytes(dest.read_bytes())
+            print(f"Archived sailed xlsx -> {arch.relative_to(data_dir)}")
+        except OSError as ex:
+            print(f"WARN sailed xlsx archive: {ex}", file=sys.stderr)
+    return dest
 
 
 def build_sailed_month(
@@ -526,15 +779,19 @@ def build_sailed_destinations_ytd(
         "from": from_date,
         "through": through,
         "updated_at": ar_tz_now().isoformat(),
-        "source": "sailed_rows_ledger.json (NABSA vessels_sailed_update.pdf + priors)",
-        "source_url": SAILED_URL,
+        "source": (
+            "sailed_rows_ledger.json (NABSA sailed xlsx archive + "
+            "vessels_sailed_update.pdf + priors)"
+        ),
+        "source_url": SAILED_XLSX_INDEX_URL,
         "unit": "t",
         "note": (
             "Acumulado de embarques SAILED NABSA por destino — solo granos "
             "(maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). "
             "Excluye Argentina descarga. Cobertura = fechas presentes en el ledger "
-            f"({coverage}); el PDF diario NABSA es rolling (no es YTD completo). "
-            "El ledger crece con cada refresh; falta Jan–Ago hasta incorporar PDFs viejos."
+            f"({coverage}). Fuente: xlsx históricos "
+            "(https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. "
+            "El ledger crece con cada refresh (dedupe por clave estable)."
         ),
         "grains_only": True,
         "coverage_complete_ytd": bool(
@@ -676,12 +933,15 @@ def update_sailed_rows_ledger(
     out = {
         "year": year,
         "updated_at": ar_tz_now().isoformat(),
-        "source": "NABSA vessels_sailed_update.pdf (+ prior1–4 when available)",
-        "source_url": SAILED_URL,
+        "source": (
+            "NABSA sailedYYYYMMDD.xlsx (+ vessels_sailed_update.pdf / prior1–4)"
+        ),
+        "source_url": SAILED_XLSX_INDEX_URL,
         "note": (
-            "Ledger acumulativo de filas SAILED NABSA. El PDF diario es rolling "
-            "(ventana ~mensual); este JSON crece con cada refresh y es la fuente "
-            "de sailed_destinations_ytd.json. No inventa meses faltantes."
+            "Ledger acumulativo de filas SAILED NABSA. Histórico vía xlsx bajo "
+            "/SAILED/sailedYYYYMMDD.xlsx; el PDF diario es rolling (~mes). "
+            "Este JSON crece con cada refresh (dedupe) y alimenta "
+            "sailed_destinations_ytd.json. No inventa meses faltantes."
         ),
         "row_count": len(rows_sorted),
         "rows": rows_sorted,
@@ -766,21 +1026,53 @@ def write_sailed_month(
     *,
     month: str | None = None,
     extra_pdfs: list[Path] | None = None,
+    extra_xlsx: list[Path] | None = None,
     archive: bool = True,
 ) -> dict[str, Any] | None:
-    """Parse sailed PDF(s), upsert ledger, write sailed_month + destinations YTD from ledger."""
+    """Parse sailed PDF/XLSX, upsert ledger, write sailed_month + destinations YTD from ledger."""
     data_dir = Path(data_dir)
     pdf_path = Path(pdf_path) if pdf_path else data_dir / "vessels_sailed_update.pdf"
-    if not pdf_path.exists():
-        print(f"WARN sailed: missing {pdf_path.name}", file=sys.stderr)
+    xlsx_paths = [Path(p) for p in (extra_xlsx or []) if p and Path(p).exists()]
+    live_xlsx = data_dir / "vessels_sailed_update.xlsx"
+    if live_xlsx.exists() and live_xlsx not in xlsx_paths:
+        xlsx_paths.append(live_xlsx)
+
+    if not pdf_path.exists() and not xlsx_paths:
+        print(f"WARN sailed: missing PDF and xlsx under {data_dir}", file=sys.stderr)
         return None
-    try:
-        primary_rows, merged_rows = collect_sailed_pdf_rows(
-            data_dir, pdf_path, extra_pdfs=extra_pdfs
-        )
-    except Exception as ex:
-        print(f"FAIL parse sailed PDF: {ex}", file=sys.stderr)
-        return None
+
+    primary_rows: list[dict[str, Any]] = []
+    merged_rows: list[dict[str, Any]] = []
+    if pdf_path.exists():
+        try:
+            primary_rows, merged_rows = collect_sailed_pdf_rows(
+                data_dir, pdf_path, extra_pdfs=extra_pdfs
+            )
+        except Exception as ex:
+            print(f"FAIL parse sailed PDF: {ex}", file=sys.stderr)
+            if not xlsx_paths:
+                return None
+    else:
+        print(f"WARN sailed: missing {pdf_path.name} — continuing with xlsx", file=sys.stderr)
+
+    seen = {sailed_row_dedupe_key(r) for r in merged_rows}
+    for xp in xlsx_paths:
+        try:
+            for row in parse_sailed_xlsx(xp):
+                key = sailed_row_dedupe_key(row)
+                if key not in seen:
+                    seen.add(key)
+                    merged_rows.append(row)
+            print(f"Merged sailed xlsx {xp.name} into ledger batch")
+        except Exception as ex:
+            print(f"WARN parse sailed xlsx {xp.name}: {ex}", file=sys.stderr)
+
+    if not primary_rows and xlsx_paths:
+        # Month view: prefer live xlsx rows for current month when PDF absent
+        try:
+            primary_rows = parse_sailed_xlsx(xlsx_paths[0])
+        except Exception:
+            primary_rows = list(merged_rows)
 
     stamp = None
     if primary_rows:
@@ -1422,6 +1714,7 @@ def refresh_vessels(
     sailed_ok = False
     sailed_pdf_path = data_dir / "vessels_sailed_update.pdf"
     prior_paths: list[Path] = []
+    sailed_xlsx_path: Path | None = None
     if download_sailed:
         sailed_ok = _download(SAILED_URL, sailed_pdf_path)
         for i, url in enumerate(SAILED_PRIOR_URLS, start=1):
@@ -1430,18 +1723,32 @@ def refresh_vessels(
                 prior_paths.append(dest)
             elif dest.exists():
                 prior_paths.append(dest)
+        # Prefer upserting current meta-refresh xlsx into the same ledger
+        try:
+            sailed_xlsx_path = download_current_sailed_xlsx(
+                data_dir, timeout=timeout, archive=True
+            )
+            if sailed_xlsx_path:
+                sailed_ok = True
+        except Exception as xex:
+            print(f"WARN sailed xlsx download failed: {xex}", file=sys.stderr)
     else:
         for i in range(1, 5):
             dest = data_dir / f"vessels_sailed_prior{i}.pdf"
             if dest.exists():
                 prior_paths.append(dest)
-    # Parse sailed PDF(s), upsert ledger, rebuild YTD from ledger
-    if sailed_pdf_path.exists():
+        live_x = data_dir / "vessels_sailed_update.xlsx"
+        if live_x.exists():
+            sailed_xlsx_path = live_x
+    # Parse sailed PDF/XLSX, upsert ledger, rebuild YTD from ledger
+    extra_xlsx = [sailed_xlsx_path] if sailed_xlsx_path else None
+    if sailed_pdf_path.exists() or (sailed_xlsx_path and sailed_xlsx_path.exists()):
         try:
             write_sailed_month(
                 data_dir,
-                sailed_pdf_path,
+                sailed_pdf_path if sailed_pdf_path.exists() else sailed_pdf_path,
                 extra_pdfs=prior_paths,
+                extra_xlsx=extra_xlsx,
                 archive=True,
             )
         except Exception as sex:
@@ -1655,7 +1962,34 @@ def ensure_trucks(
 
 
 def main() -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Refresh NABSA / MAGyP data files")
+    parser.add_argument(
+        "--ingest-sailed-archive",
+        action="store_true",
+        help=(
+            "Parse data/sailed_archive/*nabsa_sailed*.xlsx into sailed_rows_ledger.json "
+            "and rebuild sailed_destinations_ytd.json (no network)."
+        ),
+    )
+    parser.add_argument(
+        "--skip-refresh",
+        action="store_true",
+        help="Only run --ingest-sailed-archive (skip PDF/trucks download).",
+    )
+    args = parser.parse_args()
+
     DATA.mkdir(parents=True, exist_ok=True)
+    if args.ingest_sailed_archive:
+        try:
+            ingest_sailed_archive_xlsx(DATA, rebuild_ytd=True)
+        except Exception as ex:
+            print(f"Sailed archive ingest failed: {ex}", file=sys.stderr)
+            return 1
+        if args.skip_refresh:
+            print("Done (archive ingest only).")
+            return 0
     try:
         refresh_vessels(DATA, write_sample=True, download_sailed=True)
     except Exception as ex:
