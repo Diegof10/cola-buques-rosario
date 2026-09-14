@@ -1,0 +1,288 @@
+{
+  "year": 2026,
+  "from": "2026-01-01",
+  "through": "2026-09-11",
+  "updated_at": "2026-09-14T15:02:13.953238-03:00",
+  "source": "NABSA vessels_sailed_update.pdf",
+  "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
+  "unit": "t",
+  "note": "Acumulado YTD de embarques SAILED NABSA por destino (excluye Argentina descarga).",
+  "exports": [
+    {
+      "key": "china",
+      "label": "China",
+      "tons": 502447.13,
+      "count": 14
+    },
+    {
+      "key": "peru",
+      "label": "Perú",
+      "tons": 308281.51,
+      "count": 15
+    },
+    {
+      "key": "vietnam",
+      "label": "Vietnam",
+      "tons": 287133.51,
+      "count": 11
+    },
+    {
+      "key": "indonesia",
+      "label": "Indonesia",
+      "tons": 266154.71,
+      "count": 9
+    },
+    {
+      "key": "brazil",
+      "label": "Brasil",
+      "tons": 184620.01,
+      "count": 7
+    },
+    {
+      "key": "malaysia",
+      "label": "Malasia",
+      "tons": 164649.05,
+      "count": 8
+    },
+    {
+      "key": "morocco",
+      "label": "Marruecos",
+      "tons": 160506.04,
+      "count": 8
+    },
+    {
+      "key": "chile",
+      "label": "Chile",
+      "tons": 142897.33,
+      "count": 7
+    },
+    {
+      "key": "saudi arabia",
+      "label": "Arabia Saudita",
+      "tons": 132070.82,
+      "count": 6
+    },
+    {
+      "key": "india",
+      "label": "India",
+      "tons": 126000.0,
+      "count": 12
+    },
+    {
+      "key": "ecuador",
+      "label": "Ecuador",
+      "tons": 113371.32,
+      "count": 6
+    },
+    {
+      "key": "united states",
+      "label": "Estados Unidos",
+      "tons": 103784.35,
+      "count": 7
+    },
+    {
+      "key": "spain",
+      "label": "España",
+      "tons": 92957.1,
+      "count": 3
+    },
+    {
+      "key": "netherlands",
+      "label": "Países Bajos",
+      "tons": 71470.46,
+      "count": 6
+    },
+    {
+      "key": "philippines",
+      "label": "Filipinas",
+      "tons": 71306.83,
+      "count": 2
+    },
+    {
+      "key": "australia",
+      "label": "Australia",
+      "tons": 62619.2,
+      "count": 4
+    },
+    {
+      "key": "italy",
+      "label": "Italia",
+      "tons": 60826.05,
+      "count": 2
+    },
+    {
+      "key": "uruguay",
+      "label": "Uruguay",
+      "tons": 43800.0,
+      "count": 3
+    },
+    {
+      "key": "ireland",
+      "label": "Irlanda",
+      "tons": 42608.98,
+      "count": 2
+    },
+    {
+      "key": "poland",
+      "label": "Polonia",
+      "tons": 42552.8,
+      "count": 2
+    },
+    {
+      "key": "greece",
+      "label": "Grecia",
+      "tons": 42042.71,
+      "count": 3
+    },
+    {
+      "key": "portugal",
+      "label": "Portugal",
+      "tons": 41000.0,
+      "count": 1
+    },
+    {
+      "key": "paraguay",
+      "label": "Paraguay",
+      "tons": 39857.0,
+      "count": 1
+    },
+    {
+      "key": "colombia",
+      "label": "Colombia",
+      "tons": 37255.16,
+      "count": 3
+    },
+    {
+      "key": "latvia",
+      "label": "Letonia",
+      "tons": 33471.18,
+      "count": 2
+    },
+    {
+      "key": "tunisia",
+      "label": "Túnez",
+      "tons": 33000.0,
+      "count": 1
+    },
+    {
+      "key": "turkey",
+      "label": "Turquía",
+      "tons": 32528.92,
+      "count": 2
+    },
+    {
+      "key": "united kingdom",
+      "label": "Reino Unido",
+      "tons": 30019.68,
+      "count": 3
+    },
+    {
+      "key": "egypt",
+      "label": "Egipto",
+      "tons": 30000.0,
+      "count": 1
+    },
+    {
+      "key": "new zealand",
+      "label": "Nueva Zelanda",
+      "tons": 28700.82,
+      "count": 5
+    },
+    {
+      "key": "mexico",
+      "label": "México",
+      "tons": 24260.0,
+      "count": 6
+    },
+    {
+      "key": "korea",
+      "label": "Corea",
+      "tons": 23344.07,
+      "count": 1
+    },
+    {
+      "key": "cameroon",
+      "label": "Camerún",
+      "tons": 22570.98,
+      "count": 1
+    },
+    {
+      "key": "yemen",
+      "label": "Yemen",
+      "tons": 18137.62,
+      "count": 1
+    },
+    {
+      "key": "cyprus",
+      "label": "Chipre",
+      "tons": 17000.0,
+      "count": 1
+    },
+    {
+      "key": "congo",
+      "label": "Congo",
+      "tons": 16999.86,
+      "count": 1
+    },
+    {
+      "key": "germany",
+      "label": "Alemania",
+      "tons": 14471.96,
+      "count": 1
+    },
+    {
+      "key": "lithuania",
+      "label": "Lituania",
+      "tons": 13829.74,
+      "count": 1
+    },
+    {
+      "key": "mozambique",
+      "label": "Mozambique",
+      "tons": 11000.0,
+      "count": 1
+    },
+    {
+      "key": "guatemala",
+      "label": "Guatemala",
+      "tons": 10800.0,
+      "count": 2
+    },
+    {
+      "key": "angola",
+      "label": "Angola",
+      "tons": 10500.0,
+      "count": 1
+    },
+    {
+      "key": "dominican repub",
+      "label": "Rep. Dominicana",
+      "tons": 8856.0,
+      "count": 3
+    },
+    {
+      "key": "russia",
+      "label": "Rusia",
+      "tons": 5000.0,
+      "count": 1
+    },
+    {
+      "key": "honduras",
+      "label": "Honduras",
+      "tons": 4398.0,
+      "count": 3
+    },
+    {
+      "key": "jamaica",
+      "label": "Jamaica",
+      "tons": 3250.0,
+      "count": 1
+    }
+  ],
+  "ar_tons": 200499.9,
+  "ar_count": 8,
+  "unknown_tons": 67294.26,
+  "unknown_count": 3,
+  "total_export_tons": 3532350.9,
+  "rows": 192
+}

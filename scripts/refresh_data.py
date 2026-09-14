@@ -3,7 +3,8 @@
 
 Also fetches MAGyP daily trucks HTML → data/trucks.json (keeps previous on scrape failure).
 When sailed PDF is downloaded, parses sailed rows → data/sailed_month.json
-(per-product export tonnes for the current calendar month).
+(per-product export tonnes for the current calendar month) and
+data/sailed_destinations_ytd.json (YTD export tonnes by destination).
 """
 from __future__ import annotations
 
@@ -117,6 +118,127 @@ def infer_destination_from_charterer(charterer: str | None) -> str | None:
         if key in n:
             return dest
     return None
+
+
+
+# Spanish labels + canonical NABSA keys (mirrors web DEST_META; lowercase keys in JSON).
+DEST_LABELS_ES: dict[str, str] = {
+    "ALGERIA": "Argelia",
+    "ANGOLA": "Angola",
+    "AUSTRALIA": "Australia",
+    "BRAZIL": "Brasil",
+    "CAMEROON": "Camerún",
+    "CANADA": "Canadá",
+    "CHILE": "Chile",
+    "CHINA": "China",
+    "COLOMBIA": "Colombia",
+    "CONGO": "Congo",
+    "CYPRUS": "Chipre",
+    "DENMARK": "Dinamarca",
+    "DOMINICAN REPUB": "Rep. Dominicana",
+    "ECUADOR": "Ecuador",
+    "EGYPT": "Egipto",
+    "EL SALVADOR": "El Salvador",
+    "FRANCE": "Francia",
+    "GERMANY": "Alemania",
+    "GREECE": "Grecia",
+    "GUATEMALA": "Guatemala",
+    "HONDURAS": "Honduras",
+    "INDIA": "India",
+    "INDONESIA": "Indonesia",
+    "IRAQ": "Irak",
+    "IRELAND": "Irlanda",
+    "ISRAEL": "Israel",
+    "ITALY": "Italia",
+    "JAMAICA": "Jamaica",
+    "KOREA": "Corea",
+    "LATVIA": "Letonia",
+    "LIBYA": "Libia",
+    "LITHUANIA": "Lituania",
+    "MADAGASCAR": "Madagascar",
+    "MALAYSIA": "Malasia",
+    "MEXICO": "México",
+    "MOROCCO": "Marruecos",
+    "MOZAMBIQUE": "Mozambique",
+    "NETHERLANDS": "Países Bajos",
+    "NEW ZEALAND": "Nueva Zelanda",
+    "OMAN": "Omán",
+    "PARAGUAY": "Paraguay",
+    "PERU": "Perú",
+    "PHILIPPINES": "Filipinas",
+    "POLAND": "Polonia",
+    "PORTUGAL": "Portugal",
+    "PUERTO RICO": "Puerto Rico",
+    "RUSSIA": "Rusia",
+    "SAUDI ARABIA": "Arabia Saudita",
+    "SINGAPORE": "Singapur",
+    "SPAIN": "España",
+    "THAILAND": "Tailandia",
+    "TUNISIA": "Túnez",
+    "TURKEY": "Turquía",
+    "UNITED ARAB EMIR": "Emiratos Árabes",
+    "UNITED KINGDOM": "Reino Unido",
+    "UNITED STATES": "Estados Unidos",
+    "URUGUAY": "Uruguay",
+    "VENEZUELA": "Venezuela",
+    "VIETNAM": "Vietnam",
+    "YEMEN": "Yemen",
+}
+
+# Map alternate NABSA spellings → canonical DEST_LABELS_ES key.
+DEST_CANON_ALIASES: dict[str, str] = {
+    "DOMINICAN REPUBLIC": "DOMINICAN REPUB",
+    "DOMINICAN REP": "DOMINICAN REPUB",
+    "KOREA (REPUBLIC OF SOUTH KOREA)": "KOREA",
+    "REPUBLIC OF SOUTH KOREA": "KOREA",
+    "SOUTH KOREA": "KOREA",
+    "KOREA REPUBLIC OF": "KOREA",
+    "RUSSIAN FEDERATION": "RUSSIA",
+    "RUSSIA": "RUSSIA",
+    "UNITED ARAB EMIRATES": "UNITED ARAB EMIR",
+    "UAE": "UNITED ARAB EMIR",
+    "USA": "UNITED STATES",
+    "US": "UNITED STATES",
+    "U S A": "UNITED STATES",
+    "UK": "UNITED KINGDOM",
+    "GREAT BRITAIN": "UNITED KINGDOM",
+}
+
+
+def _strip_accents_lower(s: str) -> str:
+    import unicodedata
+
+    nfd = unicodedata.normalize("NFD", s)
+    return "".join(c for c in nfd if unicodedata.category(c) != "Mn").lower()
+
+
+def normalize_dest_key(raw: str | None) -> str | None:
+    """Return lowercase destination key, 'ar' for Argentina, or None if unknown/empty."""
+    token = _norm_token(raw)
+    if not token or token in _UNKNOWN_DEST:
+        return None
+    if token == "ARGENTINA" or token == "AR" or token == "ARG" or token.startswith("ARGENTINA "):
+        return "ar"
+    canon = DEST_CANON_ALIASES.get(token, token)
+    if canon == "ARGENTINA":
+        return "ar"
+    return _strip_accents_lower(canon)
+
+
+def dest_label_for_key(key: str, raw: str | None = None) -> str:
+    """Spanish label for a normalize_dest_key result."""
+    if key == "ar":
+        return "Argentina"
+    for canon, label in DEST_LABELS_ES.items():
+        if _strip_accents_lower(canon) == key:
+            return label
+    upper = " ".join(key.upper().split())
+    if upper in DEST_LABELS_ES:
+        return DEST_LABELS_ES[upper]
+    raw_s = str(raw or key).strip()
+    if raw_s:
+        return " ".join(w[:1].upper() + w[1:].lower() if w else w for w in raw_s.split())
+    return key
 
 
 def enrich_vessel_destination(v: dict[str, Any]) -> dict[str, Any]:
@@ -234,6 +356,8 @@ def parse_sailed_pdf(pdf_path: Path) -> list[dict[str, Any]]:
                         continue
                     cargo_raw = str(row[6] or "").strip()
                     commodity = map_sailed_commodity(cargo_raw)
+                    origin = str(row[7] or "").strip() if len(row) > 7 else ""
+                    destination = str(row[8] or "").strip() if len(row) > 8 else ""
                     rows.append(
                         {
                             "date": date_iso,
@@ -242,6 +366,8 @@ def parse_sailed_pdf(pdf_path: Path) -> list[dict[str, Any]]:
                             "commodity": commodity,
                             "port": str(row[0] or "").strip(),
                             "vessel": str(row[2] or "").strip(),
+                            "origin": origin,
+                            "destination": destination,
                         }
                     )
     return rows
@@ -296,6 +422,90 @@ def build_sailed_month(
     }
 
 
+
+def build_sailed_destinations_ytd(
+    sailed_rows: list[dict[str, Any]],
+    *,
+    year: int | None = None,
+) -> dict[str, Any]:
+    """Aggregate YTD sailed export tonnes by destination (all PDF rows = source of truth).
+
+    Argentina goes to ar_* (excluded from exports pie). Unknown/empty → unknown_*.
+    """
+    dates = [str(r.get("date") or "") for r in sailed_rows if r.get("date")]
+    through = max(dates) if dates else None
+    if year is None:
+        if through and len(through) >= 4 and through[:4].isdigit():
+            year = int(through[:4])
+        else:
+            year = ar_tz_now().year
+    from_date = f"{year:04d}-01-01"
+
+    export_map: dict[str, dict[str, Any]] = {}
+    ar_tons = 0.0
+    ar_count = 0
+    unknown_tons = 0.0
+    unknown_count = 0
+    rows_used = 0
+
+    for row in sailed_rows:
+        d = str(row.get("date") or "")
+        if d and len(d) >= 4 and d[:4].isdigit() and int(d[:4]) != year:
+            continue
+        tons = float(row.get("tons") or 0)
+        rows_used += 1
+        raw_dest = row.get("destination")
+        key = normalize_dest_key(raw_dest if isinstance(raw_dest, str) else str(raw_dest or ""))
+        if key == "ar":
+            ar_tons += tons
+            ar_count += 1
+            continue
+        if key is None:
+            unknown_tons += tons
+            unknown_count += 1
+            continue
+        cur = export_map.get(key)
+        if not cur:
+            cur = {
+                "key": key,
+                "label": dest_label_for_key(key, raw_dest if isinstance(raw_dest, str) else None),
+                "tons": 0.0,
+                "count": 0,
+            }
+            export_map[key] = cur
+        cur["tons"] += tons
+        cur["count"] += 1
+
+    exports = sorted(
+        export_map.values(),
+        key=lambda e: (-float(e["tons"]), str(e["label"])),
+    )
+    for e in exports:
+        e["tons"] = round(float(e["tons"]), 2)
+
+    total_export = round(sum(float(e["tons"]) for e in exports), 2)
+    return {
+        "year": year,
+        "from": from_date,
+        "through": through or from_date,
+        "updated_at": ar_tz_now().isoformat(),
+        "source": "NABSA vessels_sailed_update.pdf",
+        "source_url": SAILED_URL,
+        "unit": "t",
+        "note": (
+            "Acumulado YTD de embarques SAILED NABSA por destino "
+            "(excluye Argentina descarga)."
+        ),
+        "exports": exports,
+        "ar_tons": round(ar_tons, 2),
+        "ar_count": ar_count,
+        "unknown_tons": round(unknown_tons, 2),
+        "unknown_count": unknown_count,
+        "total_export_tons": total_export,
+        "rows": rows_used,
+    }
+
+
 def write_sailed_month(
     data_dir: Path,
     pdf_path: Path | None = None,
@@ -328,6 +538,21 @@ def write_sailed_month(
         f"Wrote {out} month={payload['month']} rows={payload['rows_in_month']} "
         f"maiz={prods.get('maiz')} soja={prods.get('soja')} trigo={prods.get('trigo')}"
     )
+    try:
+        ytd = build_sailed_destinations_ytd(rows)
+        ytd_out = data_dir / "sailed_destinations_ytd.json"
+        ytd_out.write_text(
+            json.dumps(ytd, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
+        top = ", ".join(
+            f"{e['key']}={e['tons']}" for e in (ytd.get("exports") or [])[:5]
+        )
+        print(
+            f"Wrote {ytd_out} through={ytd.get('through')} rows={ytd.get('rows')} "
+            f"export_tn={ytd.get('total_export_tons')} top=[{top}]"
+        )
+    except Exception as yex:
+        print(f"WARN sailed_destinations_ytd write failed: {yex}", file=sys.stderr)
     return payload
 
 

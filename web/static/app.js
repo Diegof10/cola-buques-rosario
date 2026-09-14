@@ -59,6 +59,19 @@
     VENEZUELA: { label: "Venezuela", lat: 6.4, lon: -66.6 },
     VIETNAM: { label: "Vietnam", lat: 14.1, lon: 108.3 },
     YEMEN: { label: "Yemen", lat: 15.6, lon: 48.5 },
+    ANGOLA: { label: "Angola", lat: -11.2, lon: 17.9 },
+    COLOMBIA: { label: "Colombia", lat: 4.6, lon: -74.3 },
+    CONGO: { label: "Congo", lat: -0.2, lon: 15.8 },
+    CYPRUS: { label: "Chipre", lat: 35.1, lon: 33.4 },
+    HONDURAS: { label: "Honduras", lat: 15.2, lon: -86.2 },
+    JAMAICA: { label: "Jamaica", lat: 18.1, lon: -77.3 },
+    LITHUANIA: { label: "Lituania", lat: 55.2, lon: 24.0 },
+    MOZAMBIQUE: { label: "Mozambique", lat: -18.7, lon: 35.5 },
+    RUSSIA: { label: "Rusia", lat: 61.5, lon: 105.3 },
+    // Aliases for NABSA spellings / YTD lowercase key lookups (via destMetaLookup)
+    "DOMINICAN REPUBLIC": { label: "Rep. Dominicana", lat: 18.7, lon: -70.2 },
+    "RUSSIAN FEDERATION": { label: "Rusia", lat: 61.5, lon: 105.3 },
+    "KOREA (REPUBLIC OF SOUTH KOREA)": { label: "Corea", lat: 35.9, lon: 127.8 },
   };
   const PIE_COLORS = [
     "#1B5E3B", "#1565C0", "#F57C00", "#6A1B9A", "#00838F",
@@ -80,6 +93,7 @@
   let stocksPayload = null;
   let trucksPayload = null;
   let coveragePayload = null;
+  let destinationsYtdPayload = null;
   let worldMap = null;
   let worldLayer = null;
   let worldMapReady = false;
@@ -226,13 +240,33 @@
     return String(raw || "").trim().toUpperCase();
   }
   function destLabel(key) {
-    if (DEST_META[key]) return DEST_META[key].label;
+    const meta = destMetaLookup(key);
+    if (meta) return meta.label;
     // title-case fallback
-    return key
+    return String(key || "")
       .toLowerCase()
       .split(" ")
       .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
       .join(" ");
+  }
+  /** DEST_META lookup: accepts UPPERCASE lineup keys or lowercase YTD keys. */
+  function destMetaLookup(key) {
+    if (!key) return null;
+    const raw = String(key);
+    if (DEST_META[raw]) return DEST_META[raw];
+    const up = raw.toUpperCase();
+    if (DEST_META[up]) return DEST_META[up];
+    // lowercase stripped form → match DEST_META key by normalizing
+    const want = norm(raw);
+    for (const k of Object.keys(DEST_META)) {
+      if (norm(k) === want) return DEST_META[k];
+    }
+    return null;
+  }
+  function fmtIsoDateDMY(iso) {
+    const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) return iso || "—";
+    return m[3] + "/" + m[2] + "/" + m[1];
   }
   function inferFromCharterer(charterer) {
     if (isUnknownCharterer(charterer)) return null;
@@ -339,14 +373,15 @@
     setTimeout(() => worldMap.invalidateSize(), 80);
   }
 
-  function renderWorldMap(exports) {
+  function renderWorldMap(exports, opts) {
     if (!worldMapReady) initWorldMap();
     if (!worldMap || !worldLayer) return;
+    const ytd = !!(opts && opts.ytd);
     worldLayer.clearLayers();
     const maxTons = Math.max(...exports.map((e) => e.tons), 1);
     const bounds = [];
     exports.forEach((e, i) => {
-      const meta = DEST_META[e.key];
+      const meta = destMetaLookup(e.key);
       if (!meta || meta.lat == null) return;
       const r = 4 + Math.sqrt(e.tons / maxTons) * 22;
       const color = PIE_COLORS[i % PIE_COLORS.length];
@@ -357,9 +392,10 @@
         fillColor: color,
         fillOpacity: 0.72,
       });
+      const tonsLabel = ytd ? "tn acumuladas YTD" : "Toneladas";
       circle.bindPopup(
         '<div class="pop-name">' + escapeHtml(e.label) + "</div>" +
-        '<div class="pop-row"><strong>Toneladas</strong> ' + escapeHtml(fmtTonsShort(e.tons)) + "</div>" +
+        '<div class="pop-row"><strong>' + tonsLabel + '</strong> ' + escapeHtml(fmtTonsShort(e.tons)) + "</div>" +
         '<div class="pop-row"><strong>Embarques</strong> ' + escapeHtml(String(e.count)) + "</div>"
       );
       worldLayer.addLayer(circle);
@@ -429,7 +465,8 @@
     });
   }
 
-  function drawDestPie(exports) {
+  function drawDestPie(exports, opts) {
+    const ytd = !!(opts && opts.ytd);
     const canvas = $("destChart");
     if (!canvas) return;
     const rect = canvas.parentElement?.getBoundingClientRect();
@@ -510,31 +547,79 @@
     ctx.fillText(fmtTons(total).replace(" mil tn", "k"), cx, cy - 8);
     ctx.fillStyle = "#5b6b7c";
     ctx.font = "600 11px system-ui,sans-serif";
-    ctx.fillText("export tn", cx, cy + 12);
+    ctx.fillText(ytd ? "tn YTD" : "export tn", cx, cy + 12);
     pieHitMeta = { slices: hitSlices, total, cx, cy, radius, inner };
     ensurePieHover();
     return slices;
   }
 
   function renderDestinations(list) {
-    const agg = aggregateDestinations(list);
+    const ytd = destinationsYtdPayload && Array.isArray(destinationsYtdPayload.exports)
+      ? destinationsYtdPayload
+      : null;
+    // YTD mode: ignore lineup zone/commodity filters (independent of cola filters).
+    let agg;
+    let ytdMode = false;
+    if (ytd) {
+      ytdMode = true;
+      agg = {
+        exports: (ytd.exports || []).map((e) => ({
+          key: e.key,
+          label: e.label || destLabel(e.key),
+          tons: Number(e.tons) || 0,
+          count: Number(e.count) || 0,
+          inferredCount: 0,
+        })),
+        arTons: Number(ytd.ar_tons) || 0,
+        arCount: Number(ytd.ar_count) || 0,
+        sinDestTons: Number(ytd.unknown_tons) || 0,
+        sinDestCount: Number(ytd.unknown_count) || 0,
+        inferredCount: 0,
+        inferredTons: 0,
+      };
+    } else {
+      agg = aggregateDestinations(list);
+    }
+
+    const throughFmt = ytdMode ? fmtIsoDateDMY(ytd.through) : null;
+    const ytdHint = $("destYtdHint");
+    if (ytdHint) {
+      ytdHint.textContent = ytdMode
+        ? ("Acumulado desde principio de año hasta " + throughFmt + " (NABSA sailed) · independiente de filtros de cola")
+        : "Volumen de la cola actual (lineup) · aplica filtros de zona/commodity";
+    }
+    const mapNote = $("destMapNote");
+    if (mapNote) {
+      mapNote.textContent = ytdMode
+        ? ("Círculos = tn acumuladas YTD por país hasta " + throughFmt + ". Descarga AR y Sin destino no se dibujan. Independiente de filtros de cola.")
+        : "Círculos = toneladas de exportación por país (centroide). Descarga AR y Sin destino no se dibujan. Badge “estimado” = inferido por charterer.";
+    }
+
     $("destCount").textContent = String(agg.exports.length);
     $("destArTons").textContent = fmtTons(agg.arTons);
     $("destOtrosTons").textContent = fmtTons(agg.sinDestTons);
     const asideHint = $("destAsideHint");
     if (asideHint) {
-      asideHint.textContent =
-        "fuera de la torta · " +
-        agg.arCount + " descarga AR · " +
-        agg.sinDestCount + " sin país NABSA" +
-        (agg.inferredCount ? " · " + agg.inferredCount + " estimado(s) en torta" : "");
+      asideHint.textContent = ytdMode
+        ? ("fuera de la torta · " + agg.arCount + " descarga AR · " + agg.sinDestCount + " sin país NABSA")
+        : (
+          "fuera de la torta · " +
+          agg.arCount + " descarga AR · " +
+          agg.sinDestCount + " sin país NABSA" +
+          (agg.inferredCount ? " · " + agg.inferredCount + " estimado(s) en torta" : "")
+        );
     }
-    const slices = drawDestPie(agg.exports);
+    const slices = drawDestPie(agg.exports, { ytd: ytdMode });
     const exportTons = agg.exports.reduce((s, e) => s + e.tons, 0);
-    $("destChartNote").textContent =
-      "Exportación conocida: " + fmtTons(exportTons) +
-      " · Descarga AR y Sin destino aparte" +
-      (agg.inferredTons ? " · incluye " + fmtTons(agg.inferredTons) + " estimadas" : "");
+    $("destChartNote").textContent = ytdMode
+      ? ("Acumulado desde principio de año hasta " + throughFmt +
+         " · Exportación: " + fmtTons(exportTons) +
+         " · Descarga AR y Sin destino aparte")
+      : (
+        "Exportación conocida: " + fmtTons(exportTons) +
+        " · Descarga AR y Sin destino aparte" +
+        (agg.inferredTons ? " · incluye " + fmtTons(agg.inferredTons) + " estimadas" : "")
+      );
 
     const colorByLabel = new Map((slices || []).map((s) => [s.label, s.color]));
     const maxExport = Math.max(...agg.exports.map((e) => e.tons), 1);
@@ -543,7 +628,7 @@
           .map((e, i) => {
             const col = colorByLabel.get(e.label) || PIE_COLORS[i % PIE_COLORS.length];
             const est =
-              e.inferredCount > 0
+              !ytdMode && e.inferredCount > 0
                 ? ' <span class="badge estimado" title="Incluye destino estimado por charterer">estimado</span>'
                 : "";
             const pct = Math.max(2, Math.round((100 * e.tons) / maxExport));
@@ -559,9 +644,11 @@
             );
           })
           .join("")
-      : '<div class="empty">Sin destinos de exportación con estos filtros.</div>';
+      : '<div class="empty">' +
+        (ytdMode ? "Sin destinos de exportación en el acumulado YTD." : "Sin destinos de exportación con estos filtros.") +
+        "</div>";
 
-    renderWorldMap(agg.exports);
+    renderWorldMap(agg.exports, { ytd: ytdMode });
   }
 
 
@@ -1114,10 +1201,11 @@
   async function load() {
     $("queueBody").innerHTML = '<div class="loading">Cargando lineup…</div>';
     try {
-      const [vRes, tRes, sRes] = await Promise.all([
+      const [vRes, tRes, sRes, dRes] = await Promise.all([
         fetch("/api/vessels"),
         fetch("/api/trucks"),
         fetch("/api/stocks-estimado"),
+        fetch("/api/destinations-ytd"),
       ]);
       vesselsPayload = await vRes.json();
       trucksPayload = await tRes.json();
@@ -1125,6 +1213,11 @@
         stocksPayload = sRes.ok ? await sRes.json() : null;
       } catch {
         stocksPayload = null;
+      }
+      try {
+        destinationsYtdPayload = dRes.ok ? await dRes.json() : null;
+      } catch {
+        destinationsYtdPayload = null;
       }
       initWorldMap();
       renderAll();

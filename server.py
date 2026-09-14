@@ -166,6 +166,7 @@ def _ensure_writable_data() -> Path:
         "existencias_baseline.json",
         "truck_inflow_ledger.json",
         "sailed_month.json",
+        "sailed_destinations_ytd.json",
     ):
         dest = WRITABLE_DATA / name
         src = BUNDLED_DATA / name
@@ -849,6 +850,19 @@ def coverage():
         return JSONResponse(payload)
     except Exception as ex:
         return JSONResponse({"error": "coverage unavailable", "detail": str(ex)}, status_code=500)
+
+
+
+@app.get("/api/destinations-ytd")
+def destinations_ytd():
+    """YTD NABSA sailed export volumes by destination (pie/map source)."""
+    payload = _load_json_prefer_writable("sailed_destinations_ytd.json")
+    if not payload:
+        return JSONResponse(
+            {"error": "sailed_destinations_ytd unavailable", "exports": []},
+            status_code=404,
+        )
+    return JSONResponse(payload)
 
 
 @app.get("/api/stocks-estimado")
