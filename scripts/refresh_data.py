@@ -3,8 +3,9 @@
 
 Also fetches MAGyP daily trucks HTML → data/trucks.json (keeps previous on scrape failure).
 When sailed PDF is downloaded, parses sailed rows → data/sailed_month.json
-(per-product export tonnes for the current calendar month) and
-data/sailed_destinations_ytd.json (YTD export tonnes by destination).
+(per-product export tonnes for the current calendar month), upserts into
+data/sailed_rows_ledger.json (accumulates across NABSA rolling PDF refreshes),
+and rebuilds data/sailed_destinations_ytd.json FROM THE LEDGER (not from one PDF).
 """
 from __future__ import annotations
 
@@ -28,6 +29,12 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 VESSEL_URL = "https://www.nabsa.com.ar/assets/vessel_update.pdf"
 SAILED_URL = "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf"
+# NABSA also publishes short rolling priors (same month window, rotated daily).
+SAILED_PRIOR_URLS = tuple(
+    f"https://www.nabsa.com.ar/assets/vessels_sailed_prior{i}.pdf" for i in range(1, 5)
+)
+SAILED_LEDGER_NAME = "sailed_rows_ledger.json"
+SAILED_ARCHIVE_DIRNAME = "sailed_archive"
 
 UP_RIVER_PORTS = {
     "SAN LORENZO",
@@ -365,6 +372,7 @@ def parse_sailed_pdf(pdf_path: Path) -> list[dict[str, Any]]:
                             "cargo_raw": cargo_raw,
                             "commodity": commodity,
                             "port": str(row[0] or "").strip(),
+                            "terminal": str(row[1] or "").strip(),
                             "vessel": str(row[2] or "").strip(),
                             "origin": origin,
                             "destination": destination,
@@ -428,18 +436,35 @@ def build_sailed_destinations_ytd(
     *,
     year: int | None = None,
 ) -> dict[str, Any]:
-    """Aggregate YTD sailed export tonnes by destination (all PDF rows = source of truth).
+    """Aggregate sailed export tonnes by destination from accumulated ledger rows.
 
-    Only grain commodities (maiz/soja/trigo/girasol/sorgo/cebada). Argentina → ar_*; unknown → unknown_*; non-grains skipped.
+    Only grain commodities (maiz/soja/trigo/girasol/sorgo/cebada). Argentina → ar_*;
+    unknown → unknown_*; non-grains skipped.
+
+    ``from`` / ``through`` are the actual min/max dates present for that year —
+    never claims Jan 1 unless that date exists in the ledger.
     """
-    dates = [str(r.get("date") or "") for r in sailed_rows if r.get("date")]
-    through = max(dates) if dates else None
     if year is None:
-        if through and len(through) >= 4 and through[:4].isdigit():
-            year = int(through[:4])
+        year_dates = [
+            str(r.get("date") or "")
+            for r in sailed_rows
+            if r.get("date") and str(r.get("date"))[:4].isdigit()
+        ]
+        if year_dates:
+            year = int(max(year_dates)[:4])
         else:
             year = ar_tz_now().year
-    from_date = f"{year:04d}-01-01"
+
+    year_dates = [
+        str(r.get("date") or "")
+        for r in sailed_rows
+        if r.get("date")
+        and len(str(r.get("date"))) >= 4
+        and str(r.get("date"))[:4].isdigit()
+        and int(str(r.get("date"))[:4]) == year
+    ]
+    from_date = min(year_dates) if year_dates else None
+    through = max(year_dates) if year_dates else None
 
     export_map: dict[str, dict[str, Any]] = {}
     ar_tons = 0.0
@@ -493,20 +518,28 @@ def build_sailed_destinations_ytd(
         e["tons"] = round(float(e["tons"]), 2)
 
     total_export = round(sum(float(e["tons"]) for e in exports), 2)
+    coverage = (
+        f"{from_date} → {through}" if from_date and through else "sin filas en ledger"
+    )
     return {
         "year": year,
         "from": from_date,
-        "through": through or from_date,
+        "through": through,
         "updated_at": ar_tz_now().isoformat(),
-        "source": "NABSA vessels_sailed_update.pdf",
+        "source": "sailed_rows_ledger.json (NABSA vessels_sailed_update.pdf + priors)",
         "source_url": SAILED_URL,
         "unit": "t",
         "note": (
-            "Acumulado YTD de embarques SAILED NABSA por destino — solo granos "
+            "Acumulado de embarques SAILED NABSA por destino — solo granos "
             "(maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). "
-            "Excluye Argentina descarga."
+            "Excluye Argentina descarga. Cobertura = fechas presentes en el ledger "
+            f"({coverage}); el PDF diario NABSA es rolling (no es YTD completo). "
+            "El ledger crece con cada refresh; falta Jan–Ago hasta incorporar PDFs viejos."
         ),
         "grains_only": True,
+        "coverage_complete_ytd": bool(
+            from_date and from_date.endswith("-01-01")
+        ),
         "exports": exports,
         "ar_tons": round(ar_tons, 2),
         "ar_count": ar_count,
@@ -519,31 +552,260 @@ def build_sailed_destinations_ytd(
     }
 
 
+def sailed_row_dedupe_key(row: dict[str, Any]) -> str:
+    """Stable unique key: date + vessel + port + terminal + tons + cargo + destination."""
+    tons = row.get("tons")
+    try:
+        tons_s = f"{float(tons):.2f}"
+    except (TypeError, ValueError):
+        tons_s = str(tons or "")
+    parts = [
+        str(row.get("date") or "").strip(),
+        str(row.get("vessel") or "").strip().upper(),
+        str(row.get("port") or "").strip().upper(),
+        str(row.get("terminal") or "").strip().upper(),
+        tons_s,
+        str(row.get("cargo_raw") or row.get("commodity") or "").strip().upper(),
+        str(row.get("destination") or "").strip().upper(),
+    ]
+    return "|".join(parts)
+
+
+def _normalize_sailed_ledger_row(row: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "date": str(row.get("date") or "").strip(),
+        "tons": round(float(row.get("tons") or 0), 2),
+        "cargo_raw": str(row.get("cargo_raw") or "").strip(),
+        "commodity": str(row.get("commodity") or "otro").strip().lower(),
+        "port": str(row.get("port") or "").strip(),
+        "terminal": str(row.get("terminal") or "").strip(),
+        "vessel": str(row.get("vessel") or "").strip(),
+        "origin": str(row.get("origin") or "").strip(),
+        "destination": str(row.get("destination") or "").strip(),
+    }
+
+
+def load_sailed_rows_ledger(data_dir: Path) -> dict[str, Any]:
+    """Load sailed_rows_ledger.json from data_dir only (empty if missing).
+
+    Bundled seed is copied by server ``_ensure_writable_data``; refresh must not
+    silently merge the repo seed into an unrelated temp data_dir (breaks tests).
+    """
+    data_dir = Path(data_dir)
+    ledger_path = data_dir / SAILED_LEDGER_NAME
+    if ledger_path.exists():
+        try:
+            doc = json.loads(ledger_path.read_text(encoding="utf-8"))
+            if isinstance(doc, dict):
+                return doc
+        except Exception:
+            pass
+    return {"year": None, "updated_at": None, "rows": {}}
+
+
+def ledger_rows_list(ledger: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return ledger rows as a list (supports dict-by-key or list storage)."""
+    raw = ledger.get("rows")
+    if isinstance(raw, dict):
+        return [v for v in raw.values() if isinstance(v, dict)]
+    if isinstance(raw, list):
+        return [v for v in raw if isinstance(v, dict)]
+    return []
+
+
+def update_sailed_rows_ledger(
+    data_dir: Path,
+    new_rows: list[dict[str, Any]],
+    *,
+    year: int | None = None,
+) -> dict[str, Any]:
+    """Upsert unique sailed rows into sailed_rows_ledger.json for a calendar year.
+
+    Mirrors truck_inflow_ledger: durable seed JSON, dedupe on stable key, roll on year change.
+    """
+    data_dir = Path(data_dir)
+    data_dir.mkdir(parents=True, exist_ok=True)
+    ledger_path = data_dir / SAILED_LEDGER_NAME
+
+    if year is None:
+        dates = [str(r.get("date") or "") for r in new_rows if r.get("date")]
+        if dates:
+            year = int(max(dates)[:4])
+        else:
+            year = ar_tz_now().year
+
+    ledger = load_sailed_rows_ledger(data_dir)
+    if ledger.get("year") != year:
+        rows_map: dict[str, Any] = {}
+    else:
+        existing = ledger.get("rows")
+        if isinstance(existing, dict):
+            rows_map = {str(k): v for k, v in existing.items() if isinstance(v, dict)}
+        elif isinstance(existing, list):
+            rows_map = {}
+            for r in existing:
+                if isinstance(r, dict):
+                    rows_map[sailed_row_dedupe_key(r)] = _normalize_sailed_ledger_row(r)
+        else:
+            rows_map = {}
+
+    inserted = 0
+    updated = 0
+    for raw in new_rows:
+        if not isinstance(raw, dict):
+            continue
+        d = str(raw.get("date") or "")
+        if not d or len(d) < 4 or not d[:4].isdigit() or int(d[:4]) != year:
+            continue
+        norm = _normalize_sailed_ledger_row(raw)
+        key = sailed_row_dedupe_key(norm)
+        if key in rows_map:
+            if rows_map[key] != norm:
+                rows_map[key] = norm
+                updated += 1
+        else:
+            rows_map[key] = norm
+            inserted += 1
+
+    # Stable JSON: sort keys
+    rows_sorted = dict(sorted(rows_map.items(), key=lambda kv: (
+        str(kv[1].get("date") or ""),
+        str(kv[1].get("vessel") or ""),
+        kv[0],
+    )))
+    out = {
+        "year": year,
+        "updated_at": ar_tz_now().isoformat(),
+        "source": "NABSA vessels_sailed_update.pdf (+ prior1–4 when available)",
+        "source_url": SAILED_URL,
+        "note": (
+            "Ledger acumulativo de filas SAILED NABSA. El PDF diario es rolling "
+            "(ventana ~mensual); este JSON crece con cada refresh y es la fuente "
+            "de sailed_destinations_ytd.json. No inventa meses faltantes."
+        ),
+        "row_count": len(rows_sorted),
+        "rows": rows_sorted,
+    }
+    ledger_path.write_text(
+        json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    print(
+        f"Wrote {ledger_path} year={year} rows={len(rows_sorted)} "
+        f"(+{inserted} new, ~{updated} updated)"
+    )
+    return out
+
+
+def archive_sailed_pdf(
+    data_dir: Path,
+    pdf_path: Path,
+    *,
+    kind: str = "update",
+    stamp: str | None = None,
+) -> Path | None:
+    """Copy PDF under data/sailed_archive/YYYY-MM-DD_{kind}.pdf (gitignored)."""
+    data_dir = Path(data_dir)
+    pdf_path = Path(pdf_path)
+    if not pdf_path.exists():
+        return None
+    archive_dir = data_dir / SAILED_ARCHIVE_DIRNAME
+    try:
+        archive_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as ex:
+        print(f"WARN sailed archive mkdir: {ex}", file=sys.stderr)
+        return None
+    if not stamp:
+        stamp = ar_tz_now().strftime("%Y-%m-%d")
+    dest = archive_dir / f"{stamp}_{kind}.pdf"
+    try:
+        dest.write_bytes(pdf_path.read_bytes())
+        print(f"Archived sailed PDF -> {dest.relative_to(data_dir)}")
+        return dest
+    except OSError as ex:
+        print(f"WARN sailed archive write failed: {ex}", file=sys.stderr)
+        return None
+
+
+def collect_sailed_pdf_rows(
+    data_dir: Path,
+    primary_pdf: Path,
+    *,
+    extra_pdfs: list[Path] | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """Parse primary + optional prior PDFs. Returns (primary_rows, all_merged_unique_order)."""
+    data_dir = Path(data_dir)
+    primary_rows: list[dict[str, Any]] = []
+    if primary_pdf.exists():
+        primary_rows = parse_sailed_pdf(primary_pdf)
+
+    merged: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for row in primary_rows:
+        key = sailed_row_dedupe_key(row)
+        if key not in seen:
+            seen.add(key)
+            merged.append(row)
+
+    for extra in extra_pdfs or []:
+        if not extra.exists():
+            continue
+        try:
+            for row in parse_sailed_pdf(extra):
+                key = sailed_row_dedupe_key(row)
+                if key not in seen:
+                    seen.add(key)
+                    merged.append(row)
+        except Exception as ex:
+            print(f"WARN parse prior sailed {extra.name}: {ex}", file=sys.stderr)
+    return primary_rows, merged
+
+
 def write_sailed_month(
     data_dir: Path,
     pdf_path: Path | None = None,
     *,
     month: str | None = None,
+    extra_pdfs: list[Path] | None = None,
+    archive: bool = True,
 ) -> dict[str, Any] | None:
-    """Parse sailed PDF (if present) and write data/sailed_month.json."""
+    """Parse sailed PDF(s), upsert ledger, write sailed_month + destinations YTD from ledger."""
     data_dir = Path(data_dir)
     pdf_path = Path(pdf_path) if pdf_path else data_dir / "vessels_sailed_update.pdf"
     if not pdf_path.exists():
         print(f"WARN sailed: missing {pdf_path.name}", file=sys.stderr)
         return None
     try:
-        rows = parse_sailed_pdf(pdf_path)
+        primary_rows, merged_rows = collect_sailed_pdf_rows(
+            data_dir, pdf_path, extra_pdfs=extra_pdfs
+        )
     except Exception as ex:
         print(f"FAIL parse sailed PDF: {ex}", file=sys.stderr)
         return None
+
+    stamp = None
+    if primary_rows:
+        stamp = max(str(r.get("date") or "") for r in primary_rows) or None
+    if archive:
+        archive_sailed_pdf(data_dir, pdf_path, kind="update", stamp=stamp)
+        for i, extra in enumerate(extra_pdfs or [], start=1):
+            if extra.exists():
+                archive_sailed_pdf(data_dir, extra, kind=f"prior{i}", stamp=stamp)
+
+    try:
+        ledger = update_sailed_rows_ledger(data_dir, merged_rows)
+        ledger_rows = ledger_rows_list(ledger)
+    except Exception as lex:
+        print(f"WARN sailed ledger update failed: {lex}", file=sys.stderr)
+        ledger_rows = merged_rows
+
     if not month:
-        # Prefer latest date in PDF if same month as AR today; else AR today month
         month = ar_tz_now().strftime("%Y-%m")
-        if rows:
-            latest = max(str(r.get("date") or "") for r in rows)
+        if primary_rows:
+            latest = max(str(r.get("date") or "") for r in primary_rows)
             if latest[:7]:
                 month = latest[:7]
-    payload = build_sailed_month(rows, month=month)
+    # Month view still from latest rolling PDF (NABSA month window)
+    payload = build_sailed_month(primary_rows, month=month)
     out = data_dir / "sailed_month.json"
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     prods = payload.get("products") or {}
@@ -552,7 +814,7 @@ def write_sailed_month(
         f"maiz={prods.get('maiz')} soja={prods.get('soja')} trigo={prods.get('trigo')}"
     )
     try:
-        ytd = build_sailed_destinations_ytd(rows)
+        ytd = build_sailed_destinations_ytd(ledger_rows)
         ytd_out = data_dir / "sailed_destinations_ytd.json"
         ytd_out.write_text(
             json.dumps(ytd, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
@@ -561,8 +823,8 @@ def write_sailed_month(
             f"{e['key']}={e['tons']}" for e in (ytd.get("exports") or [])[:5]
         )
         print(
-            f"Wrote {ytd_out} through={ytd.get('through')} rows={ytd.get('rows')} "
-            f"export_tn={ytd.get('total_export_tons')} top=[{top}]"
+            f"Wrote {ytd_out} from={ytd.get('from')} through={ytd.get('through')} "
+            f"rows={ytd.get('rows')} export_tn={ytd.get('total_export_tons')} top=[{top}]"
         )
     except Exception as yex:
         print(f"WARN sailed_destinations_ytd write failed: {yex}", file=sys.stderr)
@@ -1159,12 +1421,29 @@ def refresh_vessels(
     live = _download(VESSEL_URL, pdf_path)
     sailed_ok = False
     sailed_pdf_path = data_dir / "vessels_sailed_update.pdf"
+    prior_paths: list[Path] = []
     if download_sailed:
         sailed_ok = _download(SAILED_URL, sailed_pdf_path)
-    # Parse sailed PDF whenever present (fresh download or prior file)
+        for i, url in enumerate(SAILED_PRIOR_URLS, start=1):
+            dest = data_dir / f"vessels_sailed_prior{i}.pdf"
+            if _download(url, dest):
+                prior_paths.append(dest)
+            elif dest.exists():
+                prior_paths.append(dest)
+    else:
+        for i in range(1, 5):
+            dest = data_dir / f"vessels_sailed_prior{i}.pdf"
+            if dest.exists():
+                prior_paths.append(dest)
+    # Parse sailed PDF(s), upsert ledger, rebuild YTD from ledger
     if sailed_pdf_path.exists():
         try:
-            write_sailed_month(data_dir, sailed_pdf_path)
+            write_sailed_month(
+                data_dir,
+                sailed_pdf_path,
+                extra_pdfs=prior_paths,
+                archive=True,
+            )
         except Exception as sex:
             print(f"WARN sailed_month write failed: {sex}", file=sys.stderr)
 

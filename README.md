@@ -49,6 +49,8 @@ La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Co
 
 ## Volumen por destino
 
+- **YTD sailed (ledger):** `data/sailed_rows_ledger.json` acumula filas SAILED NABSA entre refreshes (el PDF diario es rolling, no YTD completo). `sailed_destinations_ytd.json` se arma desde el ledger; `from`/`through` son fechas reales. Ver `docs/SAILED_YTD_LEDGER.md`.
+
 - Agrega toneladas del lineup Up-River por campo `destination` (NABSA).
 - **Argentina** (y variantes AR/ARG) → tarjeta **Descarga AR** (importación / descarga). No entra en la torta ni en los círculos de exportación.
 - Destino vacío / `NOT AVAILABLE` → tarjeta **Sin destino (NABSA)** (aparte de la torta). Nunca se mezcla en la torta como si fueran países desconocidos.

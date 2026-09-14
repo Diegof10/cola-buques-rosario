@@ -5,3 +5,5 @@ data/*.pdf
 .DS_Store
 cloudflared
 start-tunnel.sh
+# Bulky NABSA sailed PDF archive (ledger JSON stays committed)
+data/sailed_archive/*.pdf

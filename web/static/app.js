@@ -582,16 +582,29 @@
     }
 
     const throughFmt = ytdMode ? fmtIsoDateDMY(ytd.through) : null;
+    const fromFmt = ytdMode ? fmtIsoDateDMY(ytd.from) : null;
+    const ytdRangeLabel = ytdMode
+      ? (fromFmt && throughFmt
+          ? (fromFmt + " → " + throughFmt)
+          : (throughFmt || "sin cobertura"))
+      : null;
+    const ytdFullYear =
+      ytdMode && ytd.from && String(ytd.from).slice(5) === "01-01";
     const ytdHint = $("destYtdHint");
     if (ytdHint) {
       ytdHint.textContent = ytdMode
-        ? ("Acumulado YTD solo granos desde principio de año hasta " + throughFmt + " (NABSA sailed) · independiente de filtros de cola")
+        ? (
+            (ytdFullYear
+              ? ("Acumulado YTD solo granos " + ytdRangeLabel)
+              : ("Acumulado solo granos " + ytdRangeLabel + " (cobertura parcial; NABSA PDF rolling)")) +
+            " · ledger NABSA sailed · independiente de filtros de cola"
+          )
         : "Volumen de la cola actual (lineup) · aplica filtros de zona/commodity";
     }
     const mapNote = $("destMapNote");
     if (mapNote) {
       mapNote.textContent = ytdMode
-        ? ("Círculos = tn acumuladas YTD por país hasta " + throughFmt + ". Descarga AR y Sin destino no se dibujan. Independiente de filtros de cola.")
+        ? ("Círculos = tn acumuladas por país (" + ytdRangeLabel + "). Descarga AR y Sin destino no se dibujan. Independiente de filtros de cola.")
         : "Círculos = toneladas de exportación por país (centroide). Descarga AR y Sin destino no se dibujan. Badge “estimado” = inferido por charterer.";
     }
 
@@ -612,7 +625,10 @@
     const slices = drawDestPie(agg.exports, { ytd: ytdMode });
     const exportTons = agg.exports.reduce((s, e) => s + e.tons, 0);
     $("destChartNote").textContent = ytdMode
-      ? ("Acumulado YTD solo granos desde principio de año hasta " + throughFmt +
+      ? (
+          (ytdFullYear
+            ? ("Acumulado YTD solo granos " + ytdRangeLabel)
+            : ("Acumulado solo granos " + ytdRangeLabel + " (parcial)")) +
          " · Exportación: " + fmtTons(exportTons) +
          " · Descarga AR y Sin destino aparte")
       : (

@@ -1,13 +1,14 @@
 {
   "year": 2026,
-  "from": "2026-01-01",
+  "from": "2026-09-01",
   "through": "2026-09-11",
-  "updated_at": "2026-09-14T15:07:24.350727-03:00",
-  "source": "NABSA vessels_sailed_update.pdf",
+  "updated_at": "2026-09-14T15:26:12.407047-03:00",
+  "source": "sailed_rows_ledger.json (NABSA vessels_sailed_update.pdf + priors)",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "unit": "t",
-  "note": "Acumulado YTD de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga.",
+  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-09-01 → 2026-09-11); el PDF diario NABSA es rolling (no es YTD completo). El ledger crece con cada refresh; falta Jan–Ago hasta incorporar PDFs viejos.",
   "grains_only": true,
+  "coverage_complete_ytd": false,
   "exports": [
     {
       "key": "china",
