@@ -1,13 +1,13 @@
 {
   "month": "2026-09",
-  "updated_at": "2026-09-18T13:54:42.605176-03:00",
+  "updated_at": "2026-09-21T08:37:28.914547-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 2072933.6,
-    "soja": 2659054.97,
-    "trigo": 438694.35,
-    "girasol": 196177.15,
+    "maiz": 2166937.65,
+    "soja": 2730480.87,
+    "trigo": 464494.35,
+    "girasol": 211976.65,
     "sorgo": 37366.0,
     "cebada": 126176.0
   },
@@ -94,7 +94,7 @@
     },
     "2026-09-11": {
       "maiz": 116366.19,
-      "soja": 77437.81,
+      "soja": 95689.09,
       "trigo": 20500.0,
       "girasol": 14510.0,
       "sorgo": 0.0,
@@ -110,14 +110,14 @@
     },
     "2026-09-13": {
       "maiz": 104786.46,
-      "soja": 188257.33,
+      "soja": 200257.33,
       "trigo": 25216.66,
       "girasol": 12241.0,
       "sorgo": 0.0,
       "cebada": 0.0
     },
     "2026-09-14": {
-      "maiz": 37354.71,
+      "maiz": 64362.76,
       "soja": 86375.8,
       "trigo": 0.0,
       "girasol": 8000.0,
@@ -126,7 +126,7 @@
     },
     "2026-09-15": {
       "maiz": 137283.35,
-      "soja": 126620.43,
+      "soja": 149890.43,
       "trigo": 28488.0,
       "girasol": 24400.0,
       "sorgo": 37366.0,
@@ -142,15 +142,23 @@
     },
     "2026-09-17": {
       "maiz": 97301.92,
-      "soja": 29000.0,
+      "soja": 46904.62,
       "trigo": 0.0,
-      "girasol": 18400.0,
+      "girasol": 34199.5,
       "sorgo": 0.0,
       "cebada": 66000.0
+    },
+    "2026-09-18": {
+      "maiz": 66996.0,
+      "soja": 0.0,
+      "trigo": 25800.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
     }
   },
-  "rows_in_month": 336,
-  "ignored_otro_tn": 920531.54,
+  "rows_in_month": 359,
+  "ignored_otro_tn": 949541.54,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos."
 }
