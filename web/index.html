@@ -86,6 +86,37 @@
       </div>
     </section>
 
+
+
+    <section class="panel full dest-panel" id="destPanel">
+      <div class="panel-h">
+        <h2>Volumen por destino · exportación (YTD granos)</h2>
+        <span class="count" id="destCount">0</span>
+      </div>
+      <p class="fold-hint" id="destYtdHint">Acumulado NABSA sailed (rango real del ledger; independiente de filtros de cola)</p>
+      <div class="panel-b dest-panel-b">
+        <div class="dest-layout">
+          <div class="dest-chart-col">
+            <div class="dest-chart-wrap"><canvas id="destChart" width="360" height="360" aria-label="Torta de toneladas acumuladas YTD por destino"></canvas><div class="dest-pie-tooltip" id="destPieTooltip" role="tooltip"></div></div>
+            <p class="dest-chart-note" id="destChartNote">Acumulado por destino (cobertura = fechas en ledger) · solo destinos extranjeros</p>
+            <p class="dest-aside-note" id="destAsideNote">
+              <span><strong>Descarga AR</strong> <span id="destArTons">—</span></span>
+              <span class="dot">·</span>
+              <span><strong>Sin destino</strong> <span id="destOtrosTons">—</span></span>
+              <span class="dest-aside-hint" id="destAsideHint">fuera de la torta</span>
+            </p>
+          </div>
+          <div class="dest-side">
+            <div class="dest-list" id="destList"></div>
+          </div>
+        </div>
+        <div class="world-map-wrap">
+          <div id="worldMap" role="img" aria-label="Mapa mundial de destinos por volumen acumulado YTD"></div>
+          <p class="map-note" id="destMapNote">Círculos = tn acumuladas YTD por país (centroide). Descarga AR y Sin destino no se dibujan. Independiente de filtros de cola.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="filters">
       <label>Puerto / zona
         <select id="fZone"><option value="">Todas</option></select>
@@ -117,35 +148,6 @@
       <div class="spacer"></div>
       <button class="btn secondary" type="button" id="btnReset">Limpiar</button>
       <button class="btn" type="button" id="btnReload">Recargar</button>
-    </section>
-
-    <section class="panel full dest-panel" id="destPanel">
-      <div class="panel-h">
-        <h2>Volumen por destino · exportación (YTD granos)</h2>
-        <span class="count" id="destCount">0</span>
-      </div>
-      <p class="fold-hint" id="destYtdHint">Acumulado NABSA sailed (rango real del ledger; independiente de filtros de cola)</p>
-      <div class="panel-b dest-panel-b">
-        <div class="dest-layout">
-          <div class="dest-chart-col">
-            <div class="dest-chart-wrap"><canvas id="destChart" width="360" height="360" aria-label="Torta de toneladas acumuladas YTD por destino"></canvas><div class="dest-pie-tooltip" id="destPieTooltip" role="tooltip"></div></div>
-            <p class="dest-chart-note" id="destChartNote">Acumulado por destino (cobertura = fechas en ledger) · solo destinos extranjeros</p>
-            <p class="dest-aside-note" id="destAsideNote">
-              <span><strong>Descarga AR</strong> <span id="destArTons">—</span></span>
-              <span class="dot">·</span>
-              <span><strong>Sin destino</strong> <span id="destOtrosTons">—</span></span>
-              <span class="dest-aside-hint" id="destAsideHint">fuera de la torta</span>
-            </p>
-          </div>
-          <div class="dest-side">
-            <div class="dest-list" id="destList"></div>
-          </div>
-        </div>
-        <div class="world-map-wrap">
-          <div id="worldMap" role="img" aria-label="Mapa mundial de destinos por volumen acumulado YTD"></div>
-          <p class="map-note" id="destMapNote">Círculos = tn acumuladas YTD por país (centroide). Descarga AR y Sin destino no se dibujan. Independiente de filtros de cola.</p>
-        </div>
-      </div>
     </section>
 
     <section class="layout">
