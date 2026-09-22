@@ -2,7 +2,7 @@
   "year": 2026,
   "from": "2026-01-02",
   "through": "2026-09-21",
-  "updated_at": "2026-09-22T08:09:25.755510-03:00",
+  "updated_at": "2026-09-22T14:03:27.845464-03:00",
   "source": "sailed_rows_ledger.json (NABSA sailed xlsx archive + vessels_sailed_update.pdf + priors)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "unit": "t",
