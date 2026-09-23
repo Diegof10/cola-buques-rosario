@@ -1,10 +1,10 @@
 {
   "year": 2026,
-  "updated_at": "2026-09-22T14:03:27.814388-03:00",
+  "updated_at": "2026-09-23T08:51:53.055770-03:00",
   "source": "NABSA sailedYYYYMMDD.xlsx (+ vessels_sailed_update.pdf / prior1–4)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "note": "Ledger acumulativo de filas SAILED NABSA. Histórico vía xlsx bajo /SAILED/sailedYYYYMMDD.xlsx; el PDF diario es rolling (~mes). Este JSON crece con cada refresh (dedupe) y alimenta sailed_destinations_ytd.json. No inventa meses faltantes.",
-  "row_count": 4921,
+  "row_count": 4935,
   "rows": {
     "2026-01-02|BOCHEM HOUSTON|SAN LORENZO|DEMPA SAN MARTIN|2080.00|SUN FLOWER OIL (HIGHOLEIC)|MEXICO": {
       "date": "2026-01-02",
@@ -53180,6 +53180,17 @@
       "origin": "ARGENTINA",
       "destination": "MADAGASCAR"
     },
+    "2026-09-17|ASP RAINBOW|ROSARIO|CARGILL VGG VILLA GOBERNADOR GALVEZ|13000.00|BIODIESEL|NETHERLANDS": {
+      "date": "2026-09-17",
+      "tons": 13000.0,
+      "cargo_raw": "BIODIESEL",
+      "commodity": "otro",
+      "port": "ROSARIO",
+      "terminal": "CARGILL VGG VILLA GOBERNADOR GALVEZ",
+      "vessel": "ASP RAINBOW",
+      "origin": "ARGENTINA",
+      "destination": "NETHERLANDS"
+    },
     "2026-09-17|CAPE GULL|NECOCHEA / QUEQUEN|BERTH 12  (NECOCHEA) (PIER DOCE S.A. TERMINAL)|1000.00|MAP|ARGENTINA": {
       "date": "2026-09-17",
       "tons": 1000.0,
@@ -53565,6 +53576,17 @@
       "origin": "ARGENTINA",
       "destination": "CHILE"
     },
+    "2026-09-18|ELIKI|SAN PEDRO|PIER NBR 1 ELEVATOR (SAN PEDRO)|5000.00|CARINATA SEEDS|PORTUGAL": {
+      "date": "2026-09-18",
+      "tons": 5000.0,
+      "cargo_raw": "CARINATA SEEDS",
+      "commodity": "otro",
+      "port": "SAN PEDRO",
+      "terminal": "PIER NBR 1 ELEVATOR (SAN PEDRO)",
+      "vessel": "ELIKI",
+      "origin": "ARGENTINA",
+      "destination": "PORTUGAL"
+    },
     "2026-09-18|GUO YUAN 86|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|25800.00|WHEAT|INDONESIA": {
       "date": "2026-09-18",
       "tons": 25800.0,
@@ -53729,6 +53751,50 @@
       "vessel": "ADASTAR",
       "origin": "ARGENTINA",
       "destination": "BRAZIL"
+    },
+    "2026-09-19|ALANGOVA|ROSARIO|NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)|1000.00|ACID OIL (OLEINE)|NETHERLANDS": {
+      "date": "2026-09-19",
+      "tons": 1000.0,
+      "cargo_raw": "ACID OIL (OLEINE)",
+      "commodity": "otro",
+      "port": "ROSARIO",
+      "terminal": "NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)",
+      "vessel": "ALANGOVA",
+      "origin": "ARGENTINA",
+      "destination": "NETHERLANDS"
+    },
+    "2026-09-19|ALANGOVA|ROSARIO|NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)|1500.00|ACID OIL (OLEINE)|NETHERLANDS": {
+      "date": "2026-09-19",
+      "tons": 1500.0,
+      "cargo_raw": "ACID OIL (OLEINE)",
+      "commodity": "otro",
+      "port": "ROSARIO",
+      "terminal": "NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)",
+      "vessel": "ALANGOVA",
+      "origin": "ARGENTINA",
+      "destination": "NETHERLANDS"
+    },
+    "2026-09-19|ALANGOVA|ROSARIO|NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)|315.85|COOK OIL USED|NETHERLANDS": {
+      "date": "2026-09-19",
+      "tons": 315.85,
+      "cargo_raw": "COOK OIL USED",
+      "commodity": "otro",
+      "port": "ROSARIO",
+      "terminal": "NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)",
+      "vessel": "ALANGOVA",
+      "origin": "ARGENTINA",
+      "destination": "NETHERLANDS"
+    },
+    "2026-09-19|ALANGOVA|ROSARIO|NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)|500.00|ACID OIL (OLEINE)|NETHERLANDS": {
+      "date": "2026-09-19",
+      "tons": 500.0,
+      "cargo_raw": "ACID OIL (OLEINE)",
+      "commodity": "otro",
+      "port": "ROSARIO",
+      "terminal": "NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)",
+      "vessel": "ALANGOVA",
+      "origin": "ARGENTINA",
+      "destination": "NETHERLANDS"
     },
     "2026-09-19|APPALOOSA|SAN LORENZO|DEMPA SAN MARTIN|33000.00|WHEAT|INDONESIA": {
       "date": "2026-09-19",
@@ -53917,6 +53983,17 @@
       "origin": "ARGENTINA",
       "destination": "VENEZUELA"
     },
+    "2026-09-19|SHINE AGATE|SAN LORENZO|ACA SAN LORENZO|46250.00|WHEAT|INDONESIA": {
+      "date": "2026-09-19",
+      "tons": 46250.0,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "SAN LORENZO",
+      "terminal": "ACA SAN LORENZO",
+      "vessel": "SHINE AGATE",
+      "origin": "ARGENTINA",
+      "destination": "INDONESIA"
+    },
     "2026-09-19|TAI KNOWLEDGE|BAHIA BLANCA|TERMINAL BAHIA BLANCA BERTHS 9 PUERTO INGENIERO WHITE|23856.00|CORN|VIETNAM": {
       "date": "2026-09-19",
       "tons": 23856.0,
@@ -53993,6 +54070,28 @@
       "vessel": "TROODOS OAK",
       "origin": "ARGENTINA",
       "destination": "UNITED KINGDOM"
+    },
+    "2026-09-19|UNION ODYSSEY|SAN LORENZO|COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)|42049.99|SOYBEANMEAL|BANGLADESH": {
+      "date": "2026-09-19",
+      "tons": 42049.99,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)",
+      "vessel": "UNION ODYSSEY",
+      "origin": "ARGENTINA",
+      "destination": "BANGLADESH"
+    },
+    "2026-09-20|ASP RAINBOW|SAN LORENZO|SAN BENITO SAN LORENZO|7000.00|BIODIESEL|NETHERLANDS": {
+      "date": "2026-09-20",
+      "tons": 7000.0,
+      "cargo_raw": "BIODIESEL",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "SAN BENITO SAN LORENZO",
+      "vessel": "ASP RAINBOW",
+      "origin": "ARGENTINA",
+      "destination": "NETHERLANDS"
     },
     "2026-09-20|ILIA|NECOCHEA / QUEQUEN|BERTH 3 ELEVATOR (QUEQUEN) A.C.A. TERMINAL|21048.00|SOYA BEAN|CHINA": {
       "date": "2026-09-20",
@@ -54126,6 +54225,28 @@
       "origin": "BRAZIL",
       "destination": "ARGENTINA"
     },
+    "2026-09-21|CHARISMA GR|SAN LORENZO|QUEBRACHO SAN MARTIN|31142.41|SOYBEANMEAL|THAILAND": {
+      "date": "2026-09-21",
+      "tons": 31142.41,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "QUEBRACHO SAN MARTIN",
+      "vessel": "CHARISMA GR",
+      "origin": "ARGENTINA",
+      "destination": "THAILAND"
+    },
+    "2026-09-21|DSM HARBOUR|SAN LORENZO|A.G.D. TIMBUES|14072.43|CORN|YEMEN": {
+      "date": "2026-09-21",
+      "tons": 14072.43,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "A.G.D. TIMBUES",
+      "vessel": "DSM HARBOUR",
+      "origin": "ARGENTINA",
+      "destination": "YEMEN"
+    },
     "2026-09-21|EVA ISTANBUL|LIMA|DELTA DOCK LIMA|33000.00|CORN|GUATEMALA": {
       "date": "2026-09-21",
       "tons": 33000.0,
@@ -54136,6 +54257,39 @@
       "vessel": "EVA ISTANBUL",
       "origin": "ARGENTINA",
       "destination": "GUATEMALA"
+    },
+    "2026-09-22|NING JING HAI|ROSARIO|LDC TERMINAL GRAL. LAGOS|42873.04|CORN|VIETNAM": {
+      "date": "2026-09-22",
+      "tons": 42873.04,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "ROSARIO",
+      "terminal": "LDC TERMINAL GRAL. LAGOS",
+      "vessel": "NING JING HAI",
+      "origin": "ARGENTINA",
+      "destination": "VIETNAM"
+    },
+    "2026-09-22|NING JING HAI|ROSARIO|LDC TERMINAL GRAL. LAGOS|42873.05|CORN|VIETNAM": {
+      "date": "2026-09-22",
+      "tons": 42873.05,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "ROSARIO",
+      "terminal": "LDC TERMINAL GRAL. LAGOS",
+      "vessel": "NING JING HAI",
+      "origin": "ARGENTINA",
+      "destination": "VIETNAM"
+    },
+    "2026-09-22|STAR WAVE|MONTEVIDEO(R.O.U)|TGM 2|10600.00|FERTILIZER SOLID|URUGUAY": {
+      "date": "2026-09-22",
+      "tons": 10600.0,
+      "cargo_raw": "FERTILIZER SOLID",
+      "commodity": "otro",
+      "port": "MONTEVIDEO(R.O.U)",
+      "terminal": "TGM 2",
+      "vessel": "STAR WAVE",
+      "origin": "BRAZIL",
+      "destination": "URUGUAY"
     }
   }
 }
