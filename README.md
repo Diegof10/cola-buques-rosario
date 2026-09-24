@@ -62,7 +62,9 @@ La UI oculta **próximos arribos** cuya fecha ETA (DD/MM en America/Argentina/Co
 
 ## Cobertura camiones / semáforo
 
-Estima el flujo diario de camiones frente al stock de exportación Up-River:
+Detalle completo (fórmulas, semáforo, calibración, ejemplo): [`docs/COBERTURA_CAMIONES.md`](docs/COBERTURA_CAMIONES.md).
+
+Estima el flujo diario de camiones frente a la demanda de exportación Up-River:
 
 - **Tn camiones**: `Σ by_product.camiones × factor` — 30 tn/camión (soja, maíz, trigo, sorgo, cebada, etc.) y **25 tn/camión solo girasol** (se ignoran campos `tn` stale si usaban 30 para girasol).
 - **Demanda**: suma de toneladas anunciadas de buques Up-River con commodity en {soja, maíz, trigo, girasol, sorgo, cebada}, **excluyendo** destinos Argentina / Descarga AR.
