@@ -253,7 +253,16 @@
       "sorgo": 32,
       "cebada": 18,
       "national_total": 3505
+    },
+    "2026-09-29": {
+      "maiz": 1420,
+      "soja": 1352,
+      "trigo": 568,
+      "girasol": 115,
+      "sorgo": 32,
+      "cebada": 18,
+      "national_total": 3505
     }
   },
-  "updated_at": "2026-09-29T06:49:05.180991-03:00"
+  "updated_at": "2026-09-29T13:03:04.309778-03:00"
 }

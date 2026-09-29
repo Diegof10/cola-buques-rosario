@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-09-29T06:49:05.180260-03:00",
-  "date": "2026-09-28",
+  "updated_at": "2026-09-29T13:03:04.308995-03:00",
+  "date": "2026-09-29",
   "source": "magyp",
   "source_url": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/_archivos/000023_Posici%C3%B3n%20de%20Camiones%20y%20Vagones/000020_Entrada%20diaria%20de%20camiones%20y%20vagones%20a%20puertos,%20f%C3%A1bricas%20y%20molinos%20(por%20zona%20portuaria%20y%20por%20producto).php",
   "source_note": "Rosario y aledaños (MAGyP). Mix por producto prorrateado del total nacional del día.",
@@ -55,10 +55,6 @@
   ],
   "history_7d": [
     {
-      "date": "2026-09-22",
-      "camiones": 3134
-    },
-    {
       "date": "2026-09-23",
       "camiones": 4259
     },
@@ -81,12 +77,16 @@
     {
       "date": "2026-09-28",
       "camiones": 2266
+    },
+    {
+      "date": "2026-09-29",
+      "camiones": 2266
     }
   ],
   "national_total": 3505,
   "raw": {
     "page_month": "2026-09",
-    "date_cell": "28-sept",
+    "date_cell": "29-sept",
     "zones": {
       "rosario": 2266,
       "darsena": 51,
@@ -103,7 +103,7 @@
       "girasol": 115
     },
     "vagones": 89,
-    "days_parsed": 28,
+    "days_parsed": 29,
     "national_days": [
       {
         "date": "2026-09-01",
@@ -458,6 +458,19 @@
       },
       {
         "date": "2026-09-28",
+        "products": {
+          "trigo": 568,
+          "maiz": 1420,
+          "sorgo": 32,
+          "cebada": 18,
+          "soja": 1352,
+          "girasol": 115
+        },
+        "national_total": 3505,
+        "rosario": 2266
+      },
+      {
+        "date": "2026-09-29",
         "products": {
           "trigo": 568,
           "maiz": 1420,
