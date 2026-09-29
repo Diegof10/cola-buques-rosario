@@ -217,7 +217,43 @@
       "sorgo": 64,
       "cebada": 117,
       "national_total": 5812
+    },
+    "2026-09-25": {
+      "maiz": 2540,
+      "soja": 2782,
+      "trigo": 1114,
+      "girasol": 113,
+      "sorgo": 69,
+      "cebada": 143,
+      "national_total": 6761
+    },
+    "2026-09-26": {
+      "maiz": 2217,
+      "soja": 2238,
+      "trigo": 610,
+      "girasol": 112,
+      "sorgo": 21,
+      "cebada": 143,
+      "national_total": 5341
+    },
+    "2026-09-27": {
+      "maiz": 0,
+      "soja": 0,
+      "trigo": 0,
+      "girasol": 0,
+      "sorgo": 0,
+      "cebada": 0,
+      "national_total": 0
+    },
+    "2026-09-28": {
+      "maiz": 1420,
+      "soja": 1352,
+      "trigo": 568,
+      "girasol": 115,
+      "sorgo": 32,
+      "cebada": 18,
+      "national_total": 3505
     }
   },
-  "updated_at": "2026-09-25T08:34:45.010236-03:00"
+  "updated_at": "2026-09-29T06:49:05.180991-03:00"
 }
