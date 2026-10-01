@@ -1020,6 +1020,55 @@ def collect_sailed_pdf_rows(
     return primary_rows, merged
 
 
+LEDGER_HISTORY_MONTHS = 13
+
+
+def prev_month_str(month: str) -> str:
+    y, m = int(month[:4]), int(month[5:7])
+    return f"{y - 1}-12" if m == 1 else f"{y}-{m - 1:02d}"
+
+
+def build_sailed_month_history(
+    out_path: Path,
+    month: str,
+    ledger_rows: list[dict[str, Any]] | None,
+) -> dict[str, Any]:
+    """Keep per-month sailed product totals for past months (rollover-safe).
+
+    Carries existing history; archives the previous sailed_month.json month when it
+    rolls; and (re)computes the previous calendar month from the durable sailed rows
+    ledger when it has rows (more complete than the rolling NABSA PDF window).
+    """
+    history: dict[str, Any] = {}
+    prev_doc: dict[str, Any] = {}
+    if out_path.exists():
+        try:
+            prev_doc = json.loads(out_path.read_text(encoding="utf-8"))
+        except Exception:
+            prev_doc = {}
+    history.update(prev_doc.get("history") or {})
+    old_month = str(prev_doc.get("month") or "").strip()
+    if old_month and old_month != month and prev_doc.get("products"):
+        history[old_month] = {
+            "products": prev_doc.get("products"),
+            "rows_in_month": prev_doc.get("rows_in_month"),
+            "updated_at": prev_doc.get("updated_at"),
+            "source": "sailed_month.json (archivado al cambiar de mes)",
+        }
+    pm = prev_month_str(month)
+    if ledger_rows:
+        agg = build_sailed_month(ledger_rows, month=pm)
+        if agg.get("rows_in_month"):
+            history[pm] = {
+                "products": agg["products"],
+                "rows_in_month": agg["rows_in_month"],
+                "updated_at": agg["updated_at"],
+                "source": "sailed_rows_ledger.json",
+            }
+    history.pop(month, None)
+    return dict(sorted(history.items())[-LEDGER_HISTORY_MONTHS:])
+
+
 def write_sailed_month(
     data_dir: Path,
     pdf_path: Path | None = None,
@@ -1099,6 +1148,10 @@ def write_sailed_month(
     # Month view still from latest rolling PDF (NABSA month window)
     payload = build_sailed_month(primary_rows, month=month)
     out = data_dir / "sailed_month.json"
+    try:
+        payload["history"] = build_sailed_month_history(out, payload["month"], ledger_rows)
+    except Exception as hex_:
+        print(f"WARN sailed_month history failed: {hex_}", file=sys.stderr)
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     prods = payload.get("products") or {}
     print(
@@ -1852,10 +1905,21 @@ def update_truck_inflow_ledger(
             ledger = {}
 
     if ledger.get("month") != month:
+        # Archive the closing month (needed for provisional next-month baseline).
+        history = dict(ledger.get("history") or {})
+        old_month = str(ledger.get("month") or "").strip()
+        if old_month and ledger.get("days"):
+            history[old_month] = {
+                "baseline_as_of": ledger.get("baseline_as_of") or f"{old_month}-01",
+                "days": dict(sorted((ledger.get("days") or {}).items())),
+                "updated_at": ledger.get("updated_at"),
+            }
+        history = dict(sorted(history.items())[-LEDGER_HISTORY_MONTHS:])
         ledger = {
             "month": month,
             "baseline_as_of": baseline_as_of,
             "days": {},
+            "history": history,
             "updated_at": ar_tz_now().isoformat(),
         }
     else:
@@ -1901,6 +1965,178 @@ def update_truck_inflow_ledger(
     return ledger
 
 
+MAGYP_EXISTENCIAS_URL = (
+    "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/areas/granos/"
+    "_archivos/000058_Estad%C3%ADsticas/000030_Existencia%20f%C3%ADsica%20de%20granos"
+    "%20en%20plantas%20de%20almacenaje,%20de%20servicios%20e%20industria.php"
+)
+_ES_MONTHS = {
+    "ene": 1, "feb": 2, "mar": 3, "abr": 4, "may": 5, "jun": 6,
+    "jul": 7, "ago": 8, "sep": 9, "set": 9, "oct": 10, "nov": 11, "dic": 12,
+}
+# normalized column header -> (product key, cebada detail key or None)
+_EXIST_COLUMNS = {
+    "maiz": ("maiz", None),
+    "soja": ("soja", None),
+    "trigo pan": ("trigo", None),
+    "girasol": ("girasol", None),
+    "sorgo granifero": ("sorgo", None),
+    "ceb. cervecera": ("cebada", "cervecera"),
+    "ceb. forrajera": ("cebada", "forrajera"),
+    "ceb. apta para malteria": ("cebada", "malteria"),
+}
+_EXIST_REQUIRED = ("maiz", "soja", "trigo", "girasol", "sorgo", "cebada")
+_CEBADA_PARTS = ("cervecera", "forrajera", "malteria")
+
+
+def _html_cell_text(raw: str) -> str:
+    import html as _html
+
+    t = _html.unescape(re.sub(r"<[^>]+>", " ", raw))
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def parse_magyp_existencias_html(html: str) -> dict[str, dict[str, Any]]:
+    """Parse MAGyP 'Existencia física' tabbed tables → {YYYY-MM: block}.
+
+    Only months where every required product (and all 3 cebada parts) parsed are
+    returned. Raises ValueError if no recognizable table is found.
+    """
+    found: dict[str, dict[str, Any]] = {}
+    header: list[str] | None = None
+    tables_seen = 0
+    # Split on <tr> openings (tables can be nested, so </tr>-pairing is unreliable).
+    for tr in re.split(r"<tr\b", html, flags=re.I)[1:]:
+        tr = re.split(r"</tr>", tr, maxsplit=1, flags=re.I)[0]
+        cells = [
+            _html_cell_text(c)
+            for c in re.findall(r"<t[hd]\b[^>]*>(.*?)</t[hd]>", tr, flags=re.S | re.I)
+        ]
+        if not cells:
+            continue
+        first = _strip_accents_lower(cells[0])
+        if first == "mes":
+            header = [_strip_accents_lower(c) for c in cells]
+            tables_seen += 1
+            continue
+        if header is None:
+            continue
+        m = re.fullmatch(r"([a-z]{3})-(\d{2})", first)
+        if not m or m.group(1) not in _ES_MONTHS:
+            continue
+        month = f"20{m.group(2)}-{_ES_MONTHS[m.group(1)]:02d}"
+        block = found.setdefault(month, {"products": {}, "cebada_detail": {}})
+        for col, val in zip(header[1:], cells[1:]):
+            spec = _EXIST_COLUMNS.get(col)
+            if not spec:
+                continue
+            digits = re.sub(r"[^\d]", "", val)
+            if not digits:
+                continue
+            key, part = spec
+            if part:
+                block["cebada_detail"][part] = int(digits)
+            else:
+                block["products"][key] = int(digits)
+    if not tables_seen:
+        raise ValueError("no 'Mes' tables found in MAGyP existencias page")
+    out: dict[str, dict[str, Any]] = {}
+    for month, block in sorted(found.items()):
+        ced = block["cebada_detail"]
+        if all(k in ced for k in _CEBADA_PARTS):
+            block["products"]["cebada"] = sum(ced[k] for k in _CEBADA_PARTS)
+        missing = [k for k in _EXIST_REQUIRED if k not in block["products"]]
+        if missing:
+            print(f"WARN existencias {month}: missing {missing} — skip", file=sys.stderr)
+            continue
+        out[month] = {
+            "as_of": f"{month}-01",
+            "products": {k: block["products"][k] for k in _EXIST_REQUIRED},
+            "cebada_detail": {k: ced[k] for k in _CEBADA_PARTS},
+        }
+    return out
+
+
+def update_existencias_baseline(
+    data_dir: Path | None = None,
+    *,
+    html: str | None = None,
+    timeout: int = 30,
+) -> list[str]:
+    """Fetch MAGyP existencias and add months missing from existencias_baseline.json.
+
+    Never overwrites an existing month and never invents numbers: on fetch/parse
+    failure it logs and returns []. Returns the list of months added.
+    """
+    data_dir = Path(data_dir) if data_dir else DATA
+    path = data_dir / "existencias_baseline.json"
+    doc: dict[str, Any] = {}
+    for cand in (path, DATA / "existencias_baseline.json"):
+        if cand.exists():
+            try:
+                doc = json.loads(cand.read_text(encoding="utf-8"))
+                break
+            except Exception:
+                continue
+    url = str(doc.get("source_url") or MAGYP_EXISTENCIAS_URL)
+    if html is None:
+        try:
+            r = requests.get(
+                url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0 cola-buques-rosario/1.0"}
+            )
+            r.raise_for_status()
+            r.encoding = r.apparent_encoding or r.encoding
+            html = r.text
+        except Exception as ex:
+            print(f"WARN existencias fetch failed: {ex} — skip", file=sys.stderr)
+            return []
+    try:
+        parsed = parse_magyp_existencias_html(html)
+    except Exception as ex:
+        print(f"WARN existencias parse failed: {ex} — skip", file=sys.stderr)
+        return []
+    months = dict(doc.get("months") or {})
+    added = []
+    for month, block in parsed.items():
+        if month in months:
+            continue
+        months[month] = {
+            **block,
+            "notes": {
+                "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+                "trigo": "trigo pan (excluye candeal de la serie principal)",
+                "cebada": "suma cervecera + forrajera + maltería",
+            },
+            "fetched_at": ar_tz_now().isoformat(),
+            "source": "auto: scripts/refresh_data.py (tabla MAGyP)",
+        }
+        added.append(month)
+    latest = max(parsed) if parsed else None
+    print(f"Existencias MAGyP: latest on page={latest} added={added or 'none'}")
+    if not added:
+        return []
+    doc.setdefault("source_url", url)
+    doc["months"] = dict(sorted(months.items()))
+    data_dir.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"Wrote {path} (+{len(added)} months)")
+    return added
+
+
+def maybe_update_existencias(data_dir: Path | None, month: str | None) -> list[str]:
+    """Only hit MAGyP when the given month has no official baseline yet."""
+    if not month:
+        return []
+    data_dir = Path(data_dir) if data_dir else DATA
+    for cand in (data_dir / "existencias_baseline.json", DATA / "existencias_baseline.json"):
+        try:
+            if month in (json.loads(cand.read_text(encoding="utf-8")).get("months") or {}):
+                return []
+        except Exception:
+            continue
+    return update_existencias_baseline(data_dir)
+
+
 def ensure_trucks(
     data_dir: Path | None = None,
     *,
@@ -1925,6 +2161,10 @@ def ensure_trucks(
             update_truck_inflow_ledger(data_dir, live_trucks)
         except Exception as lex:
             print(f"WARN ledger update failed: {lex}", file=sys.stderr)
+        try:
+            maybe_update_existencias(data_dir, str(live_trucks.get("date") or "")[:7])
+        except Exception as eex:
+            print(f"WARN existencias update failed: {eex}", file=sys.stderr)
         return live_trucks
 
     # Failure: never silently pretend seed is live.
@@ -1996,6 +2236,10 @@ def main() -> int:
         print(f"Vessels refresh failed: {ex}", file=sys.stderr)
         return 1
     ensure_trucks(DATA)
+    try:
+        update_existencias_baseline(DATA)
+    except Exception as ex:
+        print(f"WARN existencias update failed: {ex}", file=sys.stderr)
     print("Done.")
     return 0
 

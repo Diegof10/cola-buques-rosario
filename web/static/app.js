@@ -1145,7 +1145,13 @@
     if (monthEl) monthEl.textContent = s.month || "—";
     if (meta) {
       const parts = [];
-      if (s.baseline_as_of) parts.push("Baseline MAGyP al " + s.baseline_as_of);
+      if (s.baseline_as_of) {
+        const kind = s.baseline_kind || "oficial MAGyP";
+        let b = "Stock 1° al " + s.baseline_as_of + " (" + kind + ")";
+        const pv = s.baseline_provisional;
+        if (pv && pv.from_month) b += " — cierre " + pv.from_month + " sobre base " + (pv.from_baseline_as_of || "?");
+        parts.push(b);
+      }
       if (s.last_truck_date) parts.push("último día camiones " + s.last_truck_date);
       if (s.days_counted != null) parts.push(s.days_counted + " día(s) acumulados");
       if (s.sailed_updated_at) parts.push("embarques NABSA actualizados");

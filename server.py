@@ -585,6 +585,104 @@ def _load_json_prefer_writable(name: str) -> dict[str, Any] | None:
     return None
 
 
+BASELINE_KIND_OFICIAL = "oficial MAGyP"
+BASELINE_KIND_PROVISORIO = "provisorio (cierre estimado mes anterior)"
+
+
+def _prev_month(month: str) -> str:
+    y, m = int(month[:4]), int(month[5:7])
+    return f"{y - 1}-12" if m == 1 else f"{y}-{m - 1:02d}"
+
+
+def _merged_baseline_months() -> dict[str, Any]:
+    """Official months from bundled + writable copies (writable wins per month)."""
+    months: dict[str, Any] = {}
+    for base in (BUNDLED_DATA, WRITABLE_DATA):
+        doc = _read_json(base / "existencias_baseline.json") or {}
+        months.update(doc.get("months") or {})
+    return months
+
+
+def _ledger_days_for(ledger: dict[str, Any], month: str) -> dict[str, Any] | None:
+    if str(ledger.get("month") or "") == month and ledger.get("days"):
+        return dict(ledger.get("days") or {})
+    hist = (ledger.get("history") or {}).get(month) or {}
+    if hist.get("days"):
+        return dict(hist["days"])
+    return None
+
+
+def _sailed_products_for(sailed_doc: dict[str, Any], month: str) -> dict[str, float] | None:
+    if str(sailed_doc.get("month") or "").strip() == month:
+        return dict(sailed_doc.get("products") or {})
+    hist = (sailed_doc.get("history") or {}).get(month) or {}
+    if hist.get("products"):
+        return dict(hist["products"])
+    rows_doc = _load_json_prefer_writable("sailed_rows_ledger.json") or {}
+    rows = rows_doc.get("rows") or {}
+    rows = rows.values() if isinstance(rows, dict) else rows
+    out: dict[str, float] = {}
+    hit = False
+    for r in rows:
+        if str((r or {}).get("date") or "").startswith(month):
+            hit = True
+            k = str(r.get("commodity") or "")
+            out[k] = float(out.get(k) or 0) + float(r.get("tons") or 0)
+    return out if hit else None
+
+
+def _month_close_tn(
+    base: dict[str, Any], days: dict[str, Any], sailed: dict[str, float]
+) -> dict[str, int]:
+    out: dict[str, int] = {}
+    for key, _ in STOCK_PRODUCTS:
+        inflow_tn = sum(int((days.get(d) or {}).get(key) or 0) for d in days) * _truck_factor(key)
+        out[key] = int(round(estimate_stock_tn(
+            int(base.get(key) or 0), inflow_tn, float(sailed.get(key) or 0)
+        )))
+    return out
+
+
+def resolve_stock_baseline(
+    month: str,
+    months: dict[str, Any],
+    ledger: dict[str, Any],
+    sailed_doc: dict[str, Any],
+    _depth: int = 0,
+) -> dict[str, Any] | None:
+    """Official MAGyP 1° baseline for month, else provisional = previous month close.
+
+    Provisional close(prev) = baseline(prev) + Σ camiones(prev)×factor − sailed(prev).
+    Requires archived truck days for prev month; chains at most 2 months back.
+    """
+    block = months.get(month) or {}
+    if block.get("products"):
+        return {
+            "products": dict(block["products"]),
+            "as_of": str(block.get("as_of") or f"{month}-01"),
+            "kind": BASELINE_KIND_OFICIAL,
+            "from_month": None,
+        }
+    if _depth >= 2:
+        return None
+    prev = _prev_month(month)
+    prev_base = resolve_stock_baseline(prev, months, ledger, sailed_doc, _depth + 1)
+    prev_days = _ledger_days_for(ledger, prev)
+    if not prev_base or not prev_days:
+        return None
+    prev_sailed = _sailed_products_for(sailed_doc, prev) or {}
+    return {
+        "products": _month_close_tn(prev_base["products"], prev_days, prev_sailed),
+        "as_of": f"{month}-01",
+        "kind": BASELINE_KIND_PROVISORIO,
+        "from_month": prev,
+        "from_baseline_as_of": prev_base["as_of"],
+        "from_baseline_kind": prev_base["kind"],
+        "from_days_counted": len(prev_days),
+        "from_sailed_available": bool(prev_sailed),
+    }
+
+
 def compute_stocks_estimado() -> dict[str, Any]:
     """Estimated plant stock = MAGyP 1°-of-month baseline + national truck inflows
     − NABSA sailed export tonnes for the same calendar month.
@@ -610,11 +708,14 @@ def compute_stocks_estimado() -> dict[str, Any]:
         month = datetime.now(timezone(timedelta(hours=-3))).strftime("%Y-%m")
 
     baseline_as_of = str(ledger.get("baseline_as_of") or f"{month}-01")
-    months = baseline_doc.get("months") or {}
-    month_block = months.get(month) or {}
-    products_base = dict(month_block.get("products") or {})
-    if month_block.get("as_of"):
-        baseline_as_of = str(month_block["as_of"])
+    months = _merged_baseline_months()
+    resolved = resolve_stock_baseline(month, months, ledger, sailed_doc)
+    products_base: dict[str, Any] = {}
+    baseline_kind = "sin baseline"
+    if resolved:
+        products_base = resolved["products"]
+        baseline_as_of = resolved["as_of"]
+        baseline_kind = resolved["kind"]
 
     days = dict(ledger.get("days") or {})
     # If ledger empty/stale month, bootstrap from current trucks national_products
@@ -699,6 +800,12 @@ def compute_stocks_estimado() -> dict[str, Any]:
     return {
         "month": month,
         "baseline_as_of": baseline_as_of,
+        "baseline_kind": baseline_kind,
+        "baseline_provisional": (
+            {k: v for k, v in resolved.items() if k.startswith("from_")}
+            if resolved and resolved.get("from_month")
+            else None
+        ),
         "last_truck_date": last_truck_date,
         "days_counted": days_counted,
         "products": product_rows,

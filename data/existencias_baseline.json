@@ -3,6 +3,190 @@
   "unit": "t",
   "note": "Existencia física en plantas (acopio, industria, elevadores terminales) al 1° de cada mes. Excluye existencias en poder de productores (silobolsas). Series principales: maíz común, soja, trigo pan, girasol, sorgo, cebada (cervecera+forrajera+maltería).",
   "months": {
+    "2026-01": {
+      "as_of": "2026-01-01",
+      "products": {
+        "maiz": 12148430,
+        "soja": 8955681,
+        "trigo": 14361766,
+        "girasol": 1184254,
+        "sorgo": 485934,
+        "cebada": 2255835
+      },
+      "cebada_detail": {
+        "cervecera": 1183957,
+        "forrajera": 1057933,
+        "malteria": 13945
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-01T09:02:46.076826-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
+    },
+    "2026-02": {
+      "as_of": "2026-02-01",
+      "products": {
+        "maiz": 11082890,
+        "soja": 6186963,
+        "trigo": 12439171,
+        "girasol": 2201667,
+        "sorgo": 412494,
+        "cebada": 2055436
+      },
+      "cebada_detail": {
+        "cervecera": 1270597,
+        "forrajera": 770538,
+        "malteria": 14301
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-01T09:02:46.076843-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
+    },
+    "2026-03": {
+      "as_of": "2026-03-01",
+      "products": {
+        "maiz": 13018934,
+        "soja": 5287492,
+        "trigo": 10094414,
+        "girasol": 2225269,
+        "sorgo": 430738,
+        "cebada": 1963727
+      },
+      "cebada_detail": {
+        "cervecera": 1217622,
+        "forrajera": 731938,
+        "malteria": 14167
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-01T09:02:46.076847-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
+    },
+    "2026-04": {
+      "as_of": "2026-04-01",
+      "products": {
+        "maiz": 19296929,
+        "soja": 4612907,
+        "trigo": 8452108,
+        "girasol": 3404462,
+        "sorgo": 502327,
+        "cebada": 1719296
+      },
+      "cebada_detail": {
+        "cervecera": 1090800,
+        "forrajera": 614531,
+        "malteria": 13965
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-01T09:02:46.076849-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
+    },
+    "2026-05": {
+      "as_of": "2026-05-01",
+      "products": {
+        "maiz": 16831755,
+        "soja": 11843328,
+        "trigo": 7295806,
+        "girasol": 3264937,
+        "sorgo": 558295,
+        "cebada": 1606340
+      },
+      "cebada_detail": {
+        "cervecera": 1031890,
+        "forrajera": 561511,
+        "malteria": 12939
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-01T09:02:46.076851-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
+    },
+    "2026-06": {
+      "as_of": "2026-06-01",
+      "products": {
+        "maiz": 17169391,
+        "soja": 23046980,
+        "trigo": 6345378,
+        "girasol": 2756479,
+        "sorgo": 677851,
+        "cebada": 1429975
+      },
+      "cebada_detail": {
+        "cervecera": 937457,
+        "forrajera": 479786,
+        "malteria": 12732
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-01T09:02:46.076854-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
+    },
+    "2026-07": {
+      "as_of": "2026-07-01",
+      "products": {
+        "maiz": 16717551,
+        "soja": 22463824,
+        "trigo": 6028804,
+        "girasol": 2269312,
+        "sorgo": 574165,
+        "cebada": 1179041
+      },
+      "cebada_detail": {
+        "cervecera": 825075,
+        "forrajera": 341482,
+        "malteria": 12484
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-01T09:02:46.076856-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
+    },
+    "2026-08": {
+      "as_of": "2026-08-01",
+      "products": {
+        "maiz": 20371633,
+        "soja": 21512421,
+        "trigo": 5520721,
+        "girasol": 1913450,
+        "sorgo": 597282,
+        "cebada": 1139764
+      },
+      "cebada_detail": {
+        "cervecera": 757020,
+        "forrajera": 370706,
+        "malteria": 12038
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-01T09:02:46.076859-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
+    },
     "2026-09": {
       "as_of": "2026-09-01",
       "products": {
