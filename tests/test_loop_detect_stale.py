@@ -128,3 +128,35 @@ def test_same_stale_window_marker_roundtrip():
     assert same_stale_window(body, expected, trucks, nabsa) is True
     assert same_stale_window(body, expected, trucks, date(2026, 9, 9)) is False
     assert same_stale_window("no marker here", expected, trucks, nabsa) is False
+
+
+def test_nabsa_lineup_date_from_header():
+    from datetime import date as _d
+
+    import loop_detect_stale as lds
+
+    meta = {"header": "Line Up: October 1, 2026 Circ.Nbr.: 183", "circular": "183"}
+    assert lds.nabsa_lineup_date(meta) == _d(2026, 10, 1)
+    assert lds.nabsa_lineup_date({"lineup_date": "2026-09-30"}) == _d(2026, 9, 30)
+    assert lds.nabsa_lineup_date({"header": "garbage"}) is None
+    assert lds.nabsa_lineup_date(None) is None
+
+
+def test_create_stale_issue_invokes_gh(monkeypatch):
+    import loop_detect_stale as lds
+
+    seen = {}
+
+    class _P:
+        returncode = 0
+        stdout = "https://github.com/x/y/issues/9\n"
+        stderr = ""
+
+    def fake_run(cmd, **kw):
+        seen["cmd"] = cmd
+        return _P()
+
+    monkeypatch.setattr(lds.subprocess, "run", fake_run)
+    url = lds.create_stale_issue("x/y", title="t", body="b", priority="priority:P1")
+    assert seen["cmd"][:3] == ["gh", "issue", "create"]
+    assert url.endswith("/9")

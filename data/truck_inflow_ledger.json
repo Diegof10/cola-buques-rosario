@@ -1,277 +1,303 @@
 {
-  "month": "2026-09",
-  "baseline_as_of": "2026-09-01",
+  "month": "2026-10",
+  "baseline_as_of": "2026-10-01",
   "days": {
-    "2026-09-01": {
-      "maiz": 2224,
-      "soja": 1689,
-      "trigo": 666,
-      "girasol": 145,
-      "sorgo": 30,
-      "cebada": 116,
-      "national_total": 4870
-    },
-    "2026-09-02": {
-      "maiz": 2797,
-      "soja": 1805,
-      "trigo": 629,
-      "girasol": 198,
-      "sorgo": 20,
-      "cebada": 103,
-      "national_total": 5552
-    },
-    "2026-09-03": {
-      "maiz": 2708,
-      "soja": 2041,
-      "trigo": 455,
-      "girasol": 173,
-      "sorgo": 38,
-      "cebada": 147,
-      "national_total": 5562
-    },
-    "2026-09-04": {
-      "maiz": 2425,
-      "soja": 2331,
-      "trigo": 619,
-      "girasol": 152,
-      "sorgo": 32,
-      "cebada": 198,
-      "national_total": 5757
-    },
-    "2026-09-05": {
-      "maiz": 2032,
-      "soja": 1588,
-      "trigo": 410,
-      "girasol": 203,
-      "sorgo": 21,
-      "cebada": 118,
-      "national_total": 4372
-    },
-    "2026-09-06": {
-      "maiz": 0,
-      "soja": 0,
-      "trigo": 0,
-      "girasol": 0,
-      "sorgo": 0,
-      "cebada": 0,
-      "national_total": 0
-    },
-    "2026-09-07": {
-      "maiz": 1286,
-      "soja": 854,
-      "trigo": 614,
-      "girasol": 116,
-      "sorgo": 6,
-      "cebada": 66,
-      "national_total": 2942
-    },
-    "2026-09-08": {
-      "maiz": 2420,
-      "soja": 1990,
-      "trigo": 1012,
-      "girasol": 183,
-      "sorgo": 35,
-      "cebada": 32,
-      "national_total": 5672
-    },
-    "2026-09-09": {
-      "maiz": 2501,
-      "soja": 1691,
-      "trigo": 1200,
-      "girasol": 209,
-      "sorgo": 24,
-      "cebada": 304,
-      "national_total": 5929
-    },
-    "2026-09-10": {
-      "maiz": 2865,
-      "soja": 2610,
-      "trigo": 1390,
-      "girasol": 236,
-      "sorgo": 31,
-      "cebada": 256,
-      "national_total": 7388
-    },
-    "2026-09-11": {
-      "maiz": 3325,
-      "soja": 2340,
-      "trigo": 1369,
-      "girasol": 246,
-      "sorgo": 30,
-      "cebada": 376,
-      "national_total": 7686
-    },
-    "2026-09-12": {
-      "maiz": 1992,
-      "soja": 1549,
-      "trigo": 516,
-      "girasol": 137,
-      "sorgo": 14,
-      "cebada": 335,
-      "national_total": 4543
-    },
-    "2026-09-13": {
-      "maiz": 0,
-      "soja": 0,
-      "trigo": 0,
-      "girasol": 0,
-      "sorgo": 0,
-      "cebada": 0,
-      "national_total": 0
-    },
-    "2026-09-14": {
-      "maiz": 1510,
-      "soja": 870,
-      "trigo": 730,
-      "girasol": 168,
-      "sorgo": 19,
-      "cebada": 58,
-      "national_total": 3355
-    },
-    "2026-09-15": {
-      "maiz": 3093,
-      "soja": 1953,
-      "trigo": 1294,
-      "girasol": 178,
-      "sorgo": 22,
-      "cebada": 136,
-      "national_total": 6676
-    },
-    "2026-09-16": {
-      "maiz": 3074,
-      "soja": 2278,
-      "trigo": 1400,
-      "girasol": 147,
-      "sorgo": 16,
-      "cebada": 177,
-      "national_total": 7092
-    },
-    "2026-09-17": {
-      "maiz": 3382,
-      "soja": 2401,
-      "trigo": 1389,
-      "girasol": 135,
-      "sorgo": 39,
-      "cebada": 217,
-      "national_total": 7563
-    },
-    "2026-09-18": {
-      "maiz": 3843,
-      "soja": 2211,
-      "trigo": 1496,
-      "girasol": 150,
-      "sorgo": 32,
-      "cebada": 265,
-      "national_total": 7997
-    },
-    "2026-09-19": {
-      "maiz": 2407,
-      "soja": 2134,
-      "trigo": 964,
-      "girasol": 89,
-      "sorgo": 0,
-      "cebada": 113,
-      "national_total": 5707
-    },
-    "2026-09-20": {
-      "maiz": 0,
-      "soja": 0,
-      "trigo": 0,
-      "girasol": 0,
-      "sorgo": 0,
-      "cebada": 0,
-      "national_total": 0
-    },
-    "2026-09-21": {
-      "maiz": 1804,
-      "soja": 1116,
-      "trigo": 609,
-      "girasol": 116,
-      "sorgo": 17,
-      "cebada": 26,
-      "national_total": 3688
-    },
-    "2026-09-22": {
-      "maiz": 2398,
-      "soja": 1662,
-      "trigo": 727,
-      "girasol": 66,
-      "sorgo": 47,
-      "cebada": 69,
-      "national_total": 4969
-    },
-    "2026-09-23": {
-      "maiz": 2476,
-      "soja": 2331,
-      "trigo": 867,
-      "girasol": 102,
-      "sorgo": 93,
-      "cebada": 75,
-      "national_total": 5944
-    },
-    "2026-09-24": {
-      "maiz": 2401,
-      "soja": 2154,
-      "trigo": 978,
-      "girasol": 98,
-      "sorgo": 64,
-      "cebada": 117,
-      "national_total": 5812
-    },
-    "2026-09-25": {
-      "maiz": 2540,
-      "soja": 2782,
-      "trigo": 1114,
-      "girasol": 113,
-      "sorgo": 69,
-      "cebada": 143,
-      "national_total": 6761
-    },
-    "2026-09-26": {
-      "maiz": 2217,
-      "soja": 2238,
-      "trigo": 610,
-      "girasol": 112,
-      "sorgo": 21,
-      "cebada": 143,
-      "national_total": 5341
-    },
-    "2026-09-27": {
-      "maiz": 0,
-      "soja": 0,
-      "trigo": 0,
-      "girasol": 0,
-      "sorgo": 0,
-      "cebada": 0,
-      "national_total": 0
-    },
-    "2026-09-28": {
-      "maiz": 1420,
-      "soja": 1352,
-      "trigo": 568,
+    "2026-10-01": {
+      "maiz": 2672,
+      "soja": 2180,
+      "trigo": 826,
       "girasol": 115,
-      "sorgo": 32,
-      "cebada": 18,
-      "national_total": 3505
+      "sorgo": 75,
+      "cebada": 19,
+      "national_total": 5887
     },
-    "2026-09-29": {
-      "maiz": 1828,
-      "soja": 2038,
-      "trigo": 1063,
-      "girasol": 90,
-      "sorgo": 50,
-      "cebada": 15,
-      "national_total": 5084
-    },
-    "2026-09-30": {
-      "maiz": 2206,
-      "soja": 2448,
-      "trigo": 775,
-      "girasol": 122,
-      "sorgo": 59,
-      "cebada": 35,
-      "national_total": 5645
+    "2026-10-02": {
+      "maiz": 2499,
+      "soja": 2404,
+      "trigo": 914,
+      "girasol": 103,
+      "sorgo": 121,
+      "cebada": 39,
+      "national_total": 6080
     }
   },
-  "updated_at": "2026-10-02T12:57:36.038571-03:00"
+  "history": {
+    "2026-09": {
+      "baseline_as_of": "2026-09-01",
+      "days": {
+        "2026-09-01": {
+          "maiz": 2224,
+          "soja": 1689,
+          "trigo": 666,
+          "girasol": 145,
+          "sorgo": 30,
+          "cebada": 116,
+          "national_total": 4870
+        },
+        "2026-09-02": {
+          "maiz": 2797,
+          "soja": 1805,
+          "trigo": 629,
+          "girasol": 198,
+          "sorgo": 20,
+          "cebada": 103,
+          "national_total": 5552
+        },
+        "2026-09-03": {
+          "maiz": 2708,
+          "soja": 2041,
+          "trigo": 455,
+          "girasol": 173,
+          "sorgo": 38,
+          "cebada": 147,
+          "national_total": 5562
+        },
+        "2026-09-04": {
+          "maiz": 2425,
+          "soja": 2331,
+          "trigo": 619,
+          "girasol": 152,
+          "sorgo": 32,
+          "cebada": 198,
+          "national_total": 5757
+        },
+        "2026-09-05": {
+          "maiz": 2032,
+          "soja": 1588,
+          "trigo": 410,
+          "girasol": 203,
+          "sorgo": 21,
+          "cebada": 118,
+          "national_total": 4372
+        },
+        "2026-09-06": {
+          "maiz": 0,
+          "soja": 0,
+          "trigo": 0,
+          "girasol": 0,
+          "sorgo": 0,
+          "cebada": 0,
+          "national_total": 0
+        },
+        "2026-09-07": {
+          "maiz": 1286,
+          "soja": 854,
+          "trigo": 614,
+          "girasol": 116,
+          "sorgo": 6,
+          "cebada": 66,
+          "national_total": 2942
+        },
+        "2026-09-08": {
+          "maiz": 2420,
+          "soja": 1990,
+          "trigo": 1012,
+          "girasol": 183,
+          "sorgo": 35,
+          "cebada": 32,
+          "national_total": 5672
+        },
+        "2026-09-09": {
+          "maiz": 2501,
+          "soja": 1691,
+          "trigo": 1200,
+          "girasol": 209,
+          "sorgo": 24,
+          "cebada": 304,
+          "national_total": 5929
+        },
+        "2026-09-10": {
+          "maiz": 2865,
+          "soja": 2610,
+          "trigo": 1390,
+          "girasol": 236,
+          "sorgo": 31,
+          "cebada": 256,
+          "national_total": 7388
+        },
+        "2026-09-11": {
+          "maiz": 3325,
+          "soja": 2340,
+          "trigo": 1369,
+          "girasol": 246,
+          "sorgo": 30,
+          "cebada": 376,
+          "national_total": 7686
+        },
+        "2026-09-12": {
+          "maiz": 1992,
+          "soja": 1549,
+          "trigo": 516,
+          "girasol": 137,
+          "sorgo": 14,
+          "cebada": 335,
+          "national_total": 4543
+        },
+        "2026-09-13": {
+          "maiz": 0,
+          "soja": 0,
+          "trigo": 0,
+          "girasol": 0,
+          "sorgo": 0,
+          "cebada": 0,
+          "national_total": 0
+        },
+        "2026-09-14": {
+          "maiz": 1510,
+          "soja": 870,
+          "trigo": 730,
+          "girasol": 168,
+          "sorgo": 19,
+          "cebada": 58,
+          "national_total": 3355
+        },
+        "2026-09-15": {
+          "maiz": 3093,
+          "soja": 1953,
+          "trigo": 1294,
+          "girasol": 178,
+          "sorgo": 22,
+          "cebada": 136,
+          "national_total": 6676
+        },
+        "2026-09-16": {
+          "maiz": 3074,
+          "soja": 2278,
+          "trigo": 1400,
+          "girasol": 147,
+          "sorgo": 16,
+          "cebada": 177,
+          "national_total": 7092
+        },
+        "2026-09-17": {
+          "maiz": 3382,
+          "soja": 2401,
+          "trigo": 1389,
+          "girasol": 135,
+          "sorgo": 39,
+          "cebada": 217,
+          "national_total": 7563
+        },
+        "2026-09-18": {
+          "maiz": 3843,
+          "soja": 2211,
+          "trigo": 1496,
+          "girasol": 150,
+          "sorgo": 32,
+          "cebada": 265,
+          "national_total": 7997
+        },
+        "2026-09-19": {
+          "maiz": 2407,
+          "soja": 2134,
+          "trigo": 964,
+          "girasol": 89,
+          "sorgo": 0,
+          "cebada": 113,
+          "national_total": 5707
+        },
+        "2026-09-20": {
+          "maiz": 0,
+          "soja": 0,
+          "trigo": 0,
+          "girasol": 0,
+          "sorgo": 0,
+          "cebada": 0,
+          "national_total": 0
+        },
+        "2026-09-21": {
+          "maiz": 1804,
+          "soja": 1116,
+          "trigo": 609,
+          "girasol": 116,
+          "sorgo": 17,
+          "cebada": 26,
+          "national_total": 3688
+        },
+        "2026-09-22": {
+          "maiz": 2398,
+          "soja": 1662,
+          "trigo": 727,
+          "girasol": 66,
+          "sorgo": 47,
+          "cebada": 69,
+          "national_total": 4969
+        },
+        "2026-09-23": {
+          "maiz": 2476,
+          "soja": 2331,
+          "trigo": 867,
+          "girasol": 102,
+          "sorgo": 93,
+          "cebada": 75,
+          "national_total": 5944
+        },
+        "2026-09-24": {
+          "maiz": 2401,
+          "soja": 2154,
+          "trigo": 978,
+          "girasol": 98,
+          "sorgo": 64,
+          "cebada": 117,
+          "national_total": 5812
+        },
+        "2026-09-25": {
+          "maiz": 2540,
+          "soja": 2782,
+          "trigo": 1114,
+          "girasol": 113,
+          "sorgo": 69,
+          "cebada": 143,
+          "national_total": 6761
+        },
+        "2026-09-26": {
+          "maiz": 2217,
+          "soja": 2238,
+          "trigo": 610,
+          "girasol": 112,
+          "sorgo": 21,
+          "cebada": 143,
+          "national_total": 5341
+        },
+        "2026-09-27": {
+          "maiz": 0,
+          "soja": 0,
+          "trigo": 0,
+          "girasol": 0,
+          "sorgo": 0,
+          "cebada": 0,
+          "national_total": 0
+        },
+        "2026-09-28": {
+          "maiz": 1420,
+          "soja": 1352,
+          "trigo": 568,
+          "girasol": 115,
+          "sorgo": 32,
+          "cebada": 18,
+          "national_total": 3505
+        },
+        "2026-09-29": {
+          "maiz": 1828,
+          "soja": 2038,
+          "trigo": 1063,
+          "girasol": 90,
+          "sorgo": 50,
+          "cebada": 15,
+          "national_total": 5084
+        },
+        "2026-09-30": {
+          "maiz": 2206,
+          "soja": 2448,
+          "trigo": 775,
+          "girasol": 122,
+          "sorgo": 59,
+          "cebada": 35,
+          "national_total": 5645
+        }
+      },
+      "updated_at": "2026-10-02T12:57:36.038571-03:00"
+    }
+  },
+  "updated_at": "2026-10-02T13:02:18.901861-03:00"
 }

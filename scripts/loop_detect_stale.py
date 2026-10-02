@@ -74,6 +74,30 @@ def parse_iso_date(value: str | None) -> date | None:
         return None
 
 
+_LINEUP_HEADER_RE = re.compile(
+    r"Line\s*Up:\s*([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})", re.IGNORECASE
+)
+
+
+def nabsa_lineup_date(meta: dict[str, Any] | None) -> date | None:
+    """Lineup date from vessels meta: `lineup_date` if present, else parse
+    `header` ("Line Up: October 1, 2026 Circ.Nbr.: 183")."""
+    if not isinstance(meta, dict):
+        return None
+    d = parse_iso_date(meta.get("lineup_date"))
+    if d:
+        return d
+    m = _LINEUP_HEADER_RE.search(str(meta.get("header") or ""))
+    if not m:
+        return None
+    try:
+        return datetime.strptime(
+            f"{m.group(1)[:3].title()} {m.group(2)} {m.group(3)}", "%b %d %Y"
+        ).date()
+    except ValueError:
+        return None
+
+
 def is_stale(actual: date | None, expected: date) -> bool:
     """True when actual is missing or strictly older than expected."""
     if actual is None:
@@ -227,7 +251,7 @@ def build_issue_body(
         f"- **MAGyP trucks.date:** `{format_date(assessment.trucks_date)}`"
         f" — stale={assessment.trucks_stale}"
         f" (behind {assessment.trucks_behind} business day(s))",
-        f"- **NABSA meta.lineup_date:** `{format_date(assessment.nabsa_date)}`"
+        f"- **NABSA lineup date (meta):** `{format_date(assessment.nabsa_date)}`"
         f" — stale={assessment.vessels_stale}"
         f" (behind {assessment.vessels_behind} business day(s))",
         f"- **Priority label:** `{assessment.priority}`",
@@ -380,7 +404,7 @@ def create_stale_issue(
     ]
     for lab in labels:
         args.extend(["--label", lab])
-    proc = subprocess.run(args, capture_output=True, text=True, check=False)
+    proc = subprocess.run(["gh", *args], capture_output=True, text=True, check=False)
     if proc.returncode != 0:
         raise RuntimeError(
             f"gh issue create failed ({proc.returncode}): {proc.stderr.strip()}"
@@ -466,7 +490,7 @@ def main(argv: list[str] | None = None) -> int:
     meta = vessels.get("meta") if isinstance(vessels, dict) else None
     if not isinstance(meta, dict):
         meta = {}
-    nabsa_date = parse_iso_date(meta.get("lineup_date"))
+    nabsa_date = nabsa_lineup_date(meta)
 
     magyp_confirm = None
     if not args.skip_magyp_scrape:

@@ -194,3 +194,20 @@ def test_no_history_no_baseline_is_labelled(srv):
     _w(writable / "truck_inflow_ledger.json", led)
     out = server.compute_stocks_estimado()
     assert out["baseline_kind"] == "sin baseline"
+
+
+@pytest.mark.parametrize(
+    "header,cell,expected",
+    [("Septiembre 2026", "30-sept", "2026-09-30"), ("Octubre 2026", "2-oct", "2026-10-02")],
+)
+def test_parse_magyp_trucks_month_header(header, cell, expected):
+    # Regression: a later _ES_MONTHS redefinition (abbr-only) broke full-name headers.
+    row = [cell, "3.867", "208", "718", "1.287", "6.080", "914", "2.499", "121", "39",
+           "2.404", "103", "6.080", "234"]
+    html = (
+        "<table><tr><td>" + header + "</td><td>ZONA</td></tr><tr>"
+        + "".join(f"<td>{c}</td>" for c in row) + "</tr></table>"
+    )
+    out = rd.parse_magyp_trucks_html(html)
+    assert out["date"] == expected
+    assert out["total_camiones"] == 3867

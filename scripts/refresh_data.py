@@ -1970,7 +1970,7 @@ MAGYP_EXISTENCIAS_URL = (
     "_archivos/000058_Estad%C3%ADsticas/000030_Existencia%20f%C3%ADsica%20de%20granos"
     "%20en%20plantas%20de%20almacenaje,%20de%20servicios%20e%20industria.php"
 )
-_ES_MONTHS = {
+_EXIST_MONTH_ABBR = {
     "ene": 1, "feb": 2, "mar": 3, "abr": 4, "may": 5, "jun": 6,
     "jul": 7, "ago": 8, "sep": 9, "set": 9, "oct": 10, "nov": 11, "dic": 12,
 }
@@ -2022,9 +2022,9 @@ def parse_magyp_existencias_html(html: str) -> dict[str, dict[str, Any]]:
         if header is None:
             continue
         m = re.fullmatch(r"([a-z]{3})-(\d{2})", first)
-        if not m or m.group(1) not in _ES_MONTHS:
+        if not m or m.group(1) not in _EXIST_MONTH_ABBR:
             continue
-        month = f"20{m.group(2)}-{_ES_MONTHS[m.group(1)]:02d}"
+        month = f"20{m.group(2)}-{_EXIST_MONTH_ABBR[m.group(1)]:02d}"
         block = found.setdefault(month, {"products": {}, "cebada_detail": {}})
         for col, val in zip(header[1:], cells[1:]):
             spec = _EXIST_COLUMNS.get(col)
