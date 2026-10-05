@@ -207,6 +207,29 @@
         "trigo": "trigo pan (excluye candeal de la serie principal)",
         "cebada": "suma cervecera + forrajera + maltería"
       }
+    },
+    "2026-10": {
+      "as_of": "2026-10-01",
+      "products": {
+        "maiz": 26562613,
+        "soja": 18596977,
+        "trigo": 4227624,
+        "girasol": 1139313,
+        "sorgo": 473907,
+        "cebada": 890410
+      },
+      "cebada_detail": {
+        "cervecera": 597889,
+        "forrajera": 281782,
+        "malteria": 10739
+      },
+      "notes": {
+        "maiz": "maíz común (excluye flynt/pisingallo de la serie principal)",
+        "trigo": "trigo pan (excluye candeal de la serie principal)",
+        "cebada": "suma cervecera + forrajera + maltería"
+      },
+      "fetched_at": "2026-10-05T13:01:30.127905-03:00",
+      "source": "auto: scripts/refresh_data.py (tabla MAGyP)"
     }
   }
 }

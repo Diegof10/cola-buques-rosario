@@ -1,10 +1,10 @@
 {
   "year": 2026,
-  "updated_at": "2026-10-02T13:02:15.007023-03:00",
+  "updated_at": "2026-10-05T13:01:25.714339-03:00",
   "source": "NABSA sailedYYYYMMDD.xlsx (+ vessels_sailed_update.pdf / prior1–4)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "note": "Ledger acumulativo de filas SAILED NABSA. Histórico vía xlsx bajo /SAILED/sailedYYYYMMDD.xlsx; el PDF diario es rolling (~mes). Este JSON crece con cada refresh (dedupe) y alimenta sailed_destinations_ytd.json. No inventa meses faltantes.",
-  "row_count": 5182,
+  "row_count": 5199,
   "rows": {
     "2026-01-02|BOCHEM HOUSTON|SAN LORENZO|DEMPA SAN MARTIN|2080.00|SUN FLOWER OIL (HIGHOLEIC)|MEXICO": {
       "date": "2026-01-02",
@@ -57007,6 +57007,193 @@
       "vessel": "VANTAGE COMO",
       "origin": "ARGENTINA",
       "destination": "CHILE"
+    },
+    "2026-10-01|ADVENTURER|MONTEVIDEO(R.O.U)|PIER 8-9 (MONTEVIDEO)|17000.00|MALT|BRAZIL": {
+      "date": "2026-10-01",
+      "tons": 17000.0,
+      "cargo_raw": "MALT",
+      "commodity": "otro",
+      "port": "MONTEVIDEO(R.O.U)",
+      "terminal": "PIER 8-9 (MONTEVIDEO)",
+      "vessel": "ADVENTURER",
+      "origin": "URUGUAY",
+      "destination": "BRAZIL"
+    },
+    "2026-10-01|ALIKI PERROTIS|SAN LORENZO|SAN BENITO SAN LORENZO|39518.22|SOYBEANMEAL|UNITED ARAB EMIRATES": {
+      "date": "2026-10-01",
+      "tons": 39518.22,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "SAN BENITO SAN LORENZO",
+      "vessel": "ALIKI PERROTIS",
+      "origin": "ARGENTINA",
+      "destination": "UNITED ARAB EMIRATES"
+    },
+    "2026-10-01|BOCHEM BUCEPHALAS|SAN LORENZO|COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)|1000.00|SUN FLOWER OIL|MOZAMBIQUE": {
+      "date": "2026-10-01",
+      "tons": 1000.0,
+      "cargo_raw": "SUN FLOWER OIL",
+      "commodity": "girasol",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)",
+      "vessel": "BOCHEM BUCEPHALAS",
+      "origin": "ARGENTINA",
+      "destination": "MOZAMBIQUE"
+    },
+    "2026-10-01|BOCHEM BUCEPHALAS|SAN LORENZO|COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)|1800.00|SUN FLOWER OIL|INDIA": {
+      "date": "2026-10-01",
+      "tons": 1800.0,
+      "cargo_raw": "SUN FLOWER OIL",
+      "commodity": "girasol",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)",
+      "vessel": "BOCHEM BUCEPHALAS",
+      "origin": "ARGENTINA",
+      "destination": "INDIA"
+    },
+    "2026-10-01|BOCHEM BUCEPHALAS|SAN LORENZO|COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)|2200.00|SUN FLOWER OIL|INDIA": {
+      "date": "2026-10-01",
+      "tons": 2200.0,
+      "cargo_raw": "SUN FLOWER OIL",
+      "commodity": "girasol",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)",
+      "vessel": "BOCHEM BUCEPHALAS",
+      "origin": "ARGENTINA",
+      "destination": "INDIA"
+    },
+    "2026-10-01|DAHLIA|MONTEVIDEO(R.O.U)|TGM|14500.00|GENERAL CARGO|BRAZIL": {
+      "date": "2026-10-01",
+      "tons": 14500.0,
+      "cargo_raw": "GENERAL CARGO",
+      "commodity": "otro",
+      "port": "MONTEVIDEO(R.O.U)",
+      "terminal": "TGM",
+      "vessel": "DAHLIA",
+      "origin": "BRAZIL",
+      "destination": "BRAZIL"
+    },
+    "2026-10-01|DISCOVERER|BAHIA BLANCA|TERMINAL BAHIA BLANCA BERTHS 9 PUERTO INGENIERO WHITE|12000.00|WHEAT|BRAZIL": {
+      "date": "2026-10-01",
+      "tons": 12000.0,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "BAHIA BLANCA",
+      "terminal": "TERMINAL BAHIA BLANCA BERTHS 9 PUERTO INGENIERO WHITE",
+      "vessel": "DISCOVERER",
+      "origin": "ARGENTINA",
+      "destination": "BRAZIL"
+    },
+    "2026-10-01|HONOR DIVA|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|23050.00|SOYA BEAN|CHINA": {
+      "date": "2026-10-01",
+      "tons": 23050.0,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "BAHIA BLANCA",
+      "terminal": "LDC GRAIN TERMINAL PUERTO GALVAN",
+      "vessel": "HONOR DIVA",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
+    },
+    "2026-10-01|JILL GLORY|BAHIA BLANCA|OTAMERICA 2  PUERTO ROSALES|90.00|CRUDE OIL|UNITED STATES": {
+      "date": "2026-10-01",
+      "tons": 90.0,
+      "cargo_raw": "CRUDE OIL",
+      "commodity": "otro",
+      "port": "BAHIA BLANCA",
+      "terminal": "OTAMERICA 2  PUERTO ROSALES",
+      "vessel": "JILL GLORY",
+      "origin": "ARGENTINA",
+      "destination": "UNITED STATES"
+    },
+    "2026-10-01|JILL GLORY|BAHIA BLANCA|OTAMERICA 2 PUERTO ROSALES|90.00|CRUDE OIL|UNITED STATES": {
+      "date": "2026-10-01",
+      "tons": 90.0,
+      "cargo_raw": "CRUDE OIL",
+      "commodity": "otro",
+      "port": "BAHIA BLANCA",
+      "terminal": "OTAMERICA 2 PUERTO ROSALES",
+      "vessel": "JILL GLORY",
+      "origin": "ARGENTINA",
+      "destination": "UNITED STATES"
+    },
+    "2026-10-01|ZETA P|BAHIA BLANCA|CARGILL TERMINAL PUERTO INGENIERO WHITE|23750.00|CORN|VIETNAM": {
+      "date": "2026-10-01",
+      "tons": 23750.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "BAHIA BLANCA",
+      "terminal": "CARGILL TERMINAL PUERTO INGENIERO WHITE",
+      "vessel": "ZETA P",
+      "origin": "ARGENTINA",
+      "destination": "VIETNAM"
+    },
+    "2026-10-02|DAMSGAARD|ROSARIO|CARGILL VGG VILLA GOBERNADOR GALVEZ|14000.00|NEUTRALIZED SOYBEAN OIL|SPAIN": {
+      "date": "2026-10-02",
+      "tons": 14000.0,
+      "cargo_raw": "NEUTRALIZED SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "ROSARIO",
+      "terminal": "CARGILL VGG VILLA GOBERNADOR GALVEZ",
+      "vessel": "DAMSGAARD",
+      "origin": "ARGENTINA",
+      "destination": "SPAIN"
+    },
+    "2026-10-02|DAMSGAARD|ROSARIO|CARGILL VGG VILLA GOBERNADOR GALVEZ|4000.00|SOYBEAN OIL|SPAIN": {
+      "date": "2026-10-02",
+      "tons": 4000.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "ROSARIO",
+      "terminal": "CARGILL VGG VILLA GOBERNADOR GALVEZ",
+      "vessel": "DAMSGAARD",
+      "origin": "ARGENTINA",
+      "destination": "SPAIN"
+    },
+    "2026-10-02|PACIFIC RAWAN|BAHIA BLANCA|OTAMERICA 1  PUERTO ROSALES|95186.00|CRUDE OIL|MALAYSIA": {
+      "date": "2026-10-02",
+      "tons": 95186.0,
+      "cargo_raw": "CRUDE OIL",
+      "commodity": "otro",
+      "port": "BAHIA BLANCA",
+      "terminal": "OTAMERICA 1  PUERTO ROSALES",
+      "vessel": "PACIFIC RAWAN",
+      "origin": "ARGENTINA",
+      "destination": "MALAYSIA"
+    },
+    "2026-10-02|PACIFIC RAWAN|BAHIA BLANCA|OTAMERICA 1 PUERTO ROSALES|95186.00|CRUDE OIL|MALAYSIA": {
+      "date": "2026-10-02",
+      "tons": 95186.0,
+      "cargo_raw": "CRUDE OIL",
+      "commodity": "otro",
+      "port": "BAHIA BLANCA",
+      "terminal": "OTAMERICA 1 PUERTO ROSALES",
+      "vessel": "PACIFIC RAWAN",
+      "origin": "ARGENTINA",
+      "destination": "MALAYSIA"
+    },
+    "2026-10-02|SDM DONGGUAN|SAN LORENZO|RENOVA SOUTH|43754.76|SOYBEANMEAL|VIETNAM": {
+      "date": "2026-10-02",
+      "tons": 43754.76,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA SOUTH",
+      "vessel": "SDM DONGGUAN",
+      "origin": "ARGENTINA",
+      "destination": "VIETNAM"
+    },
+    "2026-10-02|WELLNESS DIVA|SAN LORENZO|A.G.D. TIMBUES|49496.46|SOYA BEAN|CHINA": {
+      "date": "2026-10-02",
+      "tons": 49496.46,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "A.G.D. TIMBUES",
+      "vessel": "WELLNESS DIVA",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
     }
   }
 }
