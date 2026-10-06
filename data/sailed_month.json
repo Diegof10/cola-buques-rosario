@@ -1,19 +1,19 @@
 {
   "month": "2026-10",
-  "updated_at": "2026-10-05T15:32:33.683322-03:00",
+  "updated_at": "2026-10-06T13:03:04.437536-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 23750.0,
-    "soja": 173819.44,
-    "trigo": 12000.0,
-    "girasol": 5000.0,
+    "maiz": 495196.03,
+    "soja": 408661.95,
+    "trigo": 86232.42,
+    "girasol": 23999.98,
     "sorgo": 0.0,
     "cebada": 0.0
   },
   "by_day": {
     "2026-10-01": {
-      "maiz": 23750.0,
+      "maiz": 108035.58,
       "soja": 62568.22,
       "trigo": 12000.0,
       "girasol": 5000.0,
@@ -21,16 +21,40 @@
       "cebada": 0.0
     },
     "2026-10-02": {
-      "maiz": 0.0,
-      "soja": 111251.22,
+      "maiz": 199097.56,
+      "soja": 212567.8,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
+    },
+    "2026-10-03": {
+      "maiz": 89387.97,
+      "soja": 44734.94,
+      "trigo": 0.0,
+      "girasol": 5499.98,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-10-04": {
+      "maiz": 98674.92,
+      "soja": 88790.99,
+      "trigo": 42392.42,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-10-05": {
+      "maiz": 0.0,
+      "soja": 0.0,
+      "trigo": 31840.0,
+      "girasol": 13500.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
     }
   },
-  "rows_in_month": 15,
-  "ignored_otro_tn": 126776.0,
+  "rows_in_month": 48,
+  "ignored_otro_tn": 219776.0,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos.",
   "history": {
@@ -57,7 +81,7 @@
         "cebada": 268347.74
       },
       "rows_in_month": 723,
-      "updated_at": "2026-10-05T15:32:33.684486-03:00",
+      "updated_at": "2026-10-06T13:03:04.438454-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
