@@ -1,63 +1,59 @@
 {
-  "updated_at": "2026-10-07T13:07:26.087487-03:00",
-  "date": "2026-10-05",
+  "updated_at": "2026-10-08T14:06:12.362695-03:00",
+  "date": "2026-10-08",
   "source": "magyp",
   "source_url": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/_archivos/000023_Posici%C3%B3n%20de%20Camiones%20y%20Vagones/000020_Entrada%20diaria%20de%20camiones%20y%20vagones%20a%20puertos,%20f%C3%A1bricas%20y%20molinos%20(por%20zona%20portuaria%20y%20por%20producto).php",
   "source_note": "Rosario y aledaños (MAGyP). Mix por producto prorrateado del total nacional del día.",
   "unit": "camiones",
-  "total_camiones": 2193,
+  "total_camiones": 4503,
   "total_tn": null,
   "by_product": [
     {
       "product": "trigo",
       "label": "Trigo",
-      "camiones": 279
+      "camiones": 530
     },
     {
       "product": "maiz",
       "label": "Maíz",
-      "camiones": 924
+      "camiones": 2317
     },
     {
       "product": "sorgo",
       "label": "Sorgo",
-      "camiones": 51
+      "camiones": 75
     },
     {
       "product": "cebada",
       "label": "Cebada",
-      "camiones": 7
+      "camiones": 14
     },
     {
       "product": "soja",
       "label": "Soja",
-      "camiones": 855
+      "camiones": 1502
     },
     {
       "product": "girasol",
       "label": "Girasol",
-      "camiones": 77
+      "camiones": 65
     }
   ],
   "by_zone": [
     {
       "zone": "Rosario y aledaños",
-      "camiones": 2193,
+      "camiones": 4503,
       "by_product": {
-        "trigo": 279,
-        "maiz": 924,
-        "sorgo": 51,
-        "cebada": 7,
-        "soja": 855,
-        "girasol": 77
+        "trigo": 530,
+        "maiz": 2317,
+        "sorgo": 75,
+        "cebada": 14,
+        "soja": 1502,
+        "girasol": 65
       }
     }
   ],
   "history_7d": [
-    {
-      "date": "2026-10-01",
-      "camiones": 3781
-    },
     {
       "date": "2026-10-02",
       "camiones": 3867
@@ -73,29 +69,41 @@
     {
       "date": "2026-10-05",
       "camiones": 2193
+    },
+    {
+      "date": "2026-10-06",
+      "camiones": 4102
+    },
+    {
+      "date": "2026-10-07",
+      "camiones": 4756
+    },
+    {
+      "date": "2026-10-08",
+      "camiones": 4503
     }
   ],
-  "national_total": 3279,
+  "national_total": 6223,
   "raw": {
     "page_month": "2026-10",
-    "date_cell": "5-oct",
+    "date_cell": "8-oct",
     "zones": {
-      "rosario": 2193,
-      "darsena": 149,
-      "necochea": 47,
-      "bahia_blanca": 890,
-      "zones_total": 3279
+      "rosario": 4503,
+      "darsena": 224,
+      "necochea": 580,
+      "bahia_blanca": 916,
+      "zones_total": 6223
     },
     "national_products": {
-      "trigo": 417,
-      "maiz": 1381,
-      "sorgo": 76,
-      "cebada": 11,
-      "soja": 1279,
-      "girasol": 115
+      "trigo": 732,
+      "maiz": 3202,
+      "sorgo": 103,
+      "cebada": 20,
+      "soja": 2076,
+      "girasol": 90
     },
-    "vagones": 482,
-    "days_parsed": 5,
+    "vagones": 292,
+    "days_parsed": 8,
     "national_days": [
       {
         "date": "2026-10-01",
@@ -161,6 +169,45 @@
         },
         "national_total": 3279,
         "rosario": 2193
+      },
+      {
+        "date": "2026-10-06",
+        "products": {
+          "trigo": 713,
+          "maiz": 2921,
+          "sorgo": 135,
+          "cebada": 36,
+          "soja": 2064,
+          "girasol": 124
+        },
+        "national_total": 5993,
+        "rosario": 4102
+      },
+      {
+        "date": "2026-10-07",
+        "products": {
+          "trigo": 979,
+          "maiz": 3206,
+          "sorgo": 150,
+          "cebada": 23,
+          "soja": 2390,
+          "girasol": 167
+        },
+        "national_total": 6915,
+        "rosario": 4756
+      },
+      {
+        "date": "2026-10-08",
+        "products": {
+          "trigo": 732,
+          "maiz": 3202,
+          "sorgo": 103,
+          "cebada": 20,
+          "soja": 2076,
+          "girasol": 90
+        },
+        "national_total": 6223,
+        "rosario": 4503
       }
     ]
   }
