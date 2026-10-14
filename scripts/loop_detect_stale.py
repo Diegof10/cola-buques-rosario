@@ -14,6 +14,8 @@ import json
 import re
 import subprocess
 import sys
+import time
+import os
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -510,6 +512,26 @@ def main(argv: list[str] | None = None) -> int:
         f"(stale={assessment.vessels_stale}, behind={assessment.vessels_behind}) "
         f"priority={assessment.priority}"
     )
+
+    # A just-pushed refresh may still be deploying on Vercel: re-check the live
+    # API a few times before opening an issue, to avoid false positives.
+    retries = int(os.environ.get("STALE_DEPLOY_RETRIES", "4"))
+    while assessment.stale and retries > 0 and not args.dry_run:
+        retries -= 1
+        print("stale on live; waiting 45s for a possible deploy, then re-checking...")
+        time.sleep(45)
+        try:
+            trucks = http_get_json(trucks_url)
+            vessels = http_get_json(vessels_url)
+        except Exception as ex:
+            print(f"note: re-check fetch failed: {ex}", file=sys.stderr)
+            continue
+        trucks_date = parse_iso_date(trucks.get("date") if isinstance(trucks, dict) else None)
+        meta = vessels.get("meta") if isinstance(vessels, dict) else None
+        if not isinstance(meta, dict):
+            meta = {}
+        nabsa_date = nabsa_lineup_date(meta)
+        assessment = assess_staleness(today=today, trucks_date=trucks_date, nabsa_date=nabsa_date)
 
     if not assessment.stale:
         print("OK: data fresh vs previous business day — no issue.")
