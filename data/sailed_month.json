@@ -1,14 +1,14 @@
 {
   "month": "2026-10",
-  "updated_at": "2026-10-14T12:59:40.514582-03:00",
+  "updated_at": "2026-10-15T13:02:36.837124-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 1483017.98,
-    "soja": 1484821.76,
-    "trigo": 269638.82,
-    "girasol": 106128.28,
-    "sorgo": 35200.17,
+    "maiz": 1720966.38,
+    "soja": 1721889.04,
+    "trigo": 328840.31,
+    "girasol": 144103.28,
+    "sorgo": 42284.01,
     "cebada": 0.0
   },
   "by_day": {
@@ -56,7 +56,7 @@
       "maiz": 162472.7,
       "soja": 168416.58,
       "trigo": 0.0,
-      "girasol": 44232.0,
+      "girasol": 52217.0,
       "sorgo": 25200.17,
       "cebada": 0.0
     },
@@ -85,24 +85,24 @@
       "cebada": 0.0
     },
     "2026-10-10": {
-      "maiz": 74357.25,
-      "soja": 50744.78,
+      "maiz": 137698.78,
+      "soja": 95916.26,
       "trigo": 32995.31,
-      "girasol": 0.0,
+      "girasol": 4500.0,
       "sorgo": 0.0,
       "cebada": 0.0
     },
     "2026-10-11": {
-      "maiz": 35315.43,
-      "soja": 54919.51,
-      "trigo": 47204.89,
-      "girasol": 7999.5,
-      "sorgo": 0.0,
+      "maiz": 98209.67,
+      "soja": 150064.17,
+      "trigo": 73408.89,
+      "girasol": 16499.5,
+      "sorgo": 7083.84,
       "cebada": 0.0
     },
     "2026-10-12": {
       "maiz": 69353.17,
-      "soja": 213625.89,
+      "soja": 286183.63,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
@@ -110,15 +110,23 @@
     },
     "2026-10-13": {
       "maiz": 43996.04,
-      "soja": 32999.08,
+      "soja": 57192.48,
+      "trigo": 32997.49,
+      "girasol": 16990.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-10-14": {
+      "maiz": 111712.63,
+      "soja": 0.0,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     }
   },
-  "rows_in_month": 184,
-  "ignored_otro_tn": 731271.0,
+  "rows_in_month": 219,
+  "ignored_otro_tn": 1000183.5,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos.",
   "history": {
@@ -145,7 +153,7 @@
         "cebada": 268347.74
       },
       "rows_in_month": 723,
-      "updated_at": "2026-10-14T12:59:40.515690-03:00",
+      "updated_at": "2026-10-15T13:02:36.838411-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
