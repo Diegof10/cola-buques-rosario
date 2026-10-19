@@ -1,10 +1,10 @@
 {
   "year": 2026,
-  "updated_at": "2026-10-16T12:57:40.985183-03:00",
+  "updated_at": "2026-10-19T13:17:49.029284-03:00",
   "source": "NABSA sailedYYYYMMDD.xlsx (+ vessels_sailed_update.pdf / prior1–4)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "note": "Ledger acumulativo de filas SAILED NABSA. Histórico vía xlsx bajo /SAILED/sailedYYYYMMDD.xlsx; el PDF diario es rolling (~mes). Este JSON crece con cada refresh (dedupe) y alimenta sailed_destinations_ytd.json. No inventa meses faltantes.",
-  "row_count": 5461,
+  "row_count": 5478,
   "rows": {
     "2026-01-02|BOCHEM HOUSTON|SAN LORENZO|DEMPA SAN MARTIN|2080.00|SUN FLOWER OIL (HIGHOLEIC)|MEXICO": {
       "date": "2026-01-02",
@@ -59362,11 +59362,33 @@
       "origin": "ARGENTINA",
       "destination": "PHILIPPINES"
     },
+    "2026-10-11|LEONARDO|SAN LORENZO|COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)|1000.00|SUN FLOWER MEAL PELLETS|ITALY": {
+      "date": "2026-10-11",
+      "tons": 1000.0,
+      "cargo_raw": "SUN FLOWER MEAL PELLETS",
+      "commodity": "girasol",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)",
+      "vessel": "LEONARDO",
+      "origin": "ARGENTINA",
+      "destination": "ITALY"
+    },
     "2026-10-11|LEONARDO|SAN LORENZO|COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)|42133.51|SOYBEANMEAL|ITALY": {
       "date": "2026-10-11",
       "tons": 42133.51,
       "cargo_raw": "SOYBEANMEAL",
       "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)",
+      "vessel": "LEONARDO",
+      "origin": "ARGENTINA",
+      "destination": "ITALY"
+    },
+    "2026-10-11|LEONARDO|SAN LORENZO|COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)|6999.50|SUN FLOWER MEAL PELLETS|ITALY": {
+      "date": "2026-10-11",
+      "tons": 6999.5,
+      "cargo_raw": "SUN FLOWER MEAL PELLETS",
+      "commodity": "girasol",
       "port": "SAN LORENZO",
       "terminal": "COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)",
       "vessel": "LEONARDO",
@@ -59703,6 +59725,28 @@
       "origin": "ARGENTINA",
       "destination": "MALAYSIA"
     },
+    "2026-10-12|SEAWAYS YOSEMITE|BAHIA BLANCA|OTAMERICA 2  PUERTO ROSALES|90000.00|CRUDE OIL|UNITED STATES": {
+      "date": "2026-10-12",
+      "tons": 90000.0,
+      "cargo_raw": "CRUDE OIL",
+      "commodity": "otro",
+      "port": "BAHIA BLANCA",
+      "terminal": "OTAMERICA 2  PUERTO ROSALES",
+      "vessel": "SEAWAYS YOSEMITE",
+      "origin": "ARGENTINA",
+      "destination": "UNITED STATES"
+    },
+    "2026-10-12|SEAWAYS YOSEMITE|BAHIA BLANCA|OTAMERICA 2 PUERTO ROSALES|90000.00|CRUDE OIL|UNITED STATES": {
+      "date": "2026-10-12",
+      "tons": 90000.0,
+      "cargo_raw": "CRUDE OIL",
+      "commodity": "otro",
+      "port": "BAHIA BLANCA",
+      "terminal": "OTAMERICA 2 PUERTO ROSALES",
+      "vessel": "SEAWAYS YOSEMITE",
+      "origin": "ARGENTINA",
+      "destination": "UNITED STATES"
+    },
     "2026-10-12|SHAMROCK MERCURY|SAN LORENZO|RENOVA NORTH|13400.00|SOYBEAN OIL|ALGERIA": {
       "date": "2026-10-12",
       "tons": 13400.0,
@@ -59868,6 +59912,39 @@
       "origin": "ARGENTINA",
       "destination": "PERU"
     },
+    "2026-10-14|ANNA THERESA|SAN LORENZO|RENOVA SOUTH|21199.18|SOYBEANMEAL|UNITED ARAB EMIRATES": {
+      "date": "2026-10-14",
+      "tons": 21199.18,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA SOUTH",
+      "vessel": "ANNA THERESA",
+      "origin": "ARGENTINA",
+      "destination": "UNITED ARAB EMIRATES"
+    },
+    "2026-10-14|ANNA THERESA|SAN LORENZO|RENOVA SOUTH|6600.00|SOYBEANMEAL|SAUDI ARABIA": {
+      "date": "2026-10-14",
+      "tons": 6600.0,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA SOUTH",
+      "vessel": "ANNA THERESA",
+      "origin": "ARGENTINA",
+      "destination": "SAUDI ARABIA"
+    },
+    "2026-10-14|ANNA THERESA|SAN LORENZO|RENOVA SOUTH|9450.00|SOYBEANMEAL|OMAN": {
+      "date": "2026-10-14",
+      "tons": 9450.0,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA SOUTH",
+      "vessel": "ANNA THERESA",
+      "origin": "ARGENTINA",
+      "destination": "OMAN"
+    },
     "2026-10-14|BLESSED LUCK|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|20802.00|CORN|VIETNAM": {
       "date": "2026-10-14",
       "tons": 20802.0,
@@ -59933,6 +60010,17 @@
       "vessel": "DENIZ",
       "origin": "ARGENTINA",
       "destination": "VIETNAM"
+    },
+    "2026-10-14|FEDERAL SWIFT|SAN LORENZO|COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)|31614.60|SOYBEANMEAL|INDONESIA": {
+      "date": "2026-10-14",
+      "tons": 31614.6,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)",
+      "vessel": "FEDERAL SWIFT",
+      "origin": "ARGENTINA",
+      "destination": "INDONESIA"
     },
     "2026-10-14|GH GLORY|BAHIA BLANCA|ADM AGRO (EX TOEPFER BAHIA BLANCA)|17690.00|SOYA BEAN|CHINA": {
       "date": "2026-10-14",
@@ -60033,6 +60121,28 @@
       "origin": "ARGENTINA",
       "destination": "VIETNAM"
     },
+    "2026-10-15|CRIMSON SAPPHIRE|SAN LORENZO|COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)|3000.00|CORN|ALGERIA": {
+      "date": "2026-10-15",
+      "tons": 3000.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)",
+      "vessel": "CRIMSON SAPPHIRE",
+      "origin": "ARGENTINA",
+      "destination": "ALGERIA"
+    },
+    "2026-10-15|CRIMSON SAPPHIRE|SAN LORENZO|COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)|33849.16|CORN|ALGERIA": {
+      "date": "2026-10-15",
+      "tons": 33849.16,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM SOUTH BERTH (EX NIDERA SAN MARTIN)",
+      "vessel": "CRIMSON SAPPHIRE",
+      "origin": "ARGENTINA",
+      "destination": "ALGERIA"
+    },
     "2026-10-15|DORIC ARMOUR|SAN LORENZO|QUEBRACHO SAN MARTIN|29992.62|SOYA BEAN|CHINA": {
       "date": "2026-10-15",
       "tons": 29992.62,
@@ -60043,6 +60153,50 @@
       "vessel": "DORIC ARMOUR",
       "origin": "ARGENTINA",
       "destination": "CHINA"
+    },
+    "2026-10-15|GREAT FAITH|SAN LORENZO|ACA SAN LORENZO|11000.00|SORGHUM|CHINA": {
+      "date": "2026-10-15",
+      "tons": 11000.0,
+      "cargo_raw": "SORGHUM",
+      "commodity": "sorgo",
+      "port": "SAN LORENZO",
+      "terminal": "ACA SAN LORENZO",
+      "vessel": "GREAT FAITH",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
+    },
+    "2026-10-15|GREAT FAITH|SAN LORENZO|ACA SAN LORENZO|17600.00|SORGHUM|CHINA": {
+      "date": "2026-10-15",
+      "tons": 17600.0,
+      "cargo_raw": "SORGHUM",
+      "commodity": "sorgo",
+      "port": "SAN LORENZO",
+      "terminal": "ACA SAN LORENZO",
+      "vessel": "GREAT FAITH",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
+    },
+    "2026-10-15|GREAT FAITH|SAN LORENZO|ACA SAN LORENZO|6600.00|SORGHUM|CHINA": {
+      "date": "2026-10-15",
+      "tons": 6600.0,
+      "cargo_raw": "SORGHUM",
+      "commodity": "sorgo",
+      "port": "SAN LORENZO",
+      "terminal": "ACA SAN LORENZO",
+      "vessel": "GREAT FAITH",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
+    },
+    "2026-10-15|MIDJUR|SAN LORENZO|COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)|38499.13|CORN|ALGERIA": {
+      "date": "2026-10-15",
+      "tons": 38499.13,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)",
+      "vessel": "MIDJUR",
+      "origin": "ARGENTINA",
+      "destination": "ALGERIA"
     },
     "2026-10-15|QUOD VERUM|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|21250.00|SOYA BEAN|CHINA": {
       "date": "2026-10-15",
@@ -60065,6 +60219,39 @@
       "vessel": "STAR NASIA",
       "origin": "ARGENTINA",
       "destination": "SAUDI ARABIA"
+    },
+    "2026-10-15|STRATEGIC ENTITY|SAN LORENZO|SAN BENITO SAN LORENZO|10400.00|SOYBEANMEAL|ISRAEL": {
+      "date": "2026-10-15",
+      "tons": 10400.0,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "SAN BENITO SAN LORENZO",
+      "vessel": "STRATEGIC ENTITY",
+      "origin": "ARGENTINA",
+      "destination": "ISRAEL"
+    },
+    "2026-10-15|STRATEGIC ENTITY|SAN LORENZO|SAN BENITO SAN LORENZO|18965.54|SOYBEANMEAL|ISRAEL": {
+      "date": "2026-10-15",
+      "tons": 18965.54,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "SAN BENITO SAN LORENZO",
+      "vessel": "STRATEGIC ENTITY",
+      "origin": "ARGENTINA",
+      "destination": "ISRAEL"
+    },
+    "2026-10-15|STRATEGIC ENTITY|SAN LORENZO|SAN BENITO SAN LORENZO|3600.00|SOYBEANMEAL|ISRAEL": {
+      "date": "2026-10-15",
+      "tons": 3600.0,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "SAN BENITO SAN LORENZO",
+      "vessel": "STRATEGIC ENTITY",
+      "origin": "ARGENTINA",
+      "destination": "ISRAEL"
     },
     "2026-10-15|USANEE NAREE|SAN LORENZO|A.C.A. TIMBUES|45299.13|CORN|PHILIPPINES": {
       "date": "2026-10-15",

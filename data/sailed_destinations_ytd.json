@@ -2,7 +2,7 @@
   "year": 2026,
   "from": "2026-01-02",
   "through": "2026-10-15",
-  "updated_at": "2026-10-16T12:57:41.019868-03:00",
+  "updated_at": "2026-10-19T13:17:49.069913-03:00",
   "source": "sailed_rows_ledger.json (NABSA sailed xlsx archive + vessels_sailed_update.pdf + priors)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "unit": "t",
@@ -19,14 +19,14 @@
     {
       "key": "china",
       "label": "China",
-      "tons": 7472472.99,
-      "count": 240
+      "tons": 7507672.99,
+      "count": 243
     },
     {
       "key": "saudi arabia",
       "label": "Arabia Saudita",
-      "tons": 5098851.66,
-      "count": 195
+      "tons": 5105451.66,
+      "count": 196
     },
     {
       "key": "peru",
@@ -37,8 +37,8 @@
     {
       "key": "indonesia",
       "label": "Indonesia",
-      "tons": 3978547.5,
-      "count": 144
+      "tons": 4010162.1,
+      "count": 145
     },
     {
       "key": "malaysia",
@@ -67,8 +67,8 @@
     {
       "key": "algeria",
       "label": "Argelia",
-      "tons": 3003805.04,
-      "count": 97
+      "tons": 3079153.33,
+      "count": 100
     },
     {
       "key": "morocco",
@@ -121,8 +121,8 @@
     {
       "key": "italy",
       "label": "Italia",
-      "tons": 1139131.4,
-      "count": 61
+      "tons": 1147130.9,
+      "count": 63
     },
     {
       "key": "thailand",
@@ -163,8 +163,8 @@
     {
       "key": "united arab emir",
       "label": "Emiratos Árabes",
-      "tons": 688855.95,
-      "count": 34
+      "tons": 710055.13,
+      "count": 35
     },
     {
       "key": "venezuela",
@@ -235,8 +235,8 @@
     {
       "key": "oman",
       "label": "Omán",
-      "tons": 418611.28,
-      "count": 32
+      "tons": 428061.28,
+      "count": 33
     },
     {
       "key": "tunisia",
@@ -275,16 +275,16 @@
       "count": 18
     },
     {
+      "key": "israel",
+      "label": "Israel",
+      "tons": 294617.91,
+      "count": 12
+    },
+    {
       "key": "puerto rico",
       "label": "Puerto Rico",
       "tons": 263046.08,
       "count": 28
-    },
-    {
-      "key": "israel",
-      "label": "Israel",
-      "tons": 261652.37,
-      "count": 9
     },
     {
       "key": "denmark",
@@ -573,8 +573,8 @@
   "ar_count": 3,
   "unknown_tons": 1420514.52,
   "unknown_count": 55,
-  "ignored_non_grain_tn": 15996852.54,
-  "ignored_non_grain_count": 1060,
-  "total_export_tons": 87142679.17,
-  "rows": 4401
+  "ignored_non_grain_tn": 16176852.54,
+  "ignored_non_grain_count": 1062,
+  "total_export_tons": 87363056.28,
+  "rows": 4416
 }
