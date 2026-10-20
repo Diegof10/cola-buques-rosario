@@ -358,6 +358,52 @@
     };
   }
 
+  // Leaflet is loaded lazily (not render-blocking): only when the map nears the viewport.
+  let leafletPromise = null;
+  let pendingWorldRender = null;
+  function loadLeaflet() {
+    if (typeof L !== "undefined") return Promise.resolve();
+    if (leafletPromise) return leafletPromise;
+    leafletPromise = new Promise((resolve, reject) => {
+      const css = document.createElement("link");
+      css.rel = "stylesheet";
+      css.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      css.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+      css.crossOrigin = "";
+      document.head.appendChild(css);
+      const js = document.createElement("script");
+      js.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      js.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+      js.crossOrigin = "";
+      js.async = true;
+      js.onload = () => resolve();
+      js.onerror = (e) => { leafletPromise = null; reject(e); };
+      document.head.appendChild(js);
+    });
+    return leafletPromise;
+  }
+  function onLeafletReady() {
+    initWorldMap();
+    if (pendingWorldRender) {
+      const args = pendingWorldRender;
+      pendingWorldRender = null;
+      renderWorldMap(args[0], args[1]);
+    }
+  }
+  (function watchWorldMap() {
+    const el = $("worldMap");
+    if (!el) return;
+    const go = () => loadLeaflet().then(onLeafletReady).catch((e) => console.error("leaflet", e));
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (entries.some((en) => en.isIntersecting)) { io.disconnect(); go(); }
+      }, { rootMargin: "400px 0px" });
+      io.observe(el);
+    } else {
+      go();
+    }
+  })();
+
   function initWorldMap() {
     if (worldMap || typeof L === "undefined") return;
     const el = $("worldMap");
@@ -375,7 +421,7 @@
 
   function renderWorldMap(exports, opts) {
     if (!worldMapReady) initWorldMap();
-    if (!worldMap || !worldLayer) return;
+    if (!worldMap || !worldLayer) { pendingWorldRender = [exports, opts]; return; }
     const ytd = !!(opts && opts.ytd);
     worldLayer.clearLayers();
     const maxTons = Math.max(...exports.map((e) => e.tons), 1);
@@ -1206,18 +1252,35 @@
       .join("");
   }
 
+  // Render in the original order, but yield to the browser between sections so the
+  // main thread is not blocked by one long task (TBT/INP). A newer call cancels pending steps.
+  let renderGen = 0;
   function renderAll() {
+    const gen = ++renderGen;
     const base = upRiverVessels();
     fillZones(base);
     const filtered = applyFilters(base);
-    renderKpis(filtered);
-    renderQueue(filtered);
-    renderArrivals(filtered);
-    renderTrucks();
-    renderStaleBanners();
-    renderDestinations(filtered);
-    renderCoverage();
-    renderStocksEstimado();
+    const steps = [
+      () => renderKpis(filtered),
+      () => renderQueue(filtered),
+      () => renderArrivals(filtered),
+      () => renderTrucks(),
+      () => renderStaleBanners(),
+      () => renderDestinations(filtered),
+      () => renderCoverage(),
+      () => renderStocksEstimado(),
+    ];
+    let i = 0;
+    const run = () => {
+      if (gen !== renderGen) return;
+      const t0 = performance.now();
+      while (i < steps.length) {
+        steps[i++]();
+        if (performance.now() - t0 > 40) break;
+      }
+      if (i < steps.length) setTimeout(run, 0);
+    };
+    run();
   }
 
   async function load() {
@@ -1268,7 +1331,11 @@
   $("fZone").addEventListener("change", renderAll);
   $("fCommodity").addEventListener("change", renderAll);
   $("fStatus").addEventListener("change", renderAll);
-  $("fSearch").addEventListener("input", renderAll);
+  let searchTimer = null;
+  $("fSearch").addEventListener("input", () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(renderAll, 200);
+  });
   $("btnReset").addEventListener("click", () => {
     $("fZone").value = "";
     $("fCommodity").value = "";

@@ -849,6 +849,33 @@ def _startup_refresh() -> None:
         _trigger_background_refresh()
 
 
+# CDN cache for read-only API GETs: data changes a few times per day (cron + refresh).
+_CDN_CACHE_PATHS = {
+    "/api/vessels",
+    "/api/trucks",
+    "/api/terminals",
+    "/api/coverage",
+    "/api/destinations-ytd",
+    "/api/stocks-estimado",
+}
+API_CDN_CACHE = os.environ.get(
+    "API_CDN_CACHE", "public, max-age=0, s-maxage=300, stale-while-revalidate=3600"
+)
+
+
+@app.middleware("http")
+async def _api_cache_headers(request, call_next):
+    response = await call_next(request)
+    if (
+        request.method == "GET"
+        and request.url.path in _CDN_CACHE_PATHS
+        and not request.query_params.get("refresh")
+        and response.status_code == 200
+    ):
+        response.headers["Cache-Control"] = API_CDN_CACHE
+    return response
+
+
 @app.get("/api/health")
 def health():
     cached = _get_vessels_cache()

@@ -692,3 +692,7 @@ body { min-height: 100vh; }
 .stale-banner strong { font-weight: 650; }
 .stale-banner .stale-ico { flex: 0 0 auto; opacity: .9; }
 .stale-banner .stale-meta { color: var(--muted, #9aa8bc); font-size: .8rem; margin-top: .15rem; }
+
+/* perf: reserve space for late-arriving content to avoid layout shift (CLS) */
+.coverage-footnote { min-height: 2.1rem; }
+.stocks-panel .stocks-table-wrap { min-height: 15rem; }
