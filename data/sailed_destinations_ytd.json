@@ -1,12 +1,12 @@
 {
   "year": 2026,
   "from": "2026-01-02",
-  "through": "2026-10-22",
-  "updated_at": "2026-10-23T13:00:36.455105-03:00",
+  "through": "2026-10-23",
+  "updated_at": "2026-10-26T13:00:19.947831-03:00",
   "source": "sailed_rows_ledger.json (NABSA sailed xlsx archive + vessels_sailed_update.pdf + priors)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "unit": "t",
-  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-10-22). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
+  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-10-23). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
   "grains_only": true,
   "coverage_complete_ytd": false,
   "exports": [
@@ -19,8 +19,8 @@
     {
       "key": "china",
       "label": "China",
-      "tons": 7738401.99,
-      "count": 250
+      "tons": 7875893.37,
+      "count": 253
     },
     {
       "key": "saudi arabia",
@@ -121,8 +121,8 @@
     {
       "key": "italy",
       "label": "Italia",
-      "tons": 1163784.97,
-      "count": 65
+      "tons": 1200790.61,
+      "count": 66
     },
     {
       "key": "thailand",
@@ -169,8 +169,8 @@
     {
       "key": "venezuela",
       "label": "Venezuela",
-      "tons": 683073.26,
-      "count": 48
+      "tons": 700373.26,
+      "count": 50
     },
     {
       "key": "poland",
@@ -545,6 +545,12 @@
       "count": 1
     },
     {
+      "key": "slovenia",
+      "label": "Slovenia",
+      "tons": 7526.2,
+      "count": 1
+    },
+    {
       "key": "bolivia",
       "label": "Bolivia",
       "tons": 7199.98,
@@ -573,8 +579,8 @@
   "ar_count": 3,
   "unknown_tons": 1437894.52,
   "unknown_count": 56,
-  "ignored_non_grain_tn": 16912029.54,
-  "ignored_non_grain_count": 1102,
-  "total_export_tons": 89627579.94,
-  "rows": 4526
+  "ignored_non_grain_tn": 16945722.03,
+  "ignored_non_grain_count": 1110,
+  "total_export_tons": 89826903.16,
+  "rows": 4533
 }

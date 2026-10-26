@@ -1,63 +1,59 @@
 {
-  "updated_at": "2026-10-23T13:00:39.258996-03:00",
-  "date": "2026-10-22",
+  "updated_at": "2026-10-26T13:00:22.802713-03:00",
+  "date": "2026-10-23",
   "source": "magyp",
   "source_url": "https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/_archivos/000023_Posici%C3%B3n%20de%20Camiones%20y%20Vagones/000020_Entrada%20diaria%20de%20camiones%20y%20vagones%20a%20puertos,%20f%C3%A1bricas%20y%20molinos%20(por%20zona%20portuaria%20y%20por%20producto).php",
   "source_note": "Rosario y aledaños (MAGyP). Mix por producto prorrateado del total nacional del día.",
   "unit": "camiones",
-  "total_camiones": 4764,
+  "total_camiones": 4744,
   "total_tn": null,
   "by_product": [
     {
       "product": "trigo",
       "label": "Trigo",
-      "camiones": 839
+      "camiones": 821
     },
     {
       "product": "maiz",
       "label": "Maíz",
-      "camiones": 1854
+      "camiones": 1893
     },
     {
       "product": "sorgo",
       "label": "Sorgo",
-      "camiones": 57
+      "camiones": 56
     },
     {
       "product": "cebada",
       "label": "Cebada",
-      "camiones": 139
+      "camiones": 76
     },
     {
       "product": "soja",
       "label": "Soja",
-      "camiones": 1851
+      "camiones": 1863
     },
     {
       "product": "girasol",
       "label": "Girasol",
-      "camiones": 24
+      "camiones": 35
     }
   ],
   "by_zone": [
     {
       "zone": "Rosario y aledaños",
-      "camiones": 4764,
+      "camiones": 4744,
       "by_product": {
-        "trigo": 839,
-        "maiz": 1854,
-        "sorgo": 57,
-        "cebada": 139,
-        "soja": 1851,
-        "girasol": 24
+        "trigo": 821,
+        "maiz": 1893,
+        "sorgo": 56,
+        "cebada": 76,
+        "soja": 1863,
+        "girasol": 35
       }
     }
   ],
   "history_7d": [
-    {
-      "date": "2026-10-16",
-      "camiones": 4877
-    },
     {
       "date": "2026-10-17",
       "camiones": 0
@@ -81,29 +77,33 @@
     {
       "date": "2026-10-22",
       "camiones": 4764
+    },
+    {
+      "date": "2026-10-23",
+      "camiones": 4744
     }
   ],
-  "national_total": 6681,
+  "national_total": 6665,
   "raw": {
     "page_month": "2026-10",
-    "date_cell": "22-oct",
+    "date_cell": "23-oct",
     "zones": {
-      "rosario": 4764,
-      "darsena": 173,
-      "necochea": 536,
-      "bahia_blanca": 1208,
-      "zones_total": 6681
+      "rosario": 4744,
+      "darsena": 151,
+      "necochea": 542,
+      "bahia_blanca": 1228,
+      "zones_total": 6665
     },
     "national_products": {
-      "trigo": 1177,
-      "maiz": 2599,
-      "sorgo": 80,
-      "cebada": 195,
-      "soja": 2596,
-      "girasol": 34
+      "trigo": 1153,
+      "maiz": 2659,
+      "sorgo": 79,
+      "cebada": 107,
+      "soja": 2618,
+      "girasol": 49
     },
-    "vagones": 220,
-    "days_parsed": 22,
+    "vagones": 153,
+    "days_parsed": 23,
     "national_days": [
       {
         "date": "2026-10-01",
@@ -390,6 +390,19 @@
         },
         "national_total": 6681,
         "rosario": 4764
+      },
+      {
+        "date": "2026-10-23",
+        "products": {
+          "trigo": 1153,
+          "maiz": 2659,
+          "sorgo": 79,
+          "cebada": 107,
+          "soja": 2618,
+          "girasol": 49
+        },
+        "national_total": 6665,
+        "rosario": 4744
       }
     ]
   }

@@ -1,10 +1,10 @@
 {
   "year": 2026,
-  "updated_at": "2026-10-23T13:00:36.419452-03:00",
+  "updated_at": "2026-10-26T13:00:19.912130-03:00",
   "source": "NABSA sailedYYYYMMDD.xlsx (+ vessels_sailed_update.pdf / prior1–4)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "note": "Ledger acumulativo de filas SAILED NABSA. Histórico vía xlsx bajo /SAILED/sailedYYYYMMDD.xlsx; el PDF diario es rolling (~mes). Este JSON crece con cada refresh (dedupe) y alimenta sailed_destinations_ytd.json. No inventa meses faltantes.",
-  "row_count": 5628,
+  "row_count": 5643,
   "rows": {
     "2026-01-02|BOCHEM HOUSTON|SAN LORENZO|DEMPA SAN MARTIN|2080.00|SUN FLOWER OIL (HIGHOLEIC)|MEXICO": {
       "date": "2026-01-02",
@@ -59263,6 +59263,50 @@
       "origin": "ARGENTINA",
       "destination": "BRAZIL"
     },
+    "2026-10-10|MOUNT HIKURANGI|SAN LORENZO|T.F.A. SAN MARTIN|1749.91|MAP|ARGENTINA": {
+      "date": "2026-10-10",
+      "tons": 1749.91,
+      "cargo_raw": "MAP",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "T.F.A. SAN MARTIN",
+      "vessel": "MOUNT HIKURANGI",
+      "origin": "UNITED STATES",
+      "destination": "ARGENTINA"
+    },
+    "2026-10-10|MOUNT HIKURANGI|SAN LORENZO|T.F.A. SAN MARTIN|3300.00|MAP|ARGENTINA": {
+      "date": "2026-10-10",
+      "tons": 3300.0,
+      "cargo_raw": "MAP",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "T.F.A. SAN MARTIN",
+      "vessel": "MOUNT HIKURANGI",
+      "origin": "UNITED STATES",
+      "destination": "ARGENTINA"
+    },
+    "2026-10-10|MOUNT HIKURANGI|SAN LORENZO|T.F.A. SAN MARTIN|5893.17|MESZ|ARGENTINA": {
+      "date": "2026-10-10",
+      "tons": 5893.17,
+      "cargo_raw": "MESZ",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "T.F.A. SAN MARTIN",
+      "vessel": "MOUNT HIKURANGI",
+      "origin": "UNITED STATES",
+      "destination": "ARGENTINA"
+    },
+    "2026-10-10|MOUNT HIKURANGI|SAN LORENZO|T.F.A. SAN MARTIN|8400.00|MESZ|ARGENTINA": {
+      "date": "2026-10-10",
+      "tons": 8400.0,
+      "cargo_raw": "MESZ",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "T.F.A. SAN MARTIN",
+      "vessel": "MOUNT HIKURANGI",
+      "origin": "UNITED STATES",
+      "destination": "ARGENTINA"
+    },
     "2026-10-10|OCEAN VENUS|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|23572.00|SOYA BEAN|CHINA": {
       "date": "2026-10-10",
       "tons": 23572.0,
@@ -61474,6 +61518,28 @@
       "origin": "ARGENTINA",
       "destination": "INDONESIA"
     },
+    "2026-10-20|ASP LILY|SAN LORENZO|T.F.A. SAN MARTIN|2200.00|SULPHURIC ACID|ARGENTINA": {
+      "date": "2026-10-20",
+      "tons": 2200.0,
+      "cargo_raw": "SULPHURIC ACID",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "T.F.A. SAN MARTIN",
+      "vessel": "ASP LILY",
+      "origin": "SPAIN",
+      "destination": "ARGENTINA"
+    },
+    "2026-10-20|ASP LILY|SAN LORENZO|T.F.A. SAN MARTIN|5749.41|SULPHURIC ACID|ARGENTINA": {
+      "date": "2026-10-20",
+      "tons": 5749.41,
+      "cargo_raw": "SULPHURIC ACID",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "T.F.A. SAN MARTIN",
+      "vessel": "ASP LILY",
+      "origin": "SPAIN",
+      "destination": "ARGENTINA"
+    },
     "2026-10-20|AURORA|ROSARIO|ADM AGRO ARROYO SECO (EX TOEPFER)|43785.00|SOYA BEAN|CHINA": {
       "date": "2026-10-20",
       "tons": 43785.0,
@@ -61539,6 +61605,17 @@
       "vessel": "GUO HAI LIAN 568",
       "origin": "ARGENTINA",
       "destination": "VIETNAM"
+    },
+    "2026-10-20|HAFNIA VALENTINO|SAN LORENZO|SAN BENITO SAN LORENZO|3900.00|BIODIESEL|NETHERLANDS": {
+      "date": "2026-10-20",
+      "tons": 3900.0,
+      "cargo_raw": "BIODIESEL",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "SAN BENITO SAN LORENZO",
+      "vessel": "HAFNIA VALENTINO",
+      "origin": "ARGENTINA",
+      "destination": "NETHERLANDS"
     },
     "2026-10-20|IRVINE BAY|SAN LORENZO|RENOVA SOUTH|31412.26|SOYBEANMEAL|INDONESIA": {
       "date": "2026-10-20",
@@ -61627,6 +61704,17 @@
       "vessel": "STAR HAMBURG",
       "origin": "ARGENTINA",
       "destination": "BANGLADESH"
+    },
+    "2026-10-20|SUNBIRD|SAN LORENZO|COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)|2000.00|SUN FLOWER OIL|VENEZUELA": {
+      "date": "2026-10-20",
+      "tons": 2000.0,
+      "cargo_raw": "SUN FLOWER OIL",
+      "commodity": "girasol",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)",
+      "vessel": "SUNBIRD",
+      "origin": "ARGENTINA",
+      "destination": "VENEZUELA"
     },
     "2026-10-20|TSUKUBA GALAXY|ROSARIO|CARGILL VGG VILLA GOBERNADOR GALVEZ|3060.00|SOYBEAN OIL|MOZAMBIQUE": {
       "date": "2026-10-20",
@@ -61848,6 +61936,39 @@
       "origin": "ARGENTINA",
       "destination": "INDONESIA"
     },
+    "2026-10-22|DIAMOND TRADER|ROSARIO|CARGILL VGG VILLA GOBERNADOR GALVEZ|37005.64|SOYBEANMEAL|ITALY": {
+      "date": "2026-10-22",
+      "tons": 37005.64,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "ROSARIO",
+      "terminal": "CARGILL VGG VILLA GOBERNADOR GALVEZ",
+      "vessel": "DIAMOND TRADER",
+      "origin": "ARGENTINA",
+      "destination": "ITALY"
+    },
+    "2026-10-22|DIAMOND TRADER|ROSARIO|CARGILL VGG VILLA GOBERNADOR GALVEZ|7526.20|SOYBEANMEAL|SLOVENIA": {
+      "date": "2026-10-22",
+      "tons": 7526.2,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "ROSARIO",
+      "terminal": "CARGILL VGG VILLA GOBERNADOR GALVEZ",
+      "vessel": "DIAMOND TRADER",
+      "origin": "ARGENTINA",
+      "destination": "SLOVENIA"
+    },
+    "2026-10-22|DORIC ARMOUR|BAHIA BLANCA|CARGILL TERMINAL PUERTO INGENIERO WHITE|39557.38|SOYA BEAN|CHINA": {
+      "date": "2026-10-22",
+      "tons": 39557.38,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "BAHIA BLANCA",
+      "terminal": "CARGILL TERMINAL PUERTO INGENIERO WHITE",
+      "vessel": "DORIC ARMOUR",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
+    },
     "2026-10-22|ORCINUS|LIMA|DELTA DOCK LIMA|32000.00|CORN|PERU": {
       "date": "2026-10-22",
       "tons": 32000.0,
@@ -61881,6 +62002,17 @@
       "origin": "ARGENTINA",
       "destination": "IVORY COAST (COTE D`IVOIRE)"
     },
+    "2026-10-22|SUNBIRD|SAN LORENZO|ARAUCO ARGENTINA SAN MARTIN|15300.00|SOYBEAN OIL|VENEZUELA": {
+      "date": "2026-10-22",
+      "tons": 15300.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "ARAUCO ARGENTINA SAN MARTIN",
+      "vessel": "SUNBIRD",
+      "origin": "ARGENTINA",
+      "destination": "VENEZUELA"
+    },
     "2026-10-22|YELLOWBILL|SAN LORENZO|QUEBRACHO SAN MARTIN|24856.97|CORN|PERU": {
       "date": "2026-10-22",
       "tons": 24856.97,
@@ -61913,6 +62045,39 @@
       "vessel": "YELLOWBILL",
       "origin": "ARGENTINA",
       "destination": "PERU"
+    },
+    "2026-10-22|YM PIONEER|BAHIA BLANCA|ADM AGRO (EX TOEPFER BAHIA BLANCA)|28660.00|SOYA BEAN|CHINA": {
+      "date": "2026-10-22",
+      "tons": 28660.0,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "BAHIA BLANCA",
+      "terminal": "ADM AGRO (EX TOEPFER BAHIA BLANCA)",
+      "vessel": "YM PIONEER",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
+    },
+    "2026-10-23|DUCHESS ROSARIO|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|69274.00|SOYA BEAN|CHINA": {
+      "date": "2026-10-23",
+      "tons": 69274.0,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "BAHIA BLANCA",
+      "terminal": "LDC GRAIN TERMINAL PUERTO GALVAN",
+      "vessel": "DUCHESS ROSARIO",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
+    },
+    "2026-10-23|HAFNIA VALENTINO|SAN LORENZO|MINERA ALUMBRERA SAN MARTIN|2500.00|OLEIN|SPAIN": {
+      "date": "2026-10-23",
+      "tons": 2500.0,
+      "cargo_raw": "OLEIN",
+      "commodity": "otro",
+      "port": "SAN LORENZO",
+      "terminal": "MINERA ALUMBRERA SAN MARTIN",
+      "vessel": "HAFNIA VALENTINO",
+      "origin": "ARGENTINA",
+      "destination": "SPAIN"
     }
   }
 }
