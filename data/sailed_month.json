@@ -1,13 +1,13 @@
 {
   "month": "2026-10",
-  "updated_at": "2026-10-26T13:00:19.932911-03:00",
+  "updated_at": "2026-10-27T13:03:03.428718-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 2754439.26,
-    "soja": 3427440.84,
-    "trigo": 557627.15,
-    "girasol": 190412.45,
+    "maiz": 3021135.45,
+    "soja": 3597645.27,
+    "trigo": 646747.6,
+    "girasol": 194412.45,
     "sorgo": 77484.01,
     "cebada": 10400.0
   },
@@ -181,24 +181,48 @@
       "cebada": 0.0
     },
     "2026-10-22": {
-      "maiz": 69560.97,
-      "soja": 161034.37,
+      "maiz": 113666.86,
+      "soja": 166034.37,
       "trigo": 11903.0,
-      "girasol": 0.0,
+      "girasol": 4000.0,
       "sorgo": 0.0,
       "cebada": 0.0
     },
     "2026-10-23": {
-      "maiz": 0.0,
-      "soja": 69274.0,
+      "maiz": 12598.0,
+      "soja": 119274.0,
+      "trigo": 22134.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-10-24": {
+      "maiz": 43101.35,
+      "soja": 42706.0,
+      "trigo": 34007.62,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-10-25": {
+      "maiz": 16500.0,
+      "soja": 48698.43,
+      "trigo": 32978.83,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-10-26": {
+      "maiz": 150390.95,
+      "soja": 23800.0,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     }
   },
-  "rows_in_month": 424,
-  "ignored_otro_tn": 1786452.99,
+  "rows_in_month": 456,
+  "ignored_otro_tn": 2179096.69,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos.",
   "history": {
@@ -225,7 +249,7 @@
         "cebada": 268347.74
       },
       "rows_in_month": 723,
-      "updated_at": "2026-10-26T13:00:19.933745-03:00",
+      "updated_at": "2026-10-27T13:03:03.430279-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
