@@ -1,15 +1,15 @@
 {
   "month": "2026-10",
-  "updated_at": "2026-10-29T13:02:45.173470-03:00",
+  "updated_at": "2026-10-30T12:53:59.029698-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 3490308.18,
-    "soja": 3965282.27,
+    "maiz": 3533700.64,
+    "soja": 4085514.34,
     "trigo": 814768.57,
-    "girasol": 201011.53,
+    "girasol": 220961.51,
     "sorgo": 77484.01,
-    "cebada": 10400.0
+    "cebada": 31369.0
   },
   "by_day": {
     "2026-10-01": {
@@ -190,15 +190,15 @@
     },
     "2026-10-23": {
       "maiz": 48798.0,
-      "soja": 119274.0,
+      "soja": 127673.98,
       "trigo": 22134.0,
-      "girasol": 0.0,
+      "girasol": 19949.98,
       "sorgo": 0.0,
       "cebada": 0.0
     },
     "2026-10-24": {
       "maiz": 174877.48,
-      "soja": 88252.74,
+      "soja": 92355.3,
       "trigo": 44277.95,
       "girasol": 0.0,
       "sorgo": 0.0,
@@ -214,15 +214,15 @@
     },
     "2026-10-26": {
       "maiz": 184570.95,
-      "soja": 86690.44,
+      "soja": 114411.97,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     },
     "2026-10-27": {
-      "maiz": 17880.0,
-      "soja": 39044.76,
+      "maiz": 53872.46,
+      "soja": 72002.76,
       "trigo": 45459.88,
       "girasol": 0.0,
       "sorgo": 0.0,
@@ -230,15 +230,23 @@
     },
     "2026-10-28": {
       "maiz": 34000.0,
-      "soja": 0.0,
+      "soja": 15275.0,
       "trigo": 57892.22,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
+    },
+    "2026-10-29": {
+      "maiz": 7400.0,
+      "soja": 31775.0,
+      "trigo": 0.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 20969.0
     }
   },
-  "rows_in_month": 504,
-  "ignored_otro_tn": 2414010.09,
+  "rows_in_month": 542,
+  "ignored_otro_tn": 2748054.05,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos.",
   "history": {
@@ -265,7 +273,7 @@
         "cebada": 268347.74
       },
       "rows_in_month": 723,
-      "updated_at": "2026-10-29T13:02:45.174356-03:00",
+      "updated_at": "2026-10-30T12:53:59.030743-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
