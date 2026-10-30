@@ -947,7 +947,7 @@ def trucks():
 
 @app.api_route("/api/trucks/refresh", methods=["GET", "POST"])
 def trucks_refresh():
-    """Force MAGyP trucks scrape into writable data dir."""
+    """Force trucks refresh (Williams primary, MAGyP fallback) into writable data dir."""
     from refresh_data import ensure_trucks  # type: ignore
 
     data_dir = _ensure_writable_data()
@@ -958,7 +958,7 @@ def trucks_refresh():
             timeout=min(REFRESH_TIMEOUT_SEC, 45),
         )
         return {
-            "ok": payload.get("source") == "magyp",
+            "ok": payload.get("source") in ("magyp", "williams"),
             "source": payload.get("source"),
             "date": payload.get("date"),
             "total_camiones": payload.get("total_camiones"),

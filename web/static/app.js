@@ -984,6 +984,8 @@
     const sampleCaveat =
       trucksPayload?.source === "magyp"
         ? " Camiones: MAGyP en vivo (" + (trucksPayload.date || "") + ")."
+        : trucksPayload?.source === "williams"
+          ? " Camiones: Williams Agroservicios (" + (trucksPayload.date || "") + ")."
         : trucksPayload?.source === "sample"
           ? " Camiones: datos muestra (no MAGyP en vivo)."
           : "";
@@ -1043,7 +1045,7 @@
     const truckLag = daysBetweenYmd(parseYmd(truckDate), today);
     if (truckDate && truckLag != null && truckLag > 2) {
       items.push({
-        source: "MAGyP (camiones)",
+        source: trucksPayload?.source === "williams" ? "Williams (camiones)" : "MAGyP (camiones)",
         last: truckDate,
         lag: truckLag,
       });
@@ -1093,6 +1095,8 @@
       if (hint) {
         if (trucksPayload.source === "magyp") {
           hint.textContent = "MAGyP · Rosario" + (trucksPayload.date ? " · " + trucksPayload.date : "");
+        } else if (trucksPayload.source === "williams") {
+          hint.textContent = "Williams · Rosario" + (trucksPayload.date ? " · " + trucksPayload.date : "");
         } else if (trucksPayload.source === "sample") {
           hint.textContent = "Gran Rosario (muestra)";
         } else {
@@ -1166,6 +1170,10 @@
         "Fuente: MAGyP · Rosario y aledaños · " +
         (t.date || "") +
         (t.source_note ? " — " + t.source_note : "");
+    } else if (t.source === "williams") {
+      note =
+        "Fuente: Williams Agroservicios · Rosario y aledaños · " + (t.date || "") +
+        " (MAGyP como respaldo)";
     } else if (t.source === "sample") {
       note = "Camiones: muestra realista local (MAGyP scrape no disponible).";
     } else {
