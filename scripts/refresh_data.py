@@ -1671,7 +1671,34 @@ def seed_trucks() -> dict[str, Any]:
     }
 
 
-def try_fetch_trucks(*, timeout: int = 45) -> dict[str, Any] | None:
+def try_fetch_trucks(*, timeout: int = 45, williams_fetch=None) -> dict[str, Any] | None:
+    """Williams .xls primary (MAGyP fills gaps); MAGyP-only fallback. None on failure."""
+    from williams_trucks import build_trucks_payload, fetch_williams_days, http_fetch
+
+    magyp = try_fetch_trucks_magyp(timeout=timeout)
+    try:
+        wdays = fetch_williams_days(
+            ar_tz_now().date(),
+            fetch=williams_fetch or http_fetch,
+            timeout=min(timeout, 20),
+        )
+        if wdays:
+            payload = build_trucks_payload(wdays, magyp, now_iso=ar_tz_now().isoformat())
+            if magyp and magyp.get("date", "") > payload["date"]:
+                print("WARN MAGyP newer than Williams — using MAGyP", file=sys.stderr)
+                return magyp
+            print(
+                f"OK Williams trucks date={payload['date']} rosario={payload['total_camiones']} "
+                f"national={payload['national_total']} days={payload['raw']['williams_days']}"
+            )
+            return payload
+        print("FAIL Williams trucks: sin informes — fallback MAGyP", file=sys.stderr)
+    except Exception as ex:
+        print(f"FAIL Williams trucks: {ex} — fallback MAGyP", file=sys.stderr)
+    return magyp
+
+
+def try_fetch_trucks_magyp(*, timeout: int = 45) -> dict[str, Any] | None:
     """Fetch+parse MAGyP daily trucks table. Returns None on failure (keep previous)."""
     import urllib.error
     import urllib.request
@@ -1868,7 +1895,7 @@ def update_truck_inflow_ledger(
     Uses raw.national_days (full month table) when present; else raw.national_products
     for trucks.date. Rolls the ledger when the calendar month changes.
     """
-    if not trucks or trucks.get("source") not in {"magyp", "sample"}:
+    if not trucks or trucks.get("source") not in {"magyp", "williams", "sample"}:
         # Still accept magyp-shaped payloads even if source missing.
         raw = trucks.get("raw") if trucks else None
         if not isinstance(raw, dict) or not (
@@ -2156,7 +2183,7 @@ def ensure_trucks(
                 (data_dir / "sample-trucks.json").write_text(blob, encoding="utf-8")
             except OSError as ex:
                 print(f"WARN could not write sample-trucks.json: {ex}", file=sys.stderr)
-        print(f"Wrote {trucks_path} (source=magyp date={live_trucks.get('date')})")
+        print(f"Wrote {trucks_path} (source={live_trucks.get('source')} date={live_trucks.get('date')})")
         try:
             update_truck_inflow_ledger(data_dir, live_trucks)
         except Exception as lex:

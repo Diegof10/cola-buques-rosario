@@ -13,7 +13,7 @@
     },
     {
       "path": "/api/trucks/refresh",
-      "schedule": "20 10 * * 1-5"
+      "schedule": "15 13 * * 1-5"
     }
   ]
 }
