@@ -1,32 +1,32 @@
 {
   "year": 2026,
   "from": "2026-01-02",
-  "through": "2026-10-29",
-  "updated_at": "2026-10-30T12:53:59.055857-03:00",
+  "through": "2026-10-30",
+  "updated_at": "2026-11-02T12:55:38.920091-03:00",
   "source": "sailed_rows_ledger.json (NABSA sailed xlsx archive + vessels_sailed_update.pdf + priors)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "unit": "t",
-  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-10-29). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
+  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-10-30). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
   "grains_only": true,
   "coverage_complete_ytd": false,
   "exports": [
     {
       "key": "vietnam",
       "label": "Vietnam",
-      "tons": 11756135.28,
-      "count": 397
+      "tons": 11830811.36,
+      "count": 401
     },
     {
       "key": "china",
       "label": "China",
-      "tons": 8016774.37,
-      "count": 257
+      "tons": 8196848.37,
+      "count": 261
     },
     {
       "key": "peru",
       "label": "Perú",
-      "tons": 5253346.49,
-      "count": 274
+      "tons": 5309193.33,
+      "count": 277
     },
     {
       "key": "saudi arabia",
@@ -43,14 +43,14 @@
     {
       "key": "malaysia",
       "label": "Malasia",
-      "tons": 3815722.69,
-      "count": 165
+      "tons": 3955982.87,
+      "count": 170
     },
     {
       "key": "india",
       "label": "India",
-      "tons": 3768677.28,
-      "count": 422
+      "tons": 3783377.28,
+      "count": 423
     },
     {
       "key": "brazil",
@@ -67,8 +67,8 @@
     {
       "key": "algeria",
       "label": "Argelia",
-      "tons": 3180553.07,
-      "count": 103
+      "tons": 3221801.88,
+      "count": 104
     },
     {
       "key": "morocco",
@@ -103,8 +103,8 @@
     {
       "key": "philippines",
       "label": "Filipinas",
-      "tons": 1854898.01,
-      "count": 62
+      "tons": 1877060.01,
+      "count": 63
     },
     {
       "key": "bangladesh",
@@ -151,8 +151,8 @@
     {
       "key": "jordan",
       "label": "Jordan",
-      "tons": 920990.67,
-      "count": 37
+      "tons": 963827.15,
+      "count": 38
     },
     {
       "key": "iraq",
@@ -169,8 +169,8 @@
     {
       "key": "united arab emir",
       "label": "Emiratos Árabes",
-      "tons": 710055.13,
-      "count": 35
+      "tons": 721955.13,
+      "count": 36
     },
     {
       "key": "venezuela",
@@ -269,6 +269,12 @@
       "count": 13
     },
     {
+      "key": "puerto rico",
+      "label": "Puerto Rico",
+      "tons": 310606.39,
+      "count": 32
+    },
+    {
       "key": "dominican repub",
       "label": "Rep. Dominicana",
       "tons": 303480.28,
@@ -279,12 +285,6 @@
       "label": "Libia",
       "tons": 297477.16,
       "count": 18
-    },
-    {
-      "key": "puerto rico",
-      "label": "Puerto Rico",
-      "tons": 263046.08,
-      "count": 28
     },
     {
       "key": "denmark",
@@ -395,6 +395,12 @@
       "count": 3
     },
     {
+      "key": "singapore",
+      "label": "Singapur",
+      "tons": 91032.99,
+      "count": 3
+    },
+    {
       "key": "cameroon",
       "label": "Camerún",
       "tons": 89377.98,
@@ -449,12 +455,6 @@
       "count": 2
     },
     {
-      "key": "singapore",
-      "label": "Singapur",
-      "tons": 56939.99,
-      "count": 2
-    },
-    {
       "key": "uruguay",
       "label": "Uruguay",
       "tons": 55000.0,
@@ -475,8 +475,8 @@
     {
       "key": "pakistan",
       "label": "Pakistan",
-      "tons": 40000.0,
-      "count": 5
+      "tons": 43920.0,
+      "count": 6
     },
     {
       "key": "brunei",
@@ -579,8 +579,8 @@
   "ar_count": 3,
   "unknown_tons": 1460189.52,
   "unknown_count": 57,
-  "ignored_non_grain_tn": 18450136.49,
-  "ignored_non_grain_count": 1154,
-  "total_export_tons": 91699245.61,
-  "rows": 4621
+  "ignored_non_grain_tn": 18485476.49,
+  "ignored_non_grain_count": 1156,
+  "total_export_tons": 92368523.31,
+  "rows": 4648
 }
