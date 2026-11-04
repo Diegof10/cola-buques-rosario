@@ -1,268 +1,44 @@
 {
-  "month": "2026-10",
-  "updated_at": "2026-11-03T13:01:34.532176-03:00",
+  "month": "2026-11",
+  "updated_at": "2026-11-04T11:50:58.756035-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 4048857.28,
-    "soja": 4567508.08,
-    "trigo": 921707.79,
-    "girasol": 239581.51,
-    "sorgo": 111577.01,
-    "cebada": 31369.0
+    "maiz": 240643.08,
+    "soja": 332629.74,
+    "trigo": 3076.0,
+    "girasol": 0.0,
+    "sorgo": 0.0,
+    "cebada": 10000.0
   },
   "by_day": {
-    "2026-10-01": {
-      "maiz": 149237.21,
-      "soja": 99243.98,
-      "trigo": 12000.0,
-      "girasol": 5000.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-02": {
-      "maiz": 199097.56,
-      "soja": 250758.8,
-      "trigo": 76031.0,
-      "girasol": 8797.75,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-03": {
-      "maiz": 132688.79,
-      "soja": 93327.96,
-      "trigo": 0.0,
-      "girasol": 5499.98,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-04": {
-      "maiz": 169665.36,
-      "soja": 109987.67,
-      "trigo": 42392.42,
-      "girasol": 3000.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-05": {
-      "maiz": 84592.15,
-      "soja": 133412.21,
-      "trigo": 31840.0,
-      "girasol": 31599.05,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-06": {
-      "maiz": 174372.7,
-      "soja": 168416.58,
-      "trigo": 0.0,
-      "girasol": 52217.0,
-      "sorgo": 25200.17,
-      "cebada": 0.0
-    },
-    "2026-10-07": {
-      "maiz": 232871.32,
-      "soja": 176414.53,
-      "trigo": 0.0,
-      "girasol": 0.0,
-      "sorgo": 10000.0,
-      "cebada": 0.0
-    },
-    "2026-10-08": {
-      "maiz": 35000.0,
-      "soja": 148342.92,
-      "trigo": 27175.2,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-09": {
-      "maiz": 139478.63,
-      "soja": 150071.78,
+    "2026-11-01": {
+      "maiz": 89110.63,
+      "soja": 174339.5,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     },
-    "2026-10-10": {
-      "maiz": 137698.78,
-      "soja": 95916.26,
-      "trigo": 32995.31,
-      "girasol": 4500.0,
+    "2026-11-02": {
+      "maiz": 69646.15,
+      "soja": 109939.24,
+      "trigo": 3076.0,
+      "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     },
-    "2026-10-11": {
-      "maiz": 98209.67,
-      "soja": 161601.17,
-      "trigo": 73408.89,
-      "girasol": 16499.5,
-      "sorgo": 7083.84,
-      "cebada": 0.0
-    },
-    "2026-10-12": {
-      "maiz": 90828.17,
-      "soja": 368378.63,
+    "2026-11-03": {
+      "maiz": 81886.3,
+      "soja": 48351.0,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-13": {
-      "maiz": 66608.04,
-      "soja": 100605.48,
-      "trigo": 100310.58,
-      "girasol": 16990.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-14": {
-      "maiz": 232746.92,
-      "soja": 193642.86,
-      "trigo": 24163.0,
-      "girasol": 4500.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-15": {
-      "maiz": 162648.08,
-      "soja": 194831.31,
-      "trigo": 17596.54,
-      "girasol": 18620.0,
-      "sorgo": 35200.0,
-      "cebada": 0.0
-    },
-    "2026-10-16": {
-      "maiz": 148297.63,
-      "soja": 166464.08,
-      "trigo": 0.0,
-      "girasol": 25809.17,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-17": {
-      "maiz": 25296.0,
-      "soja": 239283.23,
-      "trigo": 48793.0,
-      "girasol": 6000.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-18": {
-      "maiz": 140094.16,
-      "soja": 106264.48,
-      "trigo": 81159.78,
-      "girasol": 8000.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-19": {
-      "maiz": 130087.89,
-      "soja": 199073.61,
-      "trigo": 0.0,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 10400.0
-    },
-    "2026-10-20": {
-      "maiz": 234110.32,
-      "soja": 201577.74,
-      "trigo": 0.0,
-      "girasol": 2000.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-21": {
-      "maiz": 149627.51,
-      "soja": 77157.38,
-      "trigo": 32256.97,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-22": {
-      "maiz": 113666.86,
-      "soja": 229737.65,
-      "trigo": 11903.0,
-      "girasol": 4000.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-23": {
-      "maiz": 48798.0,
-      "soja": 127673.98,
-      "trigo": 22134.0,
-      "girasol": 19949.98,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-24": {
-      "maiz": 174877.48,
-      "soja": 108821.58,
-      "trigo": 44277.95,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-25": {
-      "maiz": 38795.0,
-      "soja": 158597.85,
-      "trigo": 32978.83,
-      "girasol": 6599.08,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-26": {
-      "maiz": 199467.5,
-      "soja": 131241.5,
-      "trigo": 0.0,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-27": {
-      "maiz": 153649.3,
-      "soja": 72002.76,
-      "trigo": 70754.3,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-28": {
-      "maiz": 71078.39,
-      "soja": 110569.8,
-      "trigo": 82700.32,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
-    },
-    "2026-10-29": {
-      "maiz": 81113.84,
-      "soja": 51571.5,
-      "trigo": 0.0,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 20969.0
-    },
-    "2026-10-30": {
-      "maiz": 132776.02,
-      "soja": 29727.08,
-      "trigo": 32996.7,
-      "girasol": 0.0,
-      "sorgo": 34093.0,
-      "cebada": 0.0
-    },
-    "2026-10-31": {
-      "maiz": 101378.0,
-      "soja": 112791.72,
-      "trigo": 23840.0,
-      "girasol": 0.0,
-      "sorgo": 0.0,
-      "cebada": 0.0
+      "cebada": 10000.0
     }
   },
-  "rows_in_month": 595,
-  "ignored_otro_tn": 2820414.05,
+  "rows_in_month": 27,
+  "ignored_otro_tn": 85100.0,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos.",
   "history": {
@@ -290,6 +66,19 @@
       },
       "rows_in_month": 723,
       "updated_at": "2026-11-03T13:01:34.533009-03:00",
+      "source": "sailed_rows_ledger.json"
+    },
+    "2026-10": {
+      "products": {
+        "maiz": 4389464.64,
+        "soja": 4780665.45,
+        "trigo": 1015688.21,
+        "girasol": 247581.01,
+        "sorgo": 111577.01,
+        "cebada": 31369.0
+      },
+      "rows_in_month": 650,
+      "updated_at": "2026-11-04T11:50:58.758498-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
