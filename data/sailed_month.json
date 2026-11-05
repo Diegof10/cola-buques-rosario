@@ -1,6 +1,6 @@
 {
   "month": "2026-11",
-  "updated_at": "2026-11-04T19:18:42.773170-03:00",
+  "updated_at": "2026-11-05T07:59:45.670463-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
@@ -86,7 +86,7 @@
         "cebada": 31369.0
       },
       "rows_in_month": 650,
-      "updated_at": "2026-11-04T19:18:42.773900-03:00",
+      "updated_at": "2026-11-05T07:59:45.671396-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
