@@ -1,26 +1,26 @@
 {
   "year": 2026,
   "from": "2026-01-02",
-  "through": "2026-11-05",
-  "updated_at": "2026-11-06T13:02:01.844747-03:00",
+  "through": "2026-11-06",
+  "updated_at": "2026-11-07T12:08:05.144113-03:00",
   "source": "sailed_rows_ledger.json (NABSA sailed xlsx archive + vessels_sailed_update.pdf + priors)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "unit": "t",
-  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-11-05). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
+  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-11-06). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
   "grains_only": true,
   "coverage_complete_ytd": false,
   "exports": [
     {
       "key": "vietnam",
       "label": "Vietnam",
-      "tons": 12167455.75,
-      "count": 411
+      "tons": 12188455.75,
+      "count": 412
     },
     {
       "key": "china",
       "label": "China",
-      "tons": 8379699.73,
-      "count": 266
+      "tons": 8426699.73,
+      "count": 267
     },
     {
       "key": "peru",
@@ -37,14 +37,14 @@
     {
       "key": "indonesia",
       "label": "Indonesia",
-      "tons": 4625767.23,
-      "count": 166
+      "tons": 4657785.23,
+      "count": 167
     },
     {
       "key": "malaysia",
       "label": "Malasia",
-      "tons": 4002080.95,
-      "count": 172
+      "tons": 4046717.95,
+      "count": 174
     },
     {
       "key": "india",
@@ -55,14 +55,14 @@
     {
       "key": "brazil",
       "label": "Brasil",
-      "tons": 3797200.87,
-      "count": 157
+      "tons": 3838980.87,
+      "count": 159
     },
     {
       "key": "chile",
       "label": "Chile",
-      "tons": 3318050.08,
-      "count": 181
+      "tons": 3360153.35,
+      "count": 183
     },
     {
       "key": "algeria",
@@ -97,8 +97,8 @@
     {
       "key": "korea",
       "label": "Corea",
-      "tons": 2067292.39,
-      "count": 63
+      "tons": 2109205.62,
+      "count": 64
     },
     {
       "key": "philippines",
@@ -115,8 +115,8 @@
     {
       "key": "ireland",
       "label": "Irlanda",
-      "tons": 1322728.72,
-      "count": 132
+      "tons": 1336325.71,
+      "count": 133
     },
     {
       "key": "italy",
@@ -127,8 +127,8 @@
     {
       "key": "spain",
       "label": "España",
-      "tons": 1166469.31,
-      "count": 74
+      "tons": 1217118.57,
+      "count": 75
     },
     {
       "key": "thailand",
@@ -579,8 +579,8 @@
   "ar_count": 3,
   "unknown_tons": 1507204.52,
   "unknown_count": 59,
-  "ignored_non_grain_tn": 19012596.49,
-  "ignored_non_grain_count": 1173,
-  "total_export_tons": 94339911.23,
-  "rows": 4738
+  "ignored_non_grain_tn": 19277661.49,
+  "ignored_non_grain_count": 1179,
+  "total_export_tons": 94674608.98,
+  "rows": 4750
 }

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T13:02:06.854762-03:00",
+  "updated_at": "2026-11-07T12:08:10.114392-03:00",
   "date": "2026-11-06",
   "source": "williams",
   "source_url": "https://www1.williamsagroservicios.com.ar/files/camiones/2026-11-06.xls",
@@ -137,11 +137,10 @@
       "soja": 1890,
       "girasol": 39
     },
-    "vagones": null,
-    "vagones_source": null,
-    "days_parsed": 36,
+    "vagones": 385,
+    "vagones_source": "magyp",
+    "days_parsed": 8,
     "williams_days": [
-      "2026-10-27",
       "2026-10-28",
       "2026-10-29",
       "2026-10-30",
