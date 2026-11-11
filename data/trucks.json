@@ -1,64 +1,60 @@
 {
-  "updated_at": "2026-11-10T12:53:28.991328-03:00",
-  "date": "2026-11-10",
+  "updated_at": "2026-11-11T12:54:06.876644-03:00",
+  "date": "2026-11-11",
   "source": "williams",
-  "source_url": "https://www1.williamsagroservicios.com.ar/files/camiones/2026-11-10.xls",
+  "source_url": "https://www1.williamsagroservicios.com.ar/files/camiones/2026-11-11.xls",
   "source_note": "Rosario y aledaños, por producto real del informe. Fuente: Williams Agroservicios.",
   "source_label": "Fuente: Williams Agroservicios",
   "unit": "camiones",
-  "total_camiones": 3070,
+  "total_camiones": 3827,
   "total_tn": null,
   "by_product": [
     {
       "product": "trigo",
       "label": "Trigo",
-      "camiones": 1379
+      "camiones": 1474
     },
     {
       "product": "maiz",
       "label": "Maíz",
-      "camiones": 815
+      "camiones": 1139
     },
     {
       "product": "sorgo",
       "label": "Sorgo",
-      "camiones": 1
+      "camiones": 0
     },
     {
       "product": "cebada",
       "label": "Cebada",
-      "camiones": 2
+      "camiones": 19
     },
     {
       "product": "soja",
       "label": "Soja",
-      "camiones": 872
+      "camiones": 1188
     },
     {
       "product": "girasol",
       "label": "Girasol",
-      "camiones": 1
+      "camiones": 7
     }
   ],
   "by_zone": [
     {
       "zone": "Rosario y aledaños",
-      "camiones": 3070,
+      "camiones": 3827,
       "by_product": {
-        "trigo": 1379,
-        "maiz": 815,
-        "sorgo": 1,
-        "cebada": 2,
-        "soja": 872,
-        "girasol": 1
+        "trigo": 1474,
+        "maiz": 1139,
+        "sorgo": 0,
+        "cebada": 19,
+        "soja": 1188,
+        "girasol": 7
       }
     }
   ],
   "history_7d": [
-    {
-      "date": "2026-11-04",
-      "camiones": 3021
-    },
     {
       "date": "2026-11-05",
       "camiones": 3585
@@ -82,71 +78,76 @@
     {
       "date": "2026-11-10",
       "camiones": 3070
+    },
+    {
+      "date": "2026-11-11",
+      "camiones": 3827
     }
   ],
-  "national_total": 4263,
+  "national_total": 4850,
   "raw": {
     "page_month": "2026-11",
-    "date_cell": "2026-11-10",
+    "date_cell": "2026-11-11",
     "zones": {
-      "rosario": 3070,
-      "darsena": 79,
-      "necochea": 331,
-      "bahia_blanca": 783,
-      "zones_total": 4263
+      "rosario": 3827,
+      "darsena": 20,
+      "necochea": 9,
+      "bahia_blanca": 994,
+      "zones_total": 4850
     },
     "zones_by_product": {
       "rosario": {
-        "trigo": 1379,
-        "maiz": 815,
-        "sorgo": 1,
-        "cebada": 2,
-        "soja": 872,
-        "girasol": 1
+        "trigo": 1474,
+        "maiz": 1139,
+        "sorgo": 0,
+        "cebada": 19,
+        "soja": 1188,
+        "girasol": 7
       },
       "darsena": {
-        "trigo": 25,
-        "maiz": 49,
+        "trigo": 13,
+        "maiz": 0,
         "sorgo": 0,
         "cebada": 0,
-        "soja": 5,
+        "soja": 7,
         "girasol": 0
       },
       "necochea": {
-        "trigo": 69,
-        "maiz": 171,
+        "trigo": 0,
+        "maiz": 0,
         "sorgo": 0,
-        "cebada": 2,
-        "soja": 80,
+        "cebada": 0,
+        "soja": 0,
         "girasol": 9
       },
       "bahia_blanca": {
-        "trigo": 133,
-        "maiz": 528,
+        "trigo": 91,
+        "maiz": 684,
         "sorgo": 0,
-        "cebada": 24,
-        "soja": 62,
-        "girasol": 36
+        "cebada": 41,
+        "soja": 132,
+        "girasol": 46
       }
     },
     "national_products": {
-      "trigo": 1606,
-      "maiz": 1563,
-      "sorgo": 1,
-      "cebada": 28,
-      "soja": 1019,
-      "girasol": 46
+      "trigo": 1578,
+      "maiz": 1823,
+      "sorgo": 0,
+      "cebada": 60,
+      "soja": 1327,
+      "girasol": 62
     },
     "vagones": null,
     "vagones_source": null,
-    "days_parsed": 6,
+    "days_parsed": 7,
     "williams_days": [
       "2026-11-02",
       "2026-11-03",
       "2026-11-04",
       "2026-11-05",
       "2026-11-06",
-      "2026-11-10"
+      "2026-11-10",
+      "2026-11-11"
     ],
     "national_days": [
       {
@@ -231,6 +232,20 @@
         },
         "national_total": 4263,
         "rosario": 3070,
+        "source": "williams"
+      },
+      {
+        "date": "2026-11-11",
+        "products": {
+          "trigo": 1578,
+          "maiz": 1823,
+          "sorgo": 0,
+          "cebada": 60,
+          "soja": 1327,
+          "girasol": 62
+        },
+        "national_total": 4850,
+        "rosario": 3827,
         "source": "williams"
       }
     ]
