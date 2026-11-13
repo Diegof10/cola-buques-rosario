@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-12T13:00:54.943250-03:00",
+  "updated_at": "2026-11-13T12:59:34.170135-03:00",
   "date": "2026-11-12",
   "source": "williams",
   "source_url": "https://www1.williamsagroservicios.com.ar/files/camiones/2026-11-12.xls",
@@ -69,7 +69,7 @@
     },
     {
       "date": "2026-11-09",
-      "camiones": 0
+      "camiones": 1759
     },
     {
       "date": "2026-11-10",
@@ -141,30 +141,16 @@
     "vagones_source": "magyp",
     "days_parsed": 8,
     "williams_days": [
-      "2026-11-02",
       "2026-11-03",
       "2026-11-04",
       "2026-11-05",
       "2026-11-06",
+      "2026-11-09",
       "2026-11-10",
       "2026-11-11",
       "2026-11-12"
     ],
     "national_days": [
-      {
-        "date": "2026-11-02",
-        "products": {
-          "trigo": 1050,
-          "maiz": 1347,
-          "sorgo": 4,
-          "cebada": 79,
-          "soja": 1193,
-          "girasol": 18
-        },
-        "national_total": 3691,
-        "rosario": 2551,
-        "source": "williams"
-      },
       {
         "date": "2026-11-03",
         "products": {
@@ -219,6 +205,20 @@
         },
         "national_total": 5857,
         "rosario": 4017,
+        "source": "williams"
+      },
+      {
+        "date": "2026-11-09",
+        "products": {
+          "trigo": 1019,
+          "maiz": 652,
+          "sorgo": 2,
+          "cebada": 1,
+          "soja": 483,
+          "girasol": 31
+        },
+        "national_total": 2188,
+        "rosario": 1759,
         "source": "williams"
       },
       {
