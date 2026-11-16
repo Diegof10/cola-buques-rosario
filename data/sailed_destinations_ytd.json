@@ -1,12 +1,12 @@
 {
   "year": 2026,
   "from": "2026-01-02",
-  "through": "2026-11-12",
-  "updated_at": "2026-11-13T13:01:46.413626-03:00",
+  "through": "2026-11-13",
+  "updated_at": "2026-11-16T12:59:37.416841-03:00",
   "source": "sailed_rows_ledger.json (NABSA sailed xlsx archive + vessels_sailed_update.pdf + priors)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "unit": "t",
-  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-11-12). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
+  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-11-13). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
   "grains_only": true,
   "coverage_complete_ytd": false,
   "exports": [
@@ -19,14 +19,14 @@
     {
       "key": "china",
       "label": "China",
-      "tons": 8596875.22,
-      "count": 274
+      "tons": 8646745.22,
+      "count": 275
     },
     {
       "key": "peru",
       "label": "Perú",
-      "tons": 5483524.61,
-      "count": 284
+      "tons": 5516620.67,
+      "count": 286
     },
     {
       "key": "saudi arabia",
@@ -61,8 +61,8 @@
     {
       "key": "chile",
       "label": "Chile",
-      "tons": 3373005.35,
-      "count": 184
+      "tons": 3412988.04,
+      "count": 186
     },
     {
       "key": "algeria",
@@ -85,8 +85,8 @@
     {
       "key": "ecuador",
       "label": "Ecuador",
-      "tons": 2188557.6,
-      "count": 88
+      "tons": 2221582.54,
+      "count": 89
     },
     {
       "key": "turkey",
@@ -151,8 +151,8 @@
     {
       "key": "jordan",
       "label": "Jordan",
-      "tons": 1009228.45,
-      "count": 40
+      "tons": 1050862.35,
+      "count": 41
     },
     {
       "key": "iraq",
@@ -579,8 +579,8 @@
   "ar_count": 3,
   "unknown_tons": 1507204.52,
   "unknown_count": 59,
-  "ignored_non_grain_tn": 19737250.34,
-  "ignored_non_grain_count": 1213,
-  "total_export_tons": 96361150.77,
-  "rows": 4822
+  "ignored_non_grain_tn": 20138686.34,
+  "ignored_non_grain_count": 1221,
+  "total_export_tons": 96558758.36,
+  "rows": 4829
 }
