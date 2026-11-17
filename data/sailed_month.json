@@ -1,13 +1,13 @@
 {
   "month": "2026-11",
-  "updated_at": "2026-11-16T12:59:37.400459-03:00",
+  "updated_at": "2026-11-17T12:57:31.304991-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 1467085.44,
-    "soja": 1419626.35,
-    "trigo": 404166.7,
-    "girasol": 89380.04,
+    "maiz": 1750952.53,
+    "soja": 2043906.05,
+    "trigo": 551501.05,
+    "girasol": 99380.04,
     "sorgo": 28453.0,
     "cebada": 20700.0
   },
@@ -93,8 +93,8 @@
       "cebada": 0.0
     },
     "2026-11-11": {
-      "maiz": 196101.86,
-      "soja": 143235.86,
+      "maiz": 235859.86,
+      "soja": 185135.0,
       "trigo": 27654.02,
       "girasol": 0.0,
       "sorgo": 0.0,
@@ -102,7 +102,7 @@
     },
     "2026-11-12": {
       "maiz": 0.0,
-      "soja": 88300.44,
+      "soja": 103300.44,
       "trigo": 24899.82,
       "girasol": 0.0,
       "sorgo": 0.0,
@@ -110,15 +110,39 @@
     },
     "2026-11-13": {
       "maiz": 30589.97,
-      "soja": 9392.72,
+      "soja": 158052.33,
       "trigo": 0.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-11-14": {
+      "maiz": 95354.48,
+      "soja": 194992.71,
+      "trigo": 34319.94,
+      "girasol": 10000.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-11-15": {
+      "maiz": 75804.51,
+      "soja": 164018.48,
+      "trigo": 57122.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-11-16": {
+      "maiz": 72950.1,
+      "soja": 59709.76,
+      "trigo": 55892.41,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     }
   },
-  "rows_in_month": 204,
-  "ignored_otro_tn": 1295129.85,
+  "rows_in_month": 264,
+  "ignored_otro_tn": 1394229.85,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos.",
   "history": {
@@ -158,7 +182,7 @@
         "cebada": 31369.0
       },
       "rows_in_month": 650,
-      "updated_at": "2026-11-16T12:59:37.402136-03:00",
+      "updated_at": "2026-11-17T12:57:31.305991-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
