@@ -1,10 +1,10 @@
 {
   "year": 2026,
-  "updated_at": "2026-11-17T12:57:31.280135-03:00",
+  "updated_at": "2026-11-19T12:58:02.995570-03:00",
   "source": "NABSA sailedYYYYMMDD.xlsx (+ vessels_sailed_update.pdf / prior1–4)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "note": "Ledger acumulativo de filas SAILED NABSA. Histórico vía xlsx bajo /SAILED/sailedYYYYMMDD.xlsx; el PDF diario es rolling (~mes). Este JSON crece con cada refresh (dedupe) y alimenta sailed_destinations_ytd.json. No inventa meses faltantes.",
-  "row_count": 6111,
+  "row_count": 6175,
   "rows": {
     "2026-01-02|BOCHEM HOUSTON|SAN LORENZO|DEMPA SAN MARTIN|2080.00|SUN FLOWER OIL (HIGHOLEIC)|MEXICO": {
       "date": "2026-01-02",
@@ -64543,6 +64543,17 @@
       "origin": "ARGENTINA",
       "destination": "GUATEMALA"
     },
+    "2026-11-03|ASTARTE|SAN LORENZO|DEMPA SAN MARTIN|31890.00|SOYBEANMEAL|GERMANY": {
+      "date": "2026-11-03",
+      "tons": 31890.0,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "DEMPA SAN MARTIN",
+      "vessel": "ASTARTE",
+      "origin": "ARGENTINA",
+      "destination": "GERMANY"
+    },
     "2026-11-03|BH FORTUNE|BAHIA BLANCA|ADM AGRO (EX TOEPFER BAHIA BLANCA)|21220.00|SOYA BEAN|CHINA": {
       "date": "2026-11-03",
       "tons": 21220.0,
@@ -64818,6 +64829,17 @@
       "origin": "NETHERLANDS",
       "destination": "PARAGUAY"
     },
+    "2026-11-04|ADRIATICA GRAECA II|SAN LORENZO|TERMINAL 6 NORTH BERTH SAN MARTIN|49999.50|SOYBEANMEAL|INDONESIA": {
+      "date": "2026-11-04",
+      "tons": 49999.5,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "TERMINAL 6 NORTH BERTH SAN MARTIN",
+      "vessel": "ADRIATICA GRAECA II",
+      "origin": "ARGENTINA",
+      "destination": "INDONESIA"
+    },
     "2026-11-04|APJ PRIYA 2|ROSARIO|ADM AGRO ARROYO SECO (EX TOEPFER)|48865.00|CORN|KOREA (REPUBLIC OF SOUTH KOREA)": {
       "date": "2026-11-04",
       "tons": 48865.0,
@@ -64971,6 +64993,28 @@
       "vessel": "ILLOVO RIVER",
       "origin": "ARGENTINA",
       "destination": "BRAZIL"
+    },
+    "2026-11-04|IWAGI ISLAND|SAN LORENZO|RENOVA SOUTH|24503.62|SOYBEANMEAL|NEW ZEALAND": {
+      "date": "2026-11-04",
+      "tons": 24503.62,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA SOUTH",
+      "vessel": "IWAGI ISLAND",
+      "origin": "ARGENTINA",
+      "destination": "NEW ZEALAND"
+    },
+    "2026-11-04|IWAGI ISLAND|SAN LORENZO|RENOVA SOUTH|5592.36|SOYA HULL PELLETS|NEW ZEALAND": {
+      "date": "2026-11-04",
+      "tons": 5592.36,
+      "cargo_raw": "SOYA HULL PELLETS",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA SOUTH",
+      "vessel": "IWAGI ISLAND",
+      "origin": "ARGENTINA",
+      "destination": "NEW ZEALAND"
     },
     "2026-11-04|LB EARTH|NECOCHEA / QUEQUEN|BERTH 3 ELEVATOR (QUEQUEN) A.C.A. TERMINAL|26570.00|CORN|NOT AVAILABLE": {
       "date": "2026-11-04",
@@ -65126,6 +65170,28 @@
       "origin": "ARGENTINA",
       "destination": "KENYA"
     },
+    "2026-11-05|ASTARTE|SAN LORENZO|RENOVA NORTH|7584.39|SOYA HULL PELLETS|GERMANY": {
+      "date": "2026-11-05",
+      "tons": 7584.39,
+      "cargo_raw": "SOYA HULL PELLETS",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "ASTARTE",
+      "origin": "ARGENTINA",
+      "destination": "GERMANY"
+    },
+    "2026-11-05|ASTARTE|SAN LORENZO|RENOVA NORTH|9324.63|SOYBEANMEAL|GERMANY": {
+      "date": "2026-11-05",
+      "tons": 9324.63,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "ASTARTE",
+      "origin": "ARGENTINA",
+      "destination": "GERMANY"
+    },
     "2026-11-05|CABO SOUNION|BAHIA BLANCA|OTAMERICA 2  PUERTO ROSALES|35000.00|CRUDE OIL|ARGENTINA": {
       "date": "2026-11-05",
       "tons": 35000.0,
@@ -65169,6 +65235,17 @@
       "vessel": "CS SATIRA",
       "origin": "CANADA",
       "destination": "ARGENTINA"
+    },
+    "2026-11-05|DISCOVERER|SAN LORENZO|PAMPA SAN MARTIN|31127.51|WHEAT|BRAZIL": {
+      "date": "2026-11-05",
+      "tons": 31127.51,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "SAN LORENZO",
+      "terminal": "PAMPA SAN MARTIN",
+      "vessel": "DISCOVERER",
+      "origin": "ARGENTINA",
+      "destination": "BRAZIL"
     },
     "2026-11-05|ECO DIAGON ALLEY|NECOCHEA / QUEQUEN|BERTH 3 ELEVATOR (QUEQUEN) A.C.A. TERMINAL|21000.00|CORN|VIETNAM": {
       "date": "2026-11-05",
@@ -65357,6 +65434,28 @@
       "origin": "ARGENTINA",
       "destination": "ARGENTINA"
     },
+    "2026-11-06|GEORGIA ATH|SAN LORENZO|RENOVA NORTH|15579.75|CORN|PERU": {
+      "date": "2026-11-06",
+      "tons": 15579.75,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "GEORGIA ATH",
+      "origin": "ARGENTINA",
+      "destination": "PERU"
+    },
+    "2026-11-06|GEORGIA ATH|SAN LORENZO|RENOVA NORTH|17420.25|SOYBEANMEAL|PERU": {
+      "date": "2026-11-06",
+      "tons": 17420.25,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "GEORGIA ATH",
+      "origin": "ARGENTINA",
+      "destination": "PERU"
+    },
     "2026-11-06|GLBS MAGIC|SAN LORENZO|A.C.A. TIMBUES|39182.96|CORN|VIETNAM": {
       "date": "2026-11-06",
       "tons": 39182.96,
@@ -65422,6 +65521,39 @@
       "vessel": "KRENOM",
       "origin": "ARGENTINA",
       "destination": "VIETNAM"
+    },
+    "2026-11-06|PANASIATIC|SAN LORENZO|TERMINAL 6 NORTH BERTH SAN MARTIN|2198.67|SOYBEANMEAL|FRANCE": {
+      "date": "2026-11-06",
+      "tons": 2198.67,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "TERMINAL 6 NORTH BERTH SAN MARTIN",
+      "vessel": "PANASIATIC",
+      "origin": "ARGENTINA",
+      "destination": "FRANCE"
+    },
+    "2026-11-06|PANASIATIC|SAN LORENZO|TERMINAL 6 NORTH BERTH SAN MARTIN|24199.37|SOYBEANMEAL|ITALY": {
+      "date": "2026-11-06",
+      "tons": 24199.37,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "TERMINAL 6 NORTH BERTH SAN MARTIN",
+      "vessel": "PANASIATIC",
+      "origin": "ARGENTINA",
+      "destination": "ITALY"
+    },
+    "2026-11-06|PANASIATIC|SAN LORENZO|TERMINAL 6 NORTH BERTH SAN MARTIN|25300.00|SOYBEANMEAL|FRANCE": {
+      "date": "2026-11-06",
+      "tons": 25300.0,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "TERMINAL 6 NORTH BERTH SAN MARTIN",
+      "vessel": "PANASIATIC",
+      "origin": "ARGENTINA",
+      "destination": "FRANCE"
     },
     "2026-11-06|SAGA FUTURE|NUEVA PALMIRA(R.O.U.)|ONTUR EXTERNAL PIER|32000.00|WOOD PULP|NOT AVAILABLE": {
       "date": "2026-11-06",
@@ -65588,6 +65720,17 @@
       "origin": "ARGENTINA",
       "destination": "MOROCCO"
     },
+    "2026-11-07|KALLIOPI S|SAN LORENZO|TERMINAL 6 SOUTH BERTH SAN MARTIN|33375.16|CORN|MOROCCO": {
+      "date": "2026-11-07",
+      "tons": 33375.16,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "TERMINAL 6 SOUTH BERTH SAN MARTIN",
+      "vessel": "KALLIOPI S",
+      "origin": "ARGENTINA",
+      "destination": "MOROCCO"
+    },
     "2026-11-07|LAGERI|SAN LORENZO|COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)|7140.00|BIODIESEL|NETHERLANDS": {
       "date": "2026-11-07",
       "tons": 7140.0,
@@ -65653,6 +65796,50 @@
       "vessel": "TRANSCENDEN WISDOM",
       "origin": "ARGENTINA",
       "destination": "INDONESIA"
+    },
+    "2026-11-07|XENA|SAN LORENZO|RENOVA NORTH|5550.00|SOYBEAN OIL|INDIA": {
+      "date": "2026-11-07",
+      "tons": 5550.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "XENA",
+      "origin": "ARGENTINA",
+      "destination": "INDIA"
+    },
+    "2026-11-07|XENA|SAN LORENZO|RENOVA NORTH|5880.00|SOYBEAN OIL|INDIA": {
+      "date": "2026-11-07",
+      "tons": 5880.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "XENA",
+      "origin": "ARGENTINA",
+      "destination": "INDIA"
+    },
+    "2026-11-07|XENA|SAN LORENZO|RENOVA NORTH|7070.00|SOYBEAN OIL|INDIA": {
+      "date": "2026-11-07",
+      "tons": 7070.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "XENA",
+      "origin": "ARGENTINA",
+      "destination": "INDIA"
+    },
+    "2026-11-08|AGERI|SAN LORENZO|PAMPA SAN MARTIN|38082.02|CORN|VIETNAM": {
+      "date": "2026-11-08",
+      "tons": 38082.02,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "PAMPA SAN MARTIN",
+      "vessel": "AGERI",
+      "origin": "ARGENTINA",
+      "destination": "VIETNAM"
     },
     "2026-11-08|AGIA DIMITRA|NUEVA PALMIRA(R.O.U.)|TGU (ANP NORTH SECTION)|2900.00|FERTILIZER SOLID|URUGUAY": {
       "date": "2026-11-08",
@@ -65819,6 +66006,17 @@
       "origin": "URUGUAY",
       "destination": "UNITED STATES"
     },
+    "2026-11-08|NAVI LYRA|SAN LORENZO|DEMPA SAN MARTIN|31859.68|WHEAT|ALGERIA": {
+      "date": "2026-11-08",
+      "tons": 31859.68,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "SAN LORENZO",
+      "terminal": "DEMPA SAN MARTIN",
+      "vessel": "NAVI LYRA",
+      "origin": "ARGENTINA",
+      "destination": "ALGERIA"
+    },
     "2026-11-08|NIRIIS|BAHIA BLANCA|BERTHS 2 / 3 BUNGE (EX VITERRA EX MORENO) PUERTO GALVÁN|62000.00|CORN|VIETNAM": {
       "date": "2026-11-08",
       "tons": 62000.0,
@@ -65929,6 +66127,28 @@
       "origin": "ARGENTINA",
       "destination": "JORDAN"
     },
+    "2026-11-09|GOLDEN MALAK|SAN LORENZO|RENOVA NORTH|10288.31|CORN|SYRIA": {
+      "date": "2026-11-09",
+      "tons": 10288.31,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "GOLDEN MALAK",
+      "origin": "ARGENTINA",
+      "destination": "SYRIA"
+    },
+    "2026-11-09|GOLDEN MALAK|SAN LORENZO|RENOVA NORTH|16127.94|SOYBEANMEAL|SYRIA": {
+      "date": "2026-11-09",
+      "tons": 16127.94,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "RENOVA NORTH",
+      "vessel": "GOLDEN MALAK",
+      "origin": "ARGENTINA",
+      "destination": "SYRIA"
+    },
     "2026-11-09|HOUYOSHI PARK|SAN LORENZO|LDC TIMBUES|8000.00|SOYBEAN OIL|MOROCCO": {
       "date": "2026-11-09",
       "tons": 8000.0,
@@ -65961,6 +66181,17 @@
       "vessel": "MAJESTIC VERA",
       "origin": "ALGERIA",
       "destination": "ARGENTINA"
+    },
+    "2026-11-09|MATIN BEY|SAN LORENZO|TERMINAL 6 SOUTH BERTH SAN MARTIN|24999.37|CORN|EGYPT": {
+      "date": "2026-11-09",
+      "tons": 24999.37,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "TERMINAL 6 SOUTH BERTH SAN MARTIN",
+      "vessel": "MATIN BEY",
+      "origin": "ARGENTINA",
+      "destination": "EGYPT"
     },
     "2026-11-09|NIRIIS|BAHIA BLANCA|TERMINAL BAHIA BLANCA BERTHS 9 PUERTO INGENIERO WHITE|7384.00|CORN|VIETNAM": {
       "date": "2026-11-09",
@@ -66236,6 +66467,17 @@
       "vessel": "NORD BRAVE",
       "origin": "ARGENTINA",
       "destination": "ALGERIA"
+    },
+    "2026-11-10|NORD VICTORIOUS|ZARATE|VITCO BERTH 1(OCEAN) ZARATE|26000.00|GASOIL|ARGENTINA": {
+      "date": "2026-11-10",
+      "tons": 26000.0,
+      "cargo_raw": "GASOIL",
+      "commodity": "otro",
+      "port": "ZARATE",
+      "terminal": "VITCO BERTH 1(OCEAN) ZARATE",
+      "vessel": "NORD VICTORIOUS",
+      "origin": "SOUTH AFRICA",
+      "destination": "ARGENTINA"
     },
     "2026-11-10|OSSA|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|12852.00|CORN|CHILE": {
       "date": "2026-11-10",
@@ -66523,6 +66765,17 @@
       "origin": "ARGENTINA",
       "destination": "PERU"
     },
+    "2026-11-12|KN PHOENIX|SAN LORENZO|COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)|38999.96|CORN|CHILE": {
+      "date": "2026-11-12",
+      "tons": 38999.96,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)",
+      "vessel": "KN PHOENIX",
+      "origin": "ARGENTINA",
+      "destination": "CHILE"
+    },
     "2026-11-12|MAGIC CHEMIST|SAN LORENZO|MINERA ALUMBRERA SAN MARTIN|15000.00|NEUTRALIZED SOYBEAN OIL|CANADA": {
       "date": "2026-11-12",
       "tons": 15000.0,
@@ -66610,6 +66863,17 @@
       "vessel": "DAHLIA",
       "origin": "NOT AVAILABLE",
       "destination": "URUGUAY"
+    },
+    "2026-11-13|EIHWAZ|NUEVA PALMIRA(R.O.U.)|TGU (ANP NORTH SECTION)|27439.35|SOYA BEAN|NOT AVAILABLE": {
+      "date": "2026-11-13",
+      "tons": 27439.35,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "NUEVA PALMIRA(R.O.U.)",
+      "terminal": "TGU (ANP NORTH SECTION)",
+      "vessel": "EIHWAZ",
+      "origin": "PARAGUAY",
+      "destination": "NOT AVAILABLE"
     },
     "2026-11-13|NORTH ISLAND|SAN LORENZO|RENOVA SOUTH|10997.90|SOYBEANMEAL|NEW ZEALAND": {
       "date": "2026-11-13",
@@ -66842,6 +67106,50 @@
       "origin": "ARGENTINA",
       "destination": "INDIA"
     },
+    "2026-11-14|NATALIE|NECOCHEA / QUEQUEN|BERTH 12  (NECOCHEA) (PIER DOCE S.A. TERMINAL)|4301.12|MAP|ARGENTINA": {
+      "date": "2026-11-14",
+      "tons": 4301.12,
+      "cargo_raw": "MAP",
+      "commodity": "otro",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 12  (NECOCHEA) (PIER DOCE S.A. TERMINAL)",
+      "vessel": "NATALIE",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
+    "2026-11-14|NATALIE|NECOCHEA / QUEQUEN|BERTH 12  (NECOCHEA) (PIER DOCE S.A. TERMINAL)|800.01|MAP|ARGENTINA": {
+      "date": "2026-11-14",
+      "tons": 800.01,
+      "cargo_raw": "MAP",
+      "commodity": "otro",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 12  (NECOCHEA) (PIER DOCE S.A. TERMINAL)",
+      "vessel": "NATALIE",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
+    "2026-11-14|NATALIE|NECOCHEA / QUEQUEN|BERTH 12 (NECOCHEA) (PIER DOCE S.A. TERMINAL)|4301.12|MAP|ARGENTINA": {
+      "date": "2026-11-14",
+      "tons": 4301.12,
+      "cargo_raw": "MAP",
+      "commodity": "otro",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 12 (NECOCHEA) (PIER DOCE S.A. TERMINAL)",
+      "vessel": "NATALIE",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
+    "2026-11-14|NATALIE|NECOCHEA / QUEQUEN|BERTH 12 (NECOCHEA) (PIER DOCE S.A. TERMINAL)|800.01|MAP|ARGENTINA": {
+      "date": "2026-11-14",
+      "tons": 800.01,
+      "cargo_raw": "MAP",
+      "commodity": "otro",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 12 (NECOCHEA) (PIER DOCE S.A. TERMINAL)",
+      "vessel": "NATALIE",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
     "2026-11-14|OM BORNEO|ZARATE|KM 171 RIO PARANA GUAZU|18000.00|NAPHTHA|PARAGUAY": {
       "date": "2026-11-14",
       "tons": 18000.0,
@@ -66908,6 +67216,17 @@
       "origin": "CANADA",
       "destination": "ARGENTINA"
     },
+    "2026-11-14|SUPERNOVA B|NUEVA PALMIRA(R.O.U.)|TERMINAL NAVIOS NORTH|29500.90|SOYBEANMEAL|SPAIN": {
+      "date": "2026-11-14",
+      "tons": 29500.9,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "NUEVA PALMIRA(R.O.U.)",
+      "terminal": "TERMINAL NAVIOS NORTH",
+      "vessel": "SUPERNOVA B",
+      "origin": "BOLIVIA",
+      "destination": "SPAIN"
+    },
     "2026-11-14|TOURLIANI|SAN LORENZO|TERMINAL 6 SOUTH BERTH SAN MARTIN|10999.24|SOYBEANMEAL|GREECE": {
       "date": "2026-11-14",
       "tons": 10999.24,
@@ -66962,6 +67281,28 @@
       "vessel": "YANGZE 16",
       "origin": "ARGENTINA",
       "destination": "ITALY"
+    },
+    "2026-11-15|BANGLAR  AGRAJATRA|RAMALLO|BUNGE FERTILIZERS - OIL RAMALLO|5000.00|UAN|ARGENTINA": {
+      "date": "2026-11-15",
+      "tons": 5000.0,
+      "cargo_raw": "UAN",
+      "commodity": "otro",
+      "port": "RAMALLO",
+      "terminal": "BUNGE FERTILIZERS - OIL RAMALLO",
+      "vessel": "BANGLAR  AGRAJATRA",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
+    "2026-11-15|BANGLAR AGRAJATRA|RAMALLO|BUNGE FERTILIZERS - OIL RAMALLO|5000.00|UAN|ARGENTINA": {
+      "date": "2026-11-15",
+      "tons": 5000.0,
+      "cargo_raw": "UAN",
+      "commodity": "otro",
+      "port": "RAMALLO",
+      "terminal": "BUNGE FERTILIZERS - OIL RAMALLO",
+      "vessel": "BANGLAR AGRAJATRA",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
     },
     "2026-11-15|BOW TIGER|ZARATE|VITCO BERTH 1(OCEAN) ZARATE|8000.00|CHEMICALS LIQUID|ARGENTINA": {
       "date": "2026-11-15",
@@ -67117,6 +67458,17 @@
       "origin": "ARGENTINA",
       "destination": "SAUDI ARABIA"
     },
+    "2026-11-15|XIN QI MENG|NUEVA PALMIRA(R.O.U.)|TERMINAL NAVIOS SOUTH|47774.36|IRON ORE|NOT AVAILABLE": {
+      "date": "2026-11-15",
+      "tons": 47774.36,
+      "cargo_raw": "IRON ORE",
+      "commodity": "otro",
+      "port": "NUEVA PALMIRA(R.O.U.)",
+      "terminal": "TERMINAL NAVIOS SOUTH",
+      "vessel": "XIN QI MENG",
+      "origin": "BRAZIL",
+      "destination": "NOT AVAILABLE"
+    },
     "2026-11-16|AGERI|NECOCHEA / QUEQUEN|BERTH 4 / 5 (QUEQUEN) (TERMINAL QUEQUEN)|15985.00|CORN|VIETNAM": {
       "date": "2026-11-16",
       "tons": 15985.0,
@@ -67161,6 +67513,17 @@
       "origin": "ARGENTINA",
       "destination": "ALGERIA"
     },
+    "2026-11-16|BOW TIGER|CAMPANA|ODFJELL TAGSA CAMPANA|2500.00|CHEMICALS LIQUID|ARGENTINA": {
+      "date": "2026-11-16",
+      "tons": 2500.0,
+      "cargo_raw": "CHEMICALS LIQUID",
+      "commodity": "otro",
+      "port": "CAMPANA",
+      "terminal": "ODFJELL TAGSA CAMPANA",
+      "vessel": "BOW TIGER",
+      "origin": "UNITED STATES",
+      "destination": "ARGENTINA"
+    },
     "2026-11-16|CORAL ISLAND|SAN LORENZO|SAN BENITO SAN LORENZO|41579.76|SOYBEANMEAL|ROMANIA": {
       "date": "2026-11-16",
       "tons": 41579.76,
@@ -67182,6 +67545,50 @@
       "vessel": "LARDOS",
       "origin": "ARGENTINA",
       "destination": "ALGERIA"
+    },
+    "2026-11-16|LETIZIA|SAN LORENZO|COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)|19899.79|SOYBEANMEAL|SLOVENIA": {
+      "date": "2026-11-16",
+      "tons": 19899.79,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)",
+      "vessel": "LETIZIA",
+      "origin": "ARGENTINA",
+      "destination": "SLOVENIA"
+    },
+    "2026-11-16|LETIZIA|SAN LORENZO|COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)|22596.38|SOYBEANMEAL|ITALY": {
+      "date": "2026-11-16",
+      "tons": 22596.38,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)",
+      "vessel": "LETIZIA",
+      "origin": "ARGENTINA",
+      "destination": "ITALY"
+    },
+    "2026-11-16|LETIZIA|SAN LORENZO|COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)|22596.39|SOYBEANMEAL|ITALY": {
+      "date": "2026-11-16",
+      "tons": 22596.39,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. SOUTH BERTH (EX COFCO SOUTH)",
+      "vessel": "LETIZIA",
+      "origin": "ARGENTINA",
+      "destination": "ITALY"
+    },
+    "2026-11-16|ROSCO POPLAR|BAHIA BLANCA|CARGILL TERMINAL PUERTO INGENIERO WHITE|26497.75|WHEAT|INDONESIA": {
+      "date": "2026-11-16",
+      "tons": 26497.75,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "BAHIA BLANCA",
+      "terminal": "CARGILL TERMINAL PUERTO INGENIERO WHITE",
+      "vessel": "ROSCO POPLAR",
+      "origin": "ARGENTINA",
+      "destination": "INDONESIA"
     },
     "2026-11-16|SAEHAN NURIA|SAN LORENZO|RENOVA NORTH|1100.00|SOYBEAN OIL|NICARAGUA": {
       "date": "2026-11-16",
@@ -67226,6 +67633,303 @@
       "vessel": "SAEHAN NURIA",
       "origin": "ARGENTINA",
       "destination": "EL SALVADOR"
+    },
+    "2026-11-16|SCORPIO CONFIDENCE|SAN LORENZO|ACA SAN LORENZO|40000.00|WHEAT|INDONESIA": {
+      "date": "2026-11-16",
+      "tons": 40000.0,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "SAN LORENZO",
+      "terminal": "ACA SAN LORENZO",
+      "vessel": "SCORPIO CONFIDENCE",
+      "origin": "ARGENTINA",
+      "destination": "INDONESIA"
+    },
+    "2026-11-16|SLAVYANKA|NUEVA PALMIRA(R.O.U.)|TERMINAL NAVIOS NORTH|24229.32|SOYBEANMEAL|NOT AVAILABLE": {
+      "date": "2026-11-16",
+      "tons": 24229.32,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "NUEVA PALMIRA(R.O.U.)",
+      "terminal": "TERMINAL NAVIOS NORTH",
+      "vessel": "SLAVYANKA",
+      "origin": "BOLIVIA",
+      "destination": "NOT AVAILABLE"
+    },
+    "2026-11-17|AP DUBROVNIK|ROSARIO|UNIT VII ROSARIO|44000.00|SOYA BEAN|CHINA": {
+      "date": "2026-11-17",
+      "tons": 44000.0,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "ROSARIO",
+      "terminal": "UNIT VII ROSARIO",
+      "vessel": "AP DUBROVNIK",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
+    },
+    "2026-11-17|ATALANDI|NECOCHEA / QUEQUEN|BERTH 1 OPEN QUAY (QUEQUEN)  (SITIO 0 DE QUEQUEN TERMINAL)|22473.00|CORN|NOT AVAILABLE": {
+      "date": "2026-11-17",
+      "tons": 22473.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 1 OPEN QUAY (QUEQUEN)  (SITIO 0 DE QUEQUEN TERMINAL)",
+      "vessel": "ATALANDI",
+      "origin": "ARGENTINA",
+      "destination": "NOT AVAILABLE"
+    },
+    "2026-11-17|ATALANDI|NECOCHEA / QUEQUEN|BERTH 1 OPEN QUAY (QUEQUEN)  (SITIO 0 DE QUEQUEN TERMINAL)|4000.00|CORN|NOT AVAILABLE": {
+      "date": "2026-11-17",
+      "tons": 4000.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 1 OPEN QUAY (QUEQUEN)  (SITIO 0 DE QUEQUEN TERMINAL)",
+      "vessel": "ATALANDI",
+      "origin": "ARGENTINA",
+      "destination": "NOT AVAILABLE"
+    },
+    "2026-11-17|ATALANDI|NECOCHEA / QUEQUEN|BERTH 1 OPEN QUAY (QUEQUEN) (SITIO 0 DE QUEQUEN TERMINAL)|22473.00|CORN|NOT AVAILABLE": {
+      "date": "2026-11-17",
+      "tons": 22473.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 1 OPEN QUAY (QUEQUEN) (SITIO 0 DE QUEQUEN TERMINAL)",
+      "vessel": "ATALANDI",
+      "origin": "ARGENTINA",
+      "destination": "NOT AVAILABLE"
+    },
+    "2026-11-17|ATALANDI|NECOCHEA / QUEQUEN|BERTH 1 OPEN QUAY (QUEQUEN) (SITIO 0 DE QUEQUEN TERMINAL)|4000.00|CORN|NOT AVAILABLE": {
+      "date": "2026-11-17",
+      "tons": 4000.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 1 OPEN QUAY (QUEQUEN) (SITIO 0 DE QUEQUEN TERMINAL)",
+      "vessel": "ATALANDI",
+      "origin": "ARGENTINA",
+      "destination": "NOT AVAILABLE"
+    },
+    "2026-11-17|BANGLAR  AGRAJATRA|ROSARIO|NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)|14649.22|UAN|ARGENTINA": {
+      "date": "2026-11-17",
+      "tons": 14649.22,
+      "cargo_raw": "UAN",
+      "commodity": "otro",
+      "port": "ROSARIO",
+      "terminal": "NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)",
+      "vessel": "BANGLAR  AGRAJATRA",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
+    "2026-11-17|BANGLAR AGRAJATRA|ROSARIO|NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)|14649.22|UAN|ARGENTINA": {
+      "date": "2026-11-17",
+      "tons": 14649.22,
+      "cargo_raw": "UAN",
+      "commodity": "otro",
+      "port": "ROSARIO",
+      "terminal": "NEW MOLE SOUTH (TERMINAL PUERTO ROSARIO)",
+      "vessel": "BANGLAR AGRAJATRA",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
+    "2026-11-17|CARINA|NECOCHEA / QUEQUEN|BERTH 3 ELEVATOR (QUEQUEN) A.C.A. TERMINAL|14628.00|WHEAT|INDONESIA": {
+      "date": "2026-11-17",
+      "tons": 14628.0,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 3 ELEVATOR (QUEQUEN) A.C.A. TERMINAL",
+      "vessel": "CARINA",
+      "origin": "ARGENTINA",
+      "destination": "INDONESIA"
+    },
+    "2026-11-17|EGRET BULKER|ZARATE|TERMINAL LAS PALMAS ZARATE|9000.00|RICE|SPAIN": {
+      "date": "2026-11-17",
+      "tons": 9000.0,
+      "cargo_raw": "RICE",
+      "commodity": "otro",
+      "port": "ZARATE",
+      "terminal": "TERMINAL LAS PALMAS ZARATE",
+      "vessel": "EGRET BULKER",
+      "origin": "ARGENTINA",
+      "destination": "SPAIN"
+    },
+    "2026-11-17|LINK AMICI|CAMPANA|EUROAMERICA TERMINAL CAMPANA|6000.00|RAW SUGAR|UNITED STATES": {
+      "date": "2026-11-17",
+      "tons": 6000.0,
+      "cargo_raw": "RAW SUGAR",
+      "commodity": "otro",
+      "port": "CAMPANA",
+      "terminal": "EUROAMERICA TERMINAL CAMPANA",
+      "vessel": "LINK AMICI",
+      "origin": "ARGENTINA",
+      "destination": "UNITED STATES"
+    },
+    "2026-11-17|LOUISE|ROSARIO|LDC TERMINAL GRAL. LAGOS|13196.22|SOYBEANMEAL|COLOMBIA": {
+      "date": "2026-11-17",
+      "tons": 13196.22,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "ROSARIO",
+      "terminal": "LDC TERMINAL GRAL. LAGOS",
+      "vessel": "LOUISE",
+      "origin": "ARGENTINA",
+      "destination": "COLOMBIA"
+    },
+    "2026-11-17|LOUISE|ROSARIO|LDC TERMINAL GRAL. LAGOS|18859.69|WHEAT|COLOMBIA": {
+      "date": "2026-11-17",
+      "tons": 18859.69,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "ROSARIO",
+      "terminal": "LDC TERMINAL GRAL. LAGOS",
+      "vessel": "LOUISE",
+      "origin": "ARGENTINA",
+      "destination": "COLOMBIA"
+    },
+    "2026-11-17|MAGIC CHEMIST|ROSARIO|LDC VGOIL BERTH GRAL. LAGOS|16000.00|NEUTRALIZED SOYBEAN OIL|CANADA": {
+      "date": "2026-11-17",
+      "tons": 16000.0,
+      "cargo_raw": "NEUTRALIZED SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "ROSARIO",
+      "terminal": "LDC VGOIL BERTH GRAL. LAGOS",
+      "vessel": "MAGIC CHEMIST",
+      "origin": "ARGENTINA",
+      "destination": "CANADA"
+    },
+    "2026-11-17|MISTRAL FLAME|SAN LORENZO|COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)|1500.00|SUN FLOWER OIL|MAURITIUS": {
+      "date": "2026-11-17",
+      "tons": 1500.0,
+      "cargo_raw": "SUN FLOWER OIL",
+      "commodity": "girasol",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)",
+      "vessel": "MISTRAL FLAME",
+      "origin": "ARGENTINA",
+      "destination": "MAURITIUS"
+    },
+    "2026-11-17|MISTRAL FLAME|SAN LORENZO|COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)|16950.00|SOYBEAN OIL|INDIA": {
+      "date": "2026-11-17",
+      "tons": 16950.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)",
+      "vessel": "MISTRAL FLAME",
+      "origin": "ARGENTINA",
+      "destination": "INDIA"
+    },
+    "2026-11-17|MISTRAL FLAME|SAN LORENZO|COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)|2000.00|SOYBEAN OIL|MAURITIUS": {
+      "date": "2026-11-17",
+      "tons": 2000.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)",
+      "vessel": "MISTRAL FLAME",
+      "origin": "ARGENTINA",
+      "destination": "MAURITIUS"
+    },
+    "2026-11-17|MISTRAL FLAME|SAN LORENZO|COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)|8150.00|SOYBEAN OIL|MOZAMBIQUE": {
+      "date": "2026-11-17",
+      "tons": 8150.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "COFCO INTL. PGSM NORTH BERTH (EX NIDERA FERTILIZANTES)",
+      "vessel": "MISTRAL FLAME",
+      "origin": "ARGENTINA",
+      "destination": "MOZAMBIQUE"
+    },
+    "2026-11-17|ML SWALLOW|BAHIA BLANCA|TERMINAL BAHIA BLANCA BERTHS 9 PUERTO INGENIERO WHITE|22800.18|WHEAT|BRAZIL": {
+      "date": "2026-11-17",
+      "tons": 22800.18,
+      "cargo_raw": "WHEAT",
+      "commodity": "trigo",
+      "port": "BAHIA BLANCA",
+      "terminal": "TERMINAL BAHIA BLANCA BERTHS 9 PUERTO INGENIERO WHITE",
+      "vessel": "ML SWALLOW",
+      "origin": "ARGENTINA",
+      "destination": "BRAZIL"
+    },
+    "2026-11-17|MTM NEWPORT|BAHIA BLANCA|BERTHS 2 / 3 BUNGE (EX VITERRA EX MORENO) PUERTO GALVÁN|3200.00|SUN FLOWER OIL|COLOMBIA": {
+      "date": "2026-11-17",
+      "tons": 3200.0,
+      "cargo_raw": "SUN FLOWER OIL",
+      "commodity": "girasol",
+      "port": "BAHIA BLANCA",
+      "terminal": "BERTHS 2 / 3 BUNGE (EX VITERRA EX MORENO) PUERTO GALVÁN",
+      "vessel": "MTM NEWPORT",
+      "origin": "ARGENTINA",
+      "destination": "COLOMBIA"
+    },
+    "2026-11-17|NATALIE|NECOCHEA / QUEQUEN|BERTH 9 / 10  (NECOCHEA) FERTILIZER BERTH|3850.28|MAP|ARGENTINA": {
+      "date": "2026-11-17",
+      "tons": 3850.28,
+      "cargo_raw": "MAP",
+      "commodity": "otro",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 9 / 10  (NECOCHEA) FERTILIZER BERTH",
+      "vessel": "NATALIE",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
+    "2026-11-17|NATALIE|NECOCHEA / QUEQUEN|BERTH 9 / 10 (NECOCHEA) FERTILIZER BERTH|3850.28|MAP|ARGENTINA": {
+      "date": "2026-11-17",
+      "tons": 3850.28,
+      "cargo_raw": "MAP",
+      "commodity": "otro",
+      "port": "NECOCHEA / QUEQUEN",
+      "terminal": "BERTH 9 / 10 (NECOCHEA) FERTILIZER BERTH",
+      "vessel": "NATALIE",
+      "origin": "RUSSIAN FEDERATION",
+      "destination": "ARGENTINA"
+    },
+    "2026-11-17|SEA BRAVERY|SAN LORENZO|LDC TIMBUES|10000.00|SOYA HULL PELLETS|IRELAND": {
+      "date": "2026-11-17",
+      "tons": 10000.0,
+      "cargo_raw": "SOYA HULL PELLETS",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "LDC TIMBUES",
+      "vessel": "SEA BRAVERY",
+      "origin": "ARGENTINA",
+      "destination": "IRELAND"
+    },
+    "2026-11-17|SEA BRAVERY|SAN LORENZO|LDC TIMBUES|18000.00|SOYBEANMEAL|IRELAND": {
+      "date": "2026-11-17",
+      "tons": 18000.0,
+      "cargo_raw": "SOYBEANMEAL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "LDC TIMBUES",
+      "vessel": "SEA BRAVERY",
+      "origin": "ARGENTINA",
+      "destination": "IRELAND"
+    },
+    "2026-11-17|SPAR PAVO|BAHIA BLANCA|ADM AGRO (EX TOEPFER BAHIA BLANCA)|22045.00|CORN|VIETNAM": {
+      "date": "2026-11-17",
+      "tons": 22045.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "BAHIA BLANCA",
+      "terminal": "ADM AGRO (EX TOEPFER BAHIA BLANCA)",
+      "vessel": "SPAR PAVO",
+      "origin": "ARGENTINA",
+      "destination": "VIETNAM"
+    },
+    "2026-11-18|SCARLET STORK|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|23525.00|SOYA BEAN|CHINA": {
+      "date": "2026-11-18",
+      "tons": 23525.0,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "BAHIA BLANCA",
+      "terminal": "LDC GRAIN TERMINAL PUERTO GALVAN",
+      "vessel": "SCARLET STORK",
+      "origin": "ARGENTINA",
+      "destination": "CHINA"
     }
   }
 }

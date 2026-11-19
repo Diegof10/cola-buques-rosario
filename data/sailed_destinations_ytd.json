@@ -1,32 +1,32 @@
 {
   "year": 2026,
   "from": "2026-01-02",
-  "through": "2026-11-16",
-  "updated_at": "2026-11-17T12:57:31.322215-03:00",
+  "through": "2026-11-18",
+  "updated_at": "2026-11-19T12:58:03.060017-03:00",
   "source": "sailed_rows_ledger.json (NABSA sailed xlsx archive + vessels_sailed_update.pdf + priors)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "unit": "t",
-  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-11-16). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
+  "note": "Acumulado de embarques SAILED NABSA por destino — solo granos (maíz/soja/trigo/girasol/sorgo/cebada; excluye iron ore y no-granos). Excluye Argentina descarga. Cobertura = fechas presentes en el ledger (2026-01-02 → 2026-11-18). Fuente: xlsx históricos (https://www.nabsa.com.ar/SAILED/sailedYYYYMMDD.xlsx) + PDF/xlsx diario. El ledger crece con cada refresh (dedupe por clave estable).",
   "grains_only": true,
   "coverage_complete_ytd": false,
   "exports": [
     {
       "key": "vietnam",
       "label": "Vietnam",
-      "tons": 12607070.59,
-      "count": 423
+      "tons": 12667197.61,
+      "count": 425
     },
     {
       "key": "china",
       "label": "China",
-      "tons": 8669853.22,
-      "count": 277
+      "tons": 8737378.22,
+      "count": 279
     },
     {
       "key": "peru",
       "label": "Perú",
-      "tons": 5641723.28,
-      "count": 292
+      "tons": 5674723.28,
+      "count": 294
     },
     {
       "key": "saudi arabia",
@@ -37,14 +37,14 @@
     {
       "key": "indonesia",
       "label": "Indonesia",
-      "tons": 4858662.25,
-      "count": 173
+      "tons": 4989787.5,
+      "count": 177
     },
     {
       "key": "brazil",
       "label": "Brasil",
-      "tons": 4084452.95,
-      "count": 168
+      "tons": 4138380.64,
+      "count": 170
     },
     {
       "key": "malaysia",
@@ -55,32 +55,32 @@
     {
       "key": "india",
       "label": "India",
-      "tons": 3927873.28,
-      "count": 438
+      "tons": 3963323.28,
+      "count": 442
     },
     {
       "key": "chile",
       "label": "Chile",
-      "tons": 3412988.04,
-      "count": 186
+      "tons": 3451988.0,
+      "count": 187
     },
     {
       "key": "algeria",
       "label": "Argelia",
-      "tons": 3370070.91,
-      "count": 110
+      "tons": 3401930.59,
+      "count": 111
     },
     {
       "key": "morocco",
       "label": "Marruecos",
-      "tons": 3160942.81,
-      "count": 160
+      "tons": 3194317.97,
+      "count": 161
     },
     {
       "key": "egypt",
       "label": "Egipto",
-      "tons": 2978799.0,
-      "count": 124
+      "tons": 3003798.37,
+      "count": 125
     },
     {
       "key": "ecuador",
@@ -115,20 +115,20 @@
     {
       "key": "ireland",
       "label": "Irlanda",
-      "tons": 1407524.85,
-      "count": 137
+      "tons": 1435524.85,
+      "count": 139
     },
     {
       "key": "italy",
       "label": "Italia",
-      "tons": 1344806.42,
-      "count": 71
+      "tons": 1414198.56,
+      "count": 74
     },
     {
       "key": "spain",
       "label": "España",
-      "tons": 1266503.44,
-      "count": 77
+      "tons": 1296004.34,
+      "count": 78
     },
     {
       "key": "thailand",
@@ -179,6 +179,12 @@
       "count": 50
     },
     {
+      "key": "france",
+      "label": "Francia",
+      "tons": 690882.66,
+      "count": 28
+    },
+    {
       "key": "greece",
       "label": "Grecia",
       "tons": 689723.22,
@@ -191,28 +197,22 @@
       "count": 24
     },
     {
-      "key": "france",
-      "label": "Francia",
-      "tons": 663383.99,
-      "count": 26
-    },
-    {
       "key": "senegal",
       "label": "Senegal",
       "tons": 569157.8,
       "count": 35
     },
     {
+      "key": "colombia",
+      "label": "Colombia",
+      "tons": 538722.28,
+      "count": 63
+    },
+    {
       "key": "guatemala",
       "label": "Guatemala",
       "tons": 534463.51,
       "count": 40
-    },
-    {
-      "key": "colombia",
-      "label": "Colombia",
-      "tons": 503466.37,
-      "count": 60
     },
     {
       "key": "oman",
@@ -293,6 +293,12 @@
       "count": 45
     },
     {
+      "key": "germany",
+      "label": "Alemania",
+      "tons": 270706.28,
+      "count": 16
+    },
+    {
       "key": "denmark",
       "label": "Dinamarca",
       "tons": 256389.59,
@@ -311,10 +317,10 @@
       "count": 15
     },
     {
-      "key": "germany",
-      "label": "Alemania",
-      "tons": 221907.26,
-      "count": 13
+      "key": "new zealand",
+      "label": "Nueva Zelanda",
+      "tons": 233848.68,
+      "count": 25
     },
     {
       "key": "el salvador",
@@ -327,12 +333,6 @@
       "label": "Kuwait",
       "tons": 214306.0,
       "count": 6
-    },
-    {
-      "key": "new zealand",
-      "label": "Nueva Zelanda",
-      "tons": 203752.7,
-      "count": 23
     },
     {
       "key": "united states",
@@ -359,22 +359,22 @@
       "count": 15
     },
     {
+      "key": "syria",
+      "label": "Syria",
+      "tons": 181482.33,
+      "count": 13
+    },
+    {
       "key": "mauritius",
       "label": "Mauritius",
-      "tons": 168224.63,
-      "count": 18
+      "tons": 171724.63,
+      "count": 20
     },
     {
       "key": "mozambique",
       "label": "Mozambique",
-      "tons": 163400.0,
-      "count": 32
-    },
-    {
-      "key": "syria",
-      "label": "Syria",
-      "tons": 155066.08,
-      "count": 11
+      "tons": 171550.0,
+      "count": 33
     },
     {
       "key": "latvia",
@@ -401,16 +401,16 @@
       "count": 4
     },
     {
+      "key": "canada",
+      "label": "Canadá",
+      "tons": 119000.0,
+      "count": 8
+    },
+    {
       "key": "nicaragua",
       "label": "Nicaragua",
       "tons": 109959.0,
       "count": 8
-    },
-    {
-      "key": "canada",
-      "label": "Canadá",
-      "tons": 103000.0,
-      "count": 7
     },
     {
       "key": "singapore",
@@ -509,6 +509,12 @@
       "count": 3
     },
     {
+      "key": "slovenia",
+      "label": "Slovenia",
+      "tons": 27425.99,
+      "count": 2
+    },
+    {
       "key": "lithuania",
       "label": "Lituania",
       "tons": 27096.78,
@@ -551,12 +557,6 @@
       "count": 1
     },
     {
-      "key": "slovenia",
-      "label": "Slovenia",
-      "tons": 7526.2,
-      "count": 1
-    },
-    {
       "key": "bolivia",
       "label": "Bolivia",
       "tons": 7199.98,
@@ -577,10 +577,10 @@
   ],
   "ar_tons": 94261.0,
   "ar_count": 3,
-  "unknown_tons": 1507204.52,
-  "unknown_count": 59,
-  "ignored_non_grain_tn": 20237786.34,
-  "ignored_non_grain_count": 1228,
-  "total_export_tons": 97633582.34,
-  "rows": 4883
+  "unknown_tons": 1611819.19,
+  "unknown_count": 65,
+  "ignored_non_grain_tn": 20386261.96,
+  "ignored_non_grain_count": 1243,
+  "total_export_tons": 98486480.13,
+  "rows": 4932
 }
