@@ -1,10 +1,10 @@
 {
   "year": 2026,
-  "updated_at": "2026-11-20T13:02:55.342390-03:00",
+  "updated_at": "2026-11-23T13:00:13.168089-03:00",
   "source": "NABSA sailedYYYYMMDD.xlsx (+ vessels_sailed_update.pdf / prior1–4)",
   "source_url": "https://www.nabsa.com.ar/SAILED/",
   "note": "Ledger acumulativo de filas SAILED NABSA. Histórico vía xlsx bajo /SAILED/sailedYYYYMMDD.xlsx; el PDF diario es rolling (~mes). Este JSON crece con cada refresh (dedupe) y alimenta sailed_destinations_ytd.json. No inventa meses faltantes.",
-  "row_count": 6200,
+  "row_count": 6206,
   "rows": {
     "2026-01-02|BOCHEM HOUSTON|SAN LORENZO|DEMPA SAN MARTIN|2080.00|SUN FLOWER OIL (HIGHOLEIC)|MEXICO": {
       "date": "2026-01-02",
@@ -68052,6 +68052,28 @@
       "origin": "ARGENTINA",
       "destination": "BRAZIL"
     },
+    "2026-11-18|EB GRAND|SAN PEDRO|PIER NBR 1 ELEVATOR (SAN PEDRO)|10000.00|SOYA BEAN|UNITED STATES": {
+      "date": "2026-11-18",
+      "tons": 10000.0,
+      "cargo_raw": "SOYA BEAN",
+      "commodity": "soja",
+      "port": "SAN PEDRO",
+      "terminal": "PIER NBR 1 ELEVATOR (SAN PEDRO)",
+      "vessel": "EB GRAND",
+      "origin": "ARGENTINA",
+      "destination": "UNITED STATES"
+    },
+    "2026-11-18|EB GRAND|SAN PEDRO|PIER NBR 1 ELEVATOR (SAN PEDRO)|12000.00|CORN|UNITED STATES": {
+      "date": "2026-11-18",
+      "tons": 12000.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "SAN PEDRO",
+      "terminal": "PIER NBR 1 ELEVATOR (SAN PEDRO)",
+      "vessel": "EB GRAND",
+      "origin": "ARGENTINA",
+      "destination": "UNITED STATES"
+    },
     "2026-11-18|GLBS MAGIC|NECOCHEA / QUEQUEN|BERTH 3 ELEVATOR (QUEQUEN) A.C.A. TERMINAL|22360.00|CORN|NOT AVAILABLE": {
       "date": "2026-11-18",
       "tons": 22360.0,
@@ -68162,6 +68184,17 @@
       "origin": "ARGENTINA",
       "destination": "JORDAN"
     },
+    "2026-11-19|ORPHEUS|BAHIA BLANCA|LDC GRAIN TERMINAL PUERTO GALVAN|20178.00|CORN|VIETNAM": {
+      "date": "2026-11-19",
+      "tons": 20178.0,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "BAHIA BLANCA",
+      "terminal": "LDC GRAIN TERMINAL PUERTO GALVAN",
+      "vessel": "ORPHEUS",
+      "origin": "ARGENTINA",
+      "destination": "VIETNAM"
+    },
     "2026-11-19|SEA BRAVERY|ROSARIO|LDC TERMINAL GRAL. LAGOS|1884.91|SOYBEANMEAL|IRELAND": {
       "date": "2026-11-19",
       "tons": 1884.91,
@@ -68205,6 +68238,39 @@
       "vessel": "SEA BRAVERY",
       "origin": "ARGENTINA",
       "destination": "IRELAND"
+    },
+    "2026-11-19|SEA MARK|ROSARIO|CARGILL PUNTA ALVEAR|25831.53|CORN|GUATEMALA": {
+      "date": "2026-11-19",
+      "tons": 25831.53,
+      "cargo_raw": "CORN",
+      "commodity": "maiz",
+      "port": "ROSARIO",
+      "terminal": "CARGILL PUNTA ALVEAR",
+      "vessel": "SEA MARK",
+      "origin": "ARGENTINA",
+      "destination": "GUATEMALA"
+    },
+    "2026-11-19|VAST ATLANTIC|ROSARIO|CARGILL VGG VILLA GOBERNADOR GALVEZ|18700.00|SOYBEAN OIL|INDIA": {
+      "date": "2026-11-19",
+      "tons": 18700.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "ROSARIO",
+      "terminal": "CARGILL VGG VILLA GOBERNADOR GALVEZ",
+      "vessel": "VAST ATLANTIC",
+      "origin": "ARGENTINA",
+      "destination": "INDIA"
+    },
+    "2026-11-20|BOCHEM WALVIS BAY|SAN LORENZO|VICENTIN SAN LORENZO|5000.00|SOYBEAN OIL|DOMINICAN REPUBLIC": {
+      "date": "2026-11-20",
+      "tons": 5000.0,
+      "cargo_raw": "SOYBEAN OIL",
+      "commodity": "soja",
+      "port": "SAN LORENZO",
+      "terminal": "VICENTIN SAN LORENZO",
+      "vessel": "BOCHEM WALVIS BAY",
+      "origin": "ARGENTINA",
+      "destination": "DOMINICAN REPUBLIC"
     }
   }
 }

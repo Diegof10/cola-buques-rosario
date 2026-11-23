@@ -1,11 +1,11 @@
 {
   "month": "2026-11",
-  "updated_at": "2026-11-20T13:02:55.368132-03:00",
+  "updated_at": "2026-11-23T13:00:13.205109-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 2124547.94,
-    "soja": 2772106.29,
+    "maiz": 2182557.47,
+    "soja": 2810806.29,
     "trigo": 813837.52,
     "girasol": 105580.04,
     "sorgo": 28453.0,
@@ -149,23 +149,31 @@
       "cebada": 0.0
     },
     "2026-11-18": {
-      "maiz": 98953.82,
-      "soja": 123906.78,
+      "maiz": 110953.82,
+      "soja": 133906.78,
       "trigo": 27495.0,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     },
     "2026-11-19": {
-      "maiz": 26300.0,
-      "soja": 14632.9,
+      "maiz": 72309.53,
+      "soja": 33332.9,
+      "trigo": 0.0,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 0.0
+    },
+    "2026-11-20": {
+      "maiz": 0.0,
+      "soja": 10000.0,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     }
   },
-  "rows_in_month": 348,
+  "rows_in_month": 355,
   "ignored_otro_tn": 1578104.84,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos.",
@@ -206,7 +214,7 @@
         "cebada": 31369.0
       },
       "rows_in_month": 650,
-      "updated_at": "2026-11-20T13:02:55.370045-03:00",
+      "updated_at": "2026-11-23T13:00:13.207096-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
