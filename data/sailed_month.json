@@ -1,12 +1,12 @@
 {
   "month": "2026-11",
-  "updated_at": "2026-11-25T13:05:55.579296-03:00",
+  "updated_at": "2026-11-26T12:57:31.836211-03:00",
   "source": "NABSA vessels_sailed_update.pdf",
   "source_url": "https://www.nabsa.com.ar/assets/vessels_sailed_update.pdf",
   "products": {
-    "maiz": 2392663.61,
-    "soja": 2958729.48,
-    "trigo": 952697.52,
+    "maiz": 2520090.69,
+    "soja": 3071039.41,
+    "trigo": 995111.54,
     "girasol": 105580.04,
     "sorgo": 28453.0,
     "cebada": 40834.62
@@ -157,7 +157,7 @@
       "cebada": 0.0
     },
     "2026-11-19": {
-      "maiz": 109959.53,
+      "maiz": 111959.53,
       "soja": 81149.91,
       "trigo": 27310.0,
       "girasol": 0.0,
@@ -165,8 +165,8 @@
       "cebada": 0.0
     },
     "2026-11-20": {
-      "maiz": 14800.0,
-      "soja": 15000.0,
+      "maiz": 53297.81,
+      "soja": 36320.68,
       "trigo": 42100.0,
       "girasol": 0.0,
       "sorgo": 0.0,
@@ -174,15 +174,15 @@
     },
     "2026-11-21": {
       "maiz": 63892.25,
-      "soja": 67599.98,
-      "trigo": 69450.0,
+      "soja": 117229.98,
+      "trigo": 80450.0,
       "girasol": 0.0,
       "sorgo": 0.0,
       "cebada": 0.0
     },
     "2026-11-22": {
-      "maiz": 25168.0,
-      "soja": 0.0,
+      "maiz": 66256.08,
+      "soja": 31999.25,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
@@ -198,15 +198,23 @@
     },
     "2026-11-24": {
       "maiz": 0.0,
+      "soja": 9360.0,
+      "trigo": 31414.02,
+      "girasol": 0.0,
+      "sorgo": 0.0,
+      "cebada": 20134.62
+    },
+    "2026-11-25": {
+      "maiz": 45841.19,
       "soja": 0.0,
       "trigo": 0.0,
       "girasol": 0.0,
       "sorgo": 0.0,
-      "cebada": 20134.62
+      "cebada": 0.0
     }
   },
-  "rows_in_month": 400,
-  "ignored_otro_tn": 2048990.6,
+  "rows_in_month": 421,
+  "ignored_otro_tn": 2086490.6,
   "unit": "t",
   "note": "Suma de toneladas SAILED NABSA (todas las filas del PDF) por commodity en el mes calendario. Complejo soja (meal/oil/bean) → soja; sun flower → girasol. Productos 'otro' no restan del stock de granos.",
   "history": {
@@ -246,7 +254,7 @@
         "cebada": 31369.0
       },
       "rows_in_month": 650,
-      "updated_at": "2026-11-25T13:05:55.580107-03:00",
+      "updated_at": "2026-11-26T12:57:31.837312-03:00",
       "source": "sailed_rows_ledger.json"
     }
   }
